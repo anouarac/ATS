@@ -19,9 +19,11 @@ namespace ats {
         bool mRunning;
     public:
         Strategy(std::string symbol, MarketData &data, std::vector<double> prices={});
+        ~Strategy();
         virtual void start();
         virtual void run();
         virtual void stop();
+        bool isRunning();
     protected:
         virtual void updatePrice() = 0;
         virtual bool getSignal() = 0;

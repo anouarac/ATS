@@ -8,7 +8,13 @@
 
 namespace ats {
     Strategy::Strategy(std::string symbol, MarketData &data, std::vector<double> prices)
-    : mSymbol(std::move(symbol)), mData(data), mPrices(std::move(prices)) {}
+    : mSymbol(std::move(symbol)), mData(data), mPrices(std::move(prices)) {
+        Strategy::start();
+    }
+
+    Strategy::~Strategy() {
+        Strategy::stop();
+    }
 
     void Strategy::start() {
         mRunning = true;
@@ -30,6 +36,10 @@ namespace ats {
             else if (signal < 0)
                 buy();
         }
+    }
+
+    bool Strategy::isRunning() {
+        return mRunning;
     }
 
     void Strategy::buy() {

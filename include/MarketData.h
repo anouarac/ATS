@@ -21,15 +21,17 @@ namespace ats {
 
     public:
         MarketData();
-        explicit MarketData(std::vector<std::string> symbols);
+        ~MarketData();
+        explicit MarketData(const std::vector<std::string>& symbols);
         void start();
         void run();
         void stop();
-        void subscribe(std::string symbol);
-        void unsubscribe(std::string symbol);
-        double getPrice(std::string symbol);
+        bool isRunning();
+        void subscribe(const std::string& symbol);
+        void unsubscribe(const std::string& symbol);
+        double getPrice(const std::string& symbol);
     private:
-        void updatePrice(std::string symbol);
+        void updatePrice(const std::string& symbol);
         void updatePrices();
     };
 

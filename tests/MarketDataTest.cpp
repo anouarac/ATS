@@ -8,9 +8,9 @@ TEST(MarketDataTest, TestSubscribeAndUnsuscribe) {
     ats::MarketData marketData;
     marketData.subscribe("BTC");
     EXPECT_TRUE(marketData.getPrice("BTC") >= 0);
-    EXPECT_EQ(marketData.getPrice("ETH"), -1);
+    EXPECT_DOUBLE_EQ(marketData.getPrice("ETH"), -1);
     marketData.unsubscribe("BTC");
-    EXPECT_EQ(marketData.getPrice("BTC"), -1);
+    EXPECT_DOUBLE_EQ(marketData.getPrice("BTC"), -1);
 }
 
 TEST(MarketDataTest, TestStartAndStop) {

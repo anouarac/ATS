@@ -7,5 +7,6 @@
 
 #include "MarketData.h"
 #include "Strategy.h"
+#include "PositionManager.h"
 
 #endif //ALGO_TRADING_ATS_H

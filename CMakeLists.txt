@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 project(ats)
-project(AllTests)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -15,7 +14,7 @@ file(GLOB_RECURSE sources src/*.cpp)
 add_subdirectory(external/googletest)
 include_directories(external/googletest/googletest/include)
 
-# Project and library
+# Build the project and the library
 add_executable(${PROJECT_NAME} ${headers} ${sources} main.cpp)
 add_library(${PROJECT_NAME}_lib ${headers} ${sources})
 target_include_directories(${PROJECT_NAME}_lib PUBLIC include)

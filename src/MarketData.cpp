@@ -13,7 +13,7 @@ namespace ats {
         for (std::string symbol : symbols)
             mSymbols.insert(symbol);
         mRunning = false;
-        MarketData::start();
+        start();
     }
 
     MarketData::~MarketData() {
@@ -25,9 +25,8 @@ namespace ats {
     }
 
     void MarketData::run() {
-        while (mRunning) {
+        while (mRunning)
             updatePrices();
-        }
     }
 
     void MarketData::stop() {
@@ -37,18 +36,22 @@ namespace ats {
     }
 
     void MarketData::subscribe(const std::string& symbol) {
+        std::unique_lock<std::mutex> lock(mDataMutex);
         mSymbols.insert(symbol);
         mPrices[symbol] = {};
     }
 
     void MarketData::unsubscribe(const std::string& symbol) {
+        std::unique_lock<std::mutex> lock(mDataMutex);
         mSymbols.erase(symbol);
         mPrices.erase(symbol);
     }
 
     double MarketData::getPrice(const std::string& symbol) {
-        if (mPrices.count(symbol))
-            return (mPrices[symbol].empty()? 0 : mPrices[symbol].back());
+        if (mPrices.count(symbol)) {
+            updatePrice(symbol);
+            return (mPrices[symbol].empty() ? 0 : mPrices[symbol].back());
+        }
         return -1;
     }
 

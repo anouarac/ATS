@@ -2,12 +2,13 @@
 // Created by Anouar Achghaf on 12/02/2023.
 //
 
-#ifndef ALGO_TRADING_MARKETDATA_H
-#define ALGO_TRADING_MARKETDATA_H
+#ifndef ATS_MARKETDATA_H
+#define ATS_MARKETDATA_H
 #include <thread>
 #include <mutex>
 #include <unordered_map>
 #include <unordered_set>
+#include "ExchangeManager.h"
 
 namespace ats {
 
@@ -18,11 +19,12 @@ namespace ats {
         bool mRunning;
         std::unordered_set<std::string> mSymbols;
         std::unordered_map<std::string, std::vector<double>> mPrices;
+        ExchangeManager& mExchangeManager;
 
     public:
-        MarketData();
+        MarketData(ExchangeManager& ems);
         ~MarketData();
-        explicit MarketData(const std::vector<std::string>& symbols);
+        explicit MarketData(const std::vector<std::string>& symbols, ExchangeManager& ems);
         void start();
         void run();
         void stop();
@@ -30,6 +32,7 @@ namespace ats {
         void subscribe(const std::string& symbol);
         void unsubscribe(const std::string& symbol);
         double getPrice(const std::string& symbol);
+        double getQtyForPrice(const std::string& symbol, double price);
     private:
         void updatePrice(const std::string& symbol);
         void updatePrices();
@@ -37,4 +40,4 @@ namespace ats {
 
 } // ats
 
-#endif //ALGO_TRADING_MARKETDATA_H
+#endif //ATS_MARKETDATA_H

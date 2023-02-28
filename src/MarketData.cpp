@@ -7,11 +7,11 @@
 
 namespace ats {
 
-    MarketData::MarketData() = default;
+    MarketData::MarketData(ExchangeManager& ems) : mExchangeManager(ems) {}
 
-    MarketData::MarketData(const std::vector<std::string>& symbols) {
-        for (std::string symbol : symbols)
-            mSymbols.insert(symbol);
+    MarketData::MarketData(const std::vector<std::string>& symbols, ExchangeManager& ems) : mExchangeManager(ems) {
+        for (const std::string& symbol : symbols)
+            subscribe(symbol);
         mRunning = false;
         start();
     }
@@ -57,8 +57,9 @@ namespace ats {
 
     void MarketData::updatePrice(const std::string& symbol) {
         std::unique_lock<std::mutex> lock(mDataMutex);
-        if (mPrices[symbol].size() < 10)
-            mPrices[symbol].push_back(5); // TODO: add EMS
+        if (mPrices[symbol].size() == 10)
+            mPrices[symbol].erase(mPrices[symbol].begin());
+        mPrices[symbol].push_back(mExchangeManager.getPrice(symbol));
     }
 
     void MarketData::updatePrices() {
@@ -68,6 +69,10 @@ namespace ats {
 
     bool MarketData::isRunning() {
         return mRunning;
+    }
+
+    double MarketData::getQtyForPrice(const std::string &symbol, double price) {
+        return price / getPrice(symbol);
     }
 
 } // ats

@@ -2,8 +2,8 @@
 // Created by Anouar Achghaf on 15/02/2023.
 //
 
-#ifndef ALLTESTS_POSITIONMANAGER_H
-#define ALLTESTS_POSITIONMANAGER_H
+#ifndef ATS_POSITIONMANAGER_H
+#define ATS_POSITIONMANAGER_H
 #include <thread>
 #include <vector>
 #include <unordered_map>
@@ -48,4 +48,4 @@ namespace ats {
 
 } // ats
 
-#endif //ALLTESTS_POSITIONMANAGER_H
+#endif //ATS_POSITIONMANAGER_H

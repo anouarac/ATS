@@ -5,6 +5,39 @@
 #include "OrderManager.h"
 
 namespace ats {
+
+    std::string OrderTypeToString(OrderType t) {
+        switch (t) {
+            case LIMIT:
+                return "LIMIT";
+            case MARKET:
+                return "MARKET";
+            case STOP_LOSS:
+                return "STOP_LOSS";
+            case STOP_LOSS_LIMIT:
+                return "STOP_LOSS_LIMIT";
+            case TAKE_PROFIT:
+                return "TAKE_PROFIT";
+            case TAKE_PROFIT_LIMIT:
+                return "TAKE_PROFIT_LIMIT";
+            case LIMIT_MAKER:
+                return "LIMIT_MAKER";
+            default:
+                return "Unknown type";
+        }
+    }
+
+    std::string SideToString(Side s) {
+        switch(s) {
+            case BUY:
+                return "BUY";
+            case SELL:
+                return "SELL";
+            default:
+                return "Unknown";
+        }
+    }
+
     OrderManager::OrderManager() {
         start();
     }
@@ -32,13 +65,15 @@ namespace ats {
         return mRunning;
     }
 
-    void OrderManager::createOrder(std::string symbol, int quantity) {
+    void OrderManager::createOrder(OrderType type, Side side, std::string symbol, double quantity, double price) {
         int id = getNewOrderId();
-        mOrders.push(Order(id, symbol, quantity));
+        mPendingOrders.push(Order(id, MARKET, side, symbol, quantity, price));
     }
 
     void OrderManager::processOrder(Order order) {
-        // TODO: Add EMS
+        bool valid = true;
+        if (valid)
+            mOrders.push(order);
     }
 
     void OrderManager::processOrders() {

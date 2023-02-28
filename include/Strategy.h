@@ -2,8 +2,8 @@
 // Created by Anouar Achghaf on 12/02/2023.
 //
 
-#ifndef ALGO_TRADING_STRATEGY_H
-#define ALGO_TRADING_STRATEGY_H
+#ifndef ATS_STRATEGY_H
+#define ATS_STRATEGY_H
 #include <thread>
 #include <vector>
 #include "MarketData.h"
@@ -33,4 +33,4 @@ namespace ats {
 
 } // ats
 
-#endif //ALGO_TRADING_STRATEGY_H
+#endif //ATS_STRATEGY_H

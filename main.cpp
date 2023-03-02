@@ -16,6 +16,6 @@ int main() {
     Json::Value result;
     bems.getUserInfo(result);
     std::cout << result.toStyledString() << std::endl;
-    std::cout << bems.getPrice("ADAUSDT");
+    std::cout << bems.getPrice("ETHUSDT");
     return 0;
 }

@@ -12,13 +12,14 @@ namespace ats {
 
     class Strategy {
     protected:
-        MarketData &mData;
+        MarketData& mData;
+        ExchangeManager& mExchangeManager;
         std::string mSymbol;
         std::vector<double> mPrices;
         std::thread mStrategyThread;
         bool mRunning;
     public:
-        Strategy(std::string symbol, MarketData &data, std::vector<double> prices={});
+        Strategy(std::string symbol, MarketData& data, ExchangeManager& exchangeManager, std::vector<double> prices={});
         ~Strategy();
         virtual void start();
         virtual void run();

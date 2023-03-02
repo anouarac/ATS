@@ -8,6 +8,7 @@
 #include <mutex>
 #include <queue>
 #include "OrderManager.h"
+#include "Trade.h"
 #include "json/json.h"
 
 namespace ats {
@@ -17,12 +18,12 @@ namespace ats {
 
     public:
         ExchangeManager(OrderManager& oms);
-        virtual void sendOrder(Order &order) = 0;
-        virtual void modifyOrder(Order &order) = 0;
-        virtual void cancelOrder(Order &order) = 0;
-        virtual void getOrderStatus(Order &order, Json::Value &result) = 0;
+        virtual void sendOrder(Order& order) = 0;
+        virtual void modifyOrder(Order& oldOrder, Order& newOrder) = 0;
+        virtual void cancelOrder(Order& order) = 0;
+        virtual void getOrderStatus(Order& order, Json::Value& result) = 0;
         virtual std::vector<Order> getOpenOrders() = 0;
-        virtual std::vector<Order> getOrderHistory() = 0;
+        virtual std::vector<Trade> getTradeHistory(std::string symbol) = 0;
 
         virtual double getPrice(std::string symbol) = 0;
     };

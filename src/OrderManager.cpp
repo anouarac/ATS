@@ -23,8 +23,15 @@ namespace ats {
             case LIMIT_MAKER:
                 return "LIMIT_MAKER";
             default:
-                return "Unknown type";
+                return "Unknown";
         }
+    }
+
+    OrderType stringToOrderType(const std::string& s) {
+        for (int i = 0; i < OTCOUNT; i++)
+            if (OrderTypeToString(OrderType(i)) == s)
+                return OrderType(i);
+        return OTCOUNT;
     }
 
     std::string SideToString(Side s) {
@@ -36,6 +43,13 @@ namespace ats {
             default:
                 return "Unknown";
         }
+    }
+
+    Side stringToSide(const std::string& s) {
+        for (int i = 0; i < SCOUNT; i++)
+            if (SideToString(Side(i)) == s)
+                return Side(i);
+        return SCOUNT;
     }
 
     OrderManager::OrderManager() {
@@ -66,7 +80,7 @@ namespace ats {
     }
 
     void OrderManager::createOrder(OrderType type, Side side, std::string symbol, double quantity, double price) {
-        int id = getNewOrderId();
+        long id = getNewOrderId();
         mPendingOrders.push(Order(id, MARKET, side, symbol, quantity, price));
     }
 
@@ -78,11 +92,9 @@ namespace ats {
 
     void OrderManager::processOrders() {
         while (mRunning)
-            if (!mOrders.empty()) {
-                std::unique_lock<std::mutex> lock(mOrderFetchMutex);
-                Order order = mOrders.front();
-                mOrders.pop();
-                lock.unlock();
+            if (!mPendingOrders.empty()) {
+                Order order = mPendingOrders.front();
+                mPendingOrders.pop();
                 processOrder(order);
             }
     }
@@ -90,5 +102,16 @@ namespace ats {
     int OrderManager::getNewOrderId() {
         std::unique_lock<std::mutex> lock(mOrderCountMutex);
         return mOrderCount++;
+    }
+
+    bool OrderManager::hasOrders() {
+        return !mOrders.empty();
+    }
+
+    Order& OrderManager::getOldestOrder() {
+        Order oldest = mOrders.front();
+        mOrders.pop();
+        mSentOrders.push_back(oldest);
+        return mSentOrders.back();
     }
 } // ats

@@ -9,6 +9,7 @@
 #include <thread>
 #include <mutex>
 #include <map>
+#include <vector>
 
 namespace ats {
     enum OrderType {
@@ -18,18 +19,22 @@ namespace ats {
         STOP_LOSS_LIMIT,
         TAKE_PROFIT,
         TAKE_PROFIT_LIMIT,
-        LIMIT_MAKER
+        LIMIT_MAKER,
+        OTCOUNT
     };
     std::string OrderTypeToString(OrderType t);
+    OrderType stringToOrderType(const std::string& s);
 
     enum Side {
         BUY,
-        SELL
+        SELL,
+        SCOUNT
     };
     std::string SideToString(Side t);
+    Side stringToSide(const std::string& s);
 
     struct Order {
-        int id;
+        long id;
         std::string symbol;
         double quantity;
         double price;
@@ -38,9 +43,11 @@ namespace ats {
         double stopPrice;
         double icebergQty;
         long recvWindow;
+        long emsId;
+        std::string timeInForce;
 
-        Order(int id, OrderType type, Side side, std::string symbol, double quantity, double price,
-              double stopPrice=0., double icebergQty=0., long recvWindow=0) {
+        Order(long id, OrderType type, Side side, std::string symbol, double quantity, double price,
+              double stopPrice=0., double icebergQty=0., long recvWindow=0, long emsId=0, std::string timeInForce="") {
             this->id = id;
             this->side = side;
             this->symbol = symbol;
@@ -50,6 +57,8 @@ namespace ats {
             this->stopPrice = stopPrice;
             this->icebergQty = icebergQty;
             this->recvWindow = recvWindow;
+            this->emsId = emsId;
+            this->timeInForce = timeInForce;
         }
     };
 
@@ -61,7 +70,8 @@ namespace ats {
         std::mutex mOrderCountMutex;
         std::mutex mOrderFetchMutex;
         bool mRunning;
-        int mOrderCount;
+        long mOrderCount;
+        std::vector<Order> mSentOrders;
     public:
         OrderManager();
         ~OrderManager();
@@ -72,6 +82,9 @@ namespace ats {
         void createOrder(OrderType type, Side side, std::string symbol, double quantity, double price);
         void processOrder(Order order);
         void processOrders();
+
+        bool hasOrders(); // returns whether there are orders to be sent
+        Order& getOldestOrder(); // returns oldest order from mOrders
     private:
         int getNewOrderId();
 

@@ -119,4 +119,8 @@ namespace ats {
         return price;
     }
 
+    void BinanceExchangeManager::getUserInfo(Json::Value& result) {
+        BINANCE_ERR_CHECK(mAccount.getInfo(result));
+    }
+
 } // ats

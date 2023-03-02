@@ -45,8 +45,10 @@ namespace ats {
 
         double getPrice(std::string symbol) override;
 
+
         Order jsonToOrder(Json::Value &result);
         Trade jsonToTrade(Json::Value &result);
+        void getUserInfo(Json::Value& result);
     };
 
 } // ats

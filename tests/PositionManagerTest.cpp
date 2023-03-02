@@ -3,23 +3,30 @@
 //
 #include "PositionManager.h"
 #include "MarketData.h"
+#include "OrderManager.h"
+#include "BinanceExchangeManager.h"
 #include <gtest/gtest.h>
 
 class PositionManagerTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        marketData.start();
-        marketData.subscribe("BTC");
-        marketData.subscribe("ETH");
-        positionManager = new ats::PositionManager(marketData);
+        exchangeManager = new ats::BinanceExchangeManager(orderManager);
+        marketData = new ats::MarketData(*exchangeManager);
+        marketData->start();
+        marketData->subscribe("BTCUSDT");
+        marketData->subscribe("ETHUSDT");
+        positionManager = new ats::PositionManager(*marketData);
     }
 
     void TearDown() override {
-        positionManager->stop();
         delete positionManager;
+        delete marketData;
+        delete exchangeManager;
     }
 
-    ats::MarketData marketData;
+    ats::OrderManager orderManager;
+    ats::BinanceExchangeManager* exchangeManager;
+    ats::MarketData* marketData;
     ats::PositionManager* positionManager;
 };
 
@@ -32,10 +39,10 @@ TEST_F(PositionManagerTest, TestStartAndStop) {
 
 
 TEST_F(PositionManagerTest, TestUpdatePosition) {
-    positionManager->updatePosition("BTC", 10);
-    ASSERT_DOUBLE_EQ(positionManager->getPosition("BTC"), 10);
-    ASSERT_DOUBLE_EQ(positionManager->getPosition("ETH"), 0);
-    ASSERT_DOUBLE_EQ(positionManager->getPosition("AAVE"), 0);
+    positionManager->updatePosition("BTCUSDT", 10);
+    ASSERT_DOUBLE_EQ(positionManager->getPosition("BTCUSDT"), 10);
+    ASSERT_DOUBLE_EQ(positionManager->getPosition("ETHUSDT"), 0);
+    ASSERT_DOUBLE_EQ(positionManager->getPosition("AAVEUSDT"), 0);
 }
 
 TEST_F(PositionManagerTest, TestGetPnL) {

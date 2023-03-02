@@ -13,5 +13,9 @@ int main() {
     ats::BinanceExchangeManager bems(oms, 1);
     ats::OrderType t = ats::MARKET;
     std::cout << ats::OrderTypeToString(t);
+    Json::Value result;
+    bems.getUserInfo(result);
+    std::cout << result.toStyledString() << std::endl;
+    std::cout << bems.getPrice("ADAUSDT");
     return 0;
 }

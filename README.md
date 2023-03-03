@@ -11,11 +11,11 @@ Submodules include [binance-cxx-api](https://github.com/dmikushin/binance-cxx-ap
 ## Quick Start Overview
 ### Cloning
 ```bash
-git clone --recurse-submodules -j4 https://github.com/anouarac/algo-trading.git
+git clone --recurse-submodules -j4 https://github.com/anouarac/ATS.git
 ```
 ### Building
 ```bash
-$ cd algo-trading
+$ cd ATS
 $ mkdir build
 $ cd build
 $ cmake ..

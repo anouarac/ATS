@@ -7,8 +7,8 @@
 #include "../include/Strategy.h"
 
 namespace ats {
-    Strategy::Strategy(std::string symbol, MarketData& data, ExchangeManager& exchangeManager, std::vector<double> prices)
-    : mSymbol(std::move(symbol)), mData(data), mExchangeManager(exchangeManager), mPrices(std::move(prices)) {
+    Strategy::Strategy(std::string symbol, MarketData& data, OrderManager& orderManager, std::vector<double> prices)
+    : mSymbol(std::move(symbol)), mData(data), mOrderManager(orderManager), mPrices(std::move(prices)) {
         Strategy::start();
     }
 

@@ -1,4 +1,3 @@
-external/
-_site/
+external/*
 
 

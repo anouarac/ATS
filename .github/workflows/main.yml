@@ -7,15 +7,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  cleanup:
     runs-on: ubuntu-latest
     steps:
       - name: cleanup
         shell: bash
         run: rm -rf external
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - uses: DenverCoder1/doxygen-github-pages-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: doc/html
-          config_file: doc/.Doxyfile
+          folder: docs/html
+          config_file: docs/.Doxyfile

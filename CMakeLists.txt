@@ -14,6 +14,11 @@ file(GLOB_RECURSE sources src/*.cpp)
 add_subdirectory(external/binance-cxx-api)
 include_directories(external/binance-cxx-api/include)
 
+# Exchange UI
+
+add_subdirectory(external/exchange-ui/exchange-ui)
+include_directories(external/exchange-ui/exchange-ui/common)
+
 # gtest
 
 add_subdirectory(external/googletest)
@@ -21,7 +26,7 @@ include_directories(external/googletest/googletest/include)
 
 # Build the project and the library
 add_library(${PROJECT_NAME} ${headers} ${sources})
-target_link_libraries(${PROJECT_NAME} binance-cxx-api)
+target_link_libraries(${PROJECT_NAME} binance-cxx-api app)
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Main executable

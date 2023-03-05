@@ -25,7 +25,7 @@ namespace ats {
     using namespace binance;
 
     /**
-     * @brief The BinanceExchangeManager class is an abstract class that defines the interface for managing orders on the Binance exchange.
+     * @brief The BinanceExchangeManager class is a class that defines the interface for managing orders on the Binance exchange.
      *
      */
     class BinanceExchangeManager : public ExchangeManager {

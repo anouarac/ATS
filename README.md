@@ -52,4 +52,4 @@ Working with this library can go as follows with the Binance EMS:
     std::cout << b_ems.getPrice("ETHUSDT") << std::endl;
     ```
 ## Documentation
-For further details check the documentation.
+For further details check the [documentation](https://anouarac.github.io/ATS/).

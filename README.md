@@ -28,28 +28,28 @@ Working with this library can go as follows with the Binance EMS:
 
 * Place Binance Spot Net API keys in ```$HOME/.binance/key``` and ```$HOME/.binance/secret```, or ```$HOME/.binance/test_key``` and ```$HOME/.binance/test_secret```for the Spot Test Net.
 * Import the following libraries 
-    ```CPP
-    #include <iostream>
-    #include "ats.h"
-    #include "json/json.h"
-    #include "binance_logger.h"
-    ```
+  ```CPP
+  #include <iostream>
+  #include "ats.h"
+  #include "json/json.h"
+  #include "binance_logger.h"
+  ```
 * Setup Logger
-    ```CPP
-    binance::Logger::set_debug_level(1);
-    binance::Logger::set_debug_logfp(stderr);
-    ```
+  ```CPP
+  binance::Logger::set_debug_level(1);
+  binance::Logger::set_debug_logfp(stderr);
+  ```
 * Initialise OMS and Binance EMS
-   ```CPP
-   ats::OrderManager oms;
-   ats::BinanceExchangeManager b_ems(oms, 1);
-   ```
+  ```CPP
+  ats::OrderManager oms;
+  ats::BinanceExchangeManager b_ems(oms, 1);
+  ```
 * Interact with EMS
-    ```CPP
-    Json::Value result;
-    b_ems.getUserInfo(result);
-    std::cout << result.toStyledString() << std::endl;
-    std::cout << b_ems.getPrice("ETHUSDT") << std::endl;
-    ```
+  ```CPP
+  Json::Value result;
+  b_ems.getUserInfo(result);
+  std::cout << result.toStyledString() << std::endl;
+  std::cout << b_ems.getPrice("ETHUSDT") << std::endl;
+  ```
 ## Documentation
 For further details check the [documentation](https://anouarac.github.io/ATS/).

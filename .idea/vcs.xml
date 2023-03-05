@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/binance-cxx-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/binance-cxx-api/ThirdParty/curl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/binance-cxx-api/ThirdParty/jsoncpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/binance-cxx-api/ThirdParty/libwebsockets" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/binance-cxx-api/ThirdParty/mbedtls" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/binance-cxx-api/ThirdParty/mbedtls/crypto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/googletest" vcs="Git" />
+  </component>
+</project>

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(ats)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(include)
@@ -32,6 +32,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 # Main executable
 add_executable(main main.cpp)
 target_link_libraries(main ${PROJECT_NAME})
+target_compile_features(main PUBLIC cxx_std_17)
 
 # Testing
 enable_testing()

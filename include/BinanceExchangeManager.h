@@ -131,6 +131,18 @@ namespace ats {
         double getPrice(std::string symbol) override;
 
         /**
+         * @brief Gets Klines for a symbol
+         *
+         * @param result Json object to write the response to
+         * @param symbol Symbol to get the Klines for
+         * @param interval Kline interval
+         * @param start_date Start date
+         * @param end_date End date
+         * @param limit Limit, should be less than or equal to 1000
+         */
+         void getKlines(Json::Value& result, std::string symbol, std::string interval, time_t start_date=0, time_t end_date=0, int limit=500);
+
+        /**
          * @brief Converts a JSON object to an Order object.
          *
          * @param result The JSON object to convert.

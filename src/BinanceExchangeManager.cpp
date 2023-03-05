@@ -119,6 +119,14 @@ namespace ats {
         return price;
     }
 
+
+
+    void
+    BinanceExchangeManager::getKlines(Json::Value &result, std::string symbol, std::string interval, time_t start_date,
+                                      time_t end_date, int limit) {
+        BINANCE_ERR_CHECK(mMarket.getKlines(result, symbol.c_str(), interval.c_str(), start_date, end_date, limit));
+    }
+
     void BinanceExchangeManager::getUserInfo(Json::Value& result) {
         BINANCE_ERR_CHECK(mAccount.getInfo(result));
     }

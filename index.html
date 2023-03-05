@@ -90,14 +90,25 @@ Example</h2>
 <p>Working with this library can go as follows with the Binance EMS:</p>
 <ul>
 <li>Place Binance Spot Net API keys in <code>$HOME/.binance/key</code> and <code>$HOME/.binance/secret</code>, or <code>$HOME/.binance/test_key</code> and <code>$HOME/.binance/test_secret</code>for the Spot Test Net.</li>
-<li>Import the following libraries ```CPP #include &lt;iostream&gt; #include "ats.h" #include "json/json.h" #include "binance_logger.h" ```</li>
-<li>Setup Logger ```CPP binance::Logger::set_debug_level(1); binance::Logger::set_debug_logfp(stderr); ```</li>
+<li>Import the following libraries <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="d9/d59/ats_8h.html">ats.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;json/json.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;binance_logger.h&quot;</span></div>
+<div class="ttc" id="aats_8h_html"><div class="ttname"><a href="d9/d59/ats_8h.html">ats.h</a></div><div class="ttdoc">Main header file for the ATS library.</div></div>
+</div><!-- fragment --></li>
+<li>Setup Logger <div class="fragment"><div class="line">binance::Logger::set_debug_level(1);</div>
+<div class="line">binance::Logger::set_debug_logfp(stderr);</div>
+</div><!-- fragment --></li>
 <li>Initialise OMS and Binance EMS <div class="fragment"><div class="line"><a class="code" href="d9/d55/classats_1_1OrderManager.html">ats::OrderManager</a> oms;</div>
 <div class="line"><a class="code" href="dd/d9f/classats_1_1BinanceExchangeManager.html">ats::BinanceExchangeManager</a> b_ems(oms, 1);</div>
 <div class="ttc" id="aclassats_1_1BinanceExchangeManager_html"><div class="ttname"><a href="dd/d9f/classats_1_1BinanceExchangeManager.html">ats::BinanceExchangeManager</a></div><div class="ttdoc">The BinanceExchangeManager class is a class that defines the interface for managing orders on the Bin...</div><div class="ttdef"><b>Definition:</b> BinanceExchangeManager.h:31</div></div>
 <div class="ttc" id="aclassats_1_1OrderManager_html"><div class="ttname"><a href="d9/d55/classats_1_1OrderManager.html">ats::OrderManager</a></div><div class="ttdoc">A class for managing orders.</div><div class="ttdef"><b>Definition:</b> OrderManager.h:124</div></div>
 </div><!-- fragment --></li>
-<li>Interact with EMS ```CPP Json::Value result; b_ems.getUserInfo(result); std::cout &lt;&lt; result.toStyledString() &lt;&lt; std::endl; std::cout &lt;&lt; b_ems.getPrice("ETHUSDT") &lt;&lt; std::endl; ``` </li>
+<li>Interact with EMS <div class="fragment"><div class="line">Json::Value result;</div>
+<div class="line">b_ems.getUserInfo(result);</div>
+<div class="line">std::cout &lt;&lt; result.toStyledString() &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; b_ems.getPrice(<span class="stringliteral">&quot;ETHUSDT&quot;</span>) &lt;&lt; std::endl;</div>
+</div><!-- fragment --> </li>
 </ul>
 <h1><a class="anchor" id="autotoc_md6"></a>
 Documentation</h1>

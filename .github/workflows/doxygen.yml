@@ -7,13 +7,3 @@ on:
   workflow_dispatch:
 
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: anouarac/doxygen-github-pages-action@v3.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: docs/html
-          config_file: docs/.Doxyfile

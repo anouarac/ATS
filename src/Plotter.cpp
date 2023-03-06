@@ -218,12 +218,24 @@ void PlotOHLC(const char *label_id, const TickerData &data, ImVec4 bullCol,
             ImU32 color = ImGui::GetColorU32(data.open[i] > data.close[i] ? bearCol : bullCol);
             ImVec2 open_pos = ImPlot::PlotToPixels(data.time[i] - half_width, data.open[i]);
             ImVec2 close_pos = ImPlot::PlotToPixels(data.time[i] + half_width, data.close[i]);
-            draw_list->AddRectFilled(open_pos, close_pos, color);
             ImVec2 low_pos = ImPlot::PlotToPixels(data.time[i], data.low[i]);
             ImVec2 high_pos = ImPlot::PlotToPixels(data.time[i], data.high[i]);
-            draw_list->AddLine(low_pos, high_pos, color, ImMax(1.0f, ImAbs(open_pos.x - close_pos.x) / 10.0f));
-        }
+            float line_width = ImMax(1.0f, ImAbs(open_pos.x - close_pos.x) / 10.0f);
 
+            // draw the outline lines
+            float outline_width = line_width/10.0f; // adjust the outline width as desired
+            ImU32 outline_color = IM_COL32_BLACK; // set the outline color
+            draw_list->AddLine(low_pos + ImVec2(1.0f, 0.0f)*line_width/2, high_pos + ImVec2(1.0f, 0.0f)*line_width/2, outline_color);//, outline_width);
+            draw_list->AddLine(low_pos + ImVec2(-1.0f, 0.0f)*line_width/2, high_pos + ImVec2(-1.0f, 0.0f)*line_width/2, outline_color);//, outline_width);
+            draw_list->AddLine(high_pos + ImVec2(-1.0f, 0.0f)*line_width/2, high_pos + ImVec2(1.0f, 0.0f)*line_width/2, outline_color);//, outline_width);
+            draw_list->AddLine(low_pos + ImVec2(-1.0f, 0.0f)*line_width/2, low_pos + ImVec2(1.0f, 0.0f)*line_width/2, outline_color);//, outline_width);
+            draw_list->AddRectFilled(open_pos, close_pos, color);
+            // draw outline
+            ImU32 line_color = IM_COL32_BLACK;
+            draw_list->AddRect(open_pos, close_pos, line_color);
+            // draw the main line
+            draw_list->AddLine(low_pos, high_pos, color, line_width);
+        }
         // end plot item
         ImPlot::EndItem();
     }

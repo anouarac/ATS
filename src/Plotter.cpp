@@ -114,13 +114,30 @@ std::time_t timestamp_from_string(std::string date, const char *format = "%Y-%m-
 #endif
 }
 
-void TickerTooltip(const TickerData &data, bool span_subplots) {
+void TickerTooltip(const TickerData &data, bool span_subplots, Interval interval) {
     ImDrawList *draw_list = ImPlot::GetPlotDrawList();
-    const double half_width = 24 * 60 * 60 * 0.25 * 1.5;
+    std::vector<double> coef(Interval_1M+1, 1);
+    coef[0] = 1. / 24 / 60 / 60;
+    coef[1] = coef[0] * 60;
+    coef[2] = coef[1] * 3;
+    coef[3] = coef[1] * 5;
+    coef[4] = coef[1] * 15;
+    coef[5] = coef[1] * 30;
+    coef[6] = coef[5] * 2;
+    coef[7] = coef[6] * 2;
+    coef[8] = coef[7] * 2;
+    coef[9] = coef[7] * 3;
+    coef[10] = coef[8] * 2;
+    coef[11] = coef[9] * 2;
+    coef[12] = coef[11] * 2;
+    coef[13] = coef[12] * 3;
+    coef[14] = coef[12] * 7;
+    coef[15] = coef[12] * 30;
+    const double half_width = 24 * 60 * 60 * 0.25 * 1.5 * coef[interval];
     const bool hovered = span_subplots ? ImPlot::IsSubplotsHovered() : ImPlot::IsPlotHovered();
     if (hovered) {
         ImPlotPoint mouse = ImPlot::GetPlotMousePos();
-        mouse.x = ImPlot::RoundTime(ImPlotTime::FromDouble(mouse.x), ImPlotTimeUnit_Day).ToDouble();
+        mouse.x = ImPlot::RoundTime(ImPlotTime::FromDouble(mouse.x), ImPlotTimeUnit_S).ToDouble();
         float tool_l = ImPlot::PlotToPixels(mouse.x - half_width, mouse.y).x;
         float tool_r = ImPlot::PlotToPixels(mouse.x + half_width, mouse.y).x;
         float tool_t = ImPlot::GetPlotPos().y;
@@ -161,12 +178,30 @@ void TickerTooltip(const TickerData &data, bool span_subplots) {
 
 
 void PlotOHLC(const char *label_id, const TickerData &data, ImVec4 bullCol,
-              ImVec4 bearCol) {
+              ImVec4 bearCol, Interval interval) {
 
     // get ImGui window DrawList
     ImDrawList *draw_list = ImPlot::GetPlotDrawList();
+
+    std::vector<double> coef(Interval_1M+1, 1);
+    coef[0] = 1. / 24 / 60 / 60;
+    coef[1] = coef[0] * 60;
+    coef[2] = coef[1] * 3;
+    coef[3] = coef[1] * 5;
+    coef[4] = coef[1] * 15;
+    coef[5] = coef[1] * 30;
+    coef[6] = coef[5] * 2;
+    coef[7] = coef[6] * 2;
+    coef[8] = coef[7] * 2;
+    coef[9] = coef[7] * 3;
+    coef[10] = coef[8] * 2;
+    coef[11] = coef[9] * 2;
+    coef[12] = coef[11] * 2;
+    coef[13] = coef[12] * 3;
+    coef[14] = coef[12] * 7;
+    coef[15] = coef[12] * 30;
     // calc real value width
-    const double half_width = 24 * 60 * 60 * 0.25;
+    const double half_width = 24 * 60 * 60 * 0.48 * coef[interval];
     // begin plot item
     if (ImPlot::BeginItem(label_id)) {
         // override legend icon color

@@ -93,6 +93,7 @@ struct TickerData {
         return (int) time.size();
     }
 
+    Interval interval;
     std::string ticker;
     std::vector<double> time;
     std::vector<double> open;
@@ -144,10 +145,10 @@ int BinarySearch(const T *arr, int l, int r, T x) {
     return -1;
 }
 
-void TickerTooltip(const TickerData &data, bool span_subplots = false);
+void TickerTooltip(const TickerData &data, bool span_subplots = false, Interval interval = Interval_1h);
 
 void PlotOHLC(const char *label_id, const TickerData &data, ImVec4 bullCol = ImVec4(0, 1, 0, 1),
-              ImVec4 bearCol = ImVec4(1, 0, 0, 1));
+              ImVec4 bearCol = ImVec4(1, 0, 0, 1), Interval interval = Interval_1h);
 
 int VolumeFormatter(double value, char *buff, int size, void *);
 
@@ -159,7 +160,7 @@ struct ImBinance : App {
     char t2_str[32];
     ImPlotTime t1;
     ImPlotTime t2;
-    Interval interval = Interval_4h;
+    Interval interval = Interval_1h;
     time_t start_time;
 
     void Start() override {
@@ -170,6 +171,7 @@ struct ImBinance : App {
         auto v = m_api.get_open_orders("BTCUSDT");
         auto b = m_api.get_balances();
         if (d.ticker != "ERROR") {
+            d.interval = interval;
             m_ticker_data[d.ticker] = d;
             m_open_orders[d.ticker] = v;
             m_balances = b;
@@ -188,7 +190,7 @@ struct ImBinance : App {
                      ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize/*|ImGuiWindowFlags_MenuBar*/);
 
 
-        static char buff[8] = "ETHUSDT";
+        static char buff[8] = "BTCUSDT";
         ImGui::SetNextItemWidth(200);
         if (ImGui::InputText("##Symbol", buff, 8,
                              ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsUppercase)) {
@@ -201,12 +203,13 @@ struct ImBinance : App {
         if (difftime(end_time, start_time) > 60) {
             for (auto &pair: m_ticker_data) {
                 auto &data = pair.second;
-                auto d = m_api.update_ticker(data.ticker, interval);
+                auto d = m_api.update_ticker(data.ticker, data.interval);
                 auto v = m_api.get_open_orders(data.ticker);
                 auto b = m_api.get_balances();
                 if (data.size() && data.time.back() == d.time.back())
                     data.pop_back();
                 if (d.ticker != "ERROR") {
+                    d.interval = interval;
                     m_ticker_data[d.ticker].push_back(d);
                     m_open_orders[d.ticker] = v;
                     m_balances = b;
@@ -218,7 +221,7 @@ struct ImBinance : App {
 
         ImGui::SameLine();
 
-        static int duration = 0;
+        static int duration = 3;
         ImGui::SetNextItemWidth(200);
         if (ImGui::Combo("##Interval", &duration,
                          "1 Second\0""1 Minute\0""5 Minutes\0""1 Hour\0""1 Day\0""1 Week\0""1 Month\0")) {
@@ -258,12 +261,12 @@ struct ImBinance : App {
 
         if (ImGui::Button("Fetch")) {
             auto d = m_api.get_ticker(buff, t1, t2, interval);
+            d.interval = interval;
             auto v = m_api.get_open_orders(buff);
             if (d.ticker != "ERROR") {
                 m_ticker_data[d.ticker] = d;
                 m_open_orders[d.ticker] = v;
-            }
-            else
+            } else
                 fmt::print("Failed to get data for ticker symbol {}!\n", buff);
         }
 
@@ -284,13 +287,13 @@ struct ImBinance : App {
                             ImPlot::SetupAxisScale(ImAxis_X1, ImPlotScale_Time);
                             ImPlot::SetupAxisLimits(ImAxis_X1, data.time[0], data.time.back());
                             ImPlot::SetupAxisFormat(ImAxis_Y1, "$%.0f");
-                            TickerTooltip(data, true);
+                            TickerTooltip(data, true, data.interval);
                             ImPlot::SetNextFillStyle(ImVec4(0.5, 0.5, 1, 1), 0.25f);
                             ImPlot::PlotShaded("BB", data.time.data(), data.bollinger_top.data(),
                                                data.bollinger_bot.data(), data.size());
                             ImPlot::SetNextLineStyle(ImVec4(0.5, 0.5, 1, 1));
                             ImPlot::PlotLine("BB", data.time.data(), data.bollinger_mid.data(), data.size());
-                            PlotOHLC("OHLC", data, bull_col, bear_col);
+                            PlotOHLC("OHLC", data, bull_col, bear_col, data.interval);
                             ImPlot::SetNextLineStyle(ImVec4(1, 1, 1, 1));
                             ImPlot::PlotLine("Close", data.time.data(), data.close.data(), data.size());
                             ImPlotRect bnds = ImPlot::GetPlotLimits();
@@ -309,10 +312,27 @@ struct ImBinance : App {
                             ImPlot::SetupAxisScale(ImAxis_X1, ImPlotScale_Time);
                             ImPlot::SetupAxisLimits(ImAxis_X1, data.time[0], data.time.back());
                             ImPlot::SetupAxisFormat(ImAxis_Y1, VolumeFormatter);
-                            TickerTooltip(data, true);
+                            TickerTooltip(data, true, data.interval);
                             ImPlot::SetNextFillStyle(ImVec4(1.f, 0.75f, 0.25f, 1));
+                            std::vector<double> coef(Interval_1M + 1, 1);
+                            coef[0] = 1. / 24 / 60 / 60;
+                            coef[1] = coef[0] * 60;
+                            coef[2] = coef[1] * 3;
+                            coef[3] = coef[1] * 5;
+                            coef[4] = coef[1] * 15;
+                            coef[5] = coef[1] * 30;
+                            coef[6] = coef[5] * 2;
+                            coef[7] = coef[6] * 2;
+                            coef[8] = coef[7] * 2;
+                            coef[9] = coef[7] * 3;
+                            coef[10] = coef[8] * 2;
+                            coef[11] = coef[9] * 2;
+                            coef[12] = coef[11] * 2;
+                            coef[13] = coef[12] * 3;
+                            coef[14] = coef[12] * 7;
+                            coef[15] = coef[12] * 30;
                             ImPlot::PlotBars("Volume", data.time.data(), data.volume.data(), data.size(),
-                                             60 * 60 * 24 * 0.5);
+                                             60 * 60 * 24 * 0.5 * coef[data.interval]);
                             ImPlot::EndPlot();
                         }
                         ImPlot::EndSubplots();

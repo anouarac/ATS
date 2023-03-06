@@ -11,7 +11,7 @@ int main(int argc, char const *argv[]) {
     binance::Logger::set_debug_level(1);
 	binance::Logger::set_debug_logfp(stderr);
     ats::OrderManager oms;
-    ats::BinanceExchangeManager bems(oms, 1);
+    ats::BinanceExchangeManager bems(oms, 0);
     Json::Value result;
     //bems.getUserInfo(result);
 //    std::cout << result.toStyledString() << std::endl;

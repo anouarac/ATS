@@ -75,9 +75,10 @@ namespace ats {
         /**
          * @brief Retrieves a list of open orders on the exchange.
          *
+         * @param symbol The symbol to get the orders for, all open orders if omitted.
          * @return A vector of open orders.
          */
-        virtual std::vector<Order> getOpenOrders() = 0;
+        virtual std::vector<Order> getOpenOrders(std::string symbol) = 0;
 
         /**
          * @brief Retrieves the trade history for a given symbol on the exchange.

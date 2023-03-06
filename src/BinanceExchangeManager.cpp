@@ -7,9 +7,12 @@
 
 namespace ats {
     using namespace binance;
-    BinanceExchangeManager::BinanceExchangeManager(OrderManager& orderManager, bool isSimulation, std::string api_key, std::string secret_key) :
-    ExchangeManager(orderManager), mServer(isSimulation?Server("https://testnet.binance.vision",1):Server()),
-    mMarket(mServer), mAccount(mServer, api_key, secret_key) {
+
+    BinanceExchangeManager::BinanceExchangeManager(OrderManager &orderManager, bool isSimulation, std::string api_key,
+                                                   std::string secret_key) :
+            ExchangeManager(orderManager),
+            mServer(isSimulation ? Server("https://testnet.binance.vision", 1) : Server()),
+            mMarket(mServer), mAccount(mServer, api_key, secret_key) {
         mMarket.getAndSaveExchangeInfo();
         start();
     }
@@ -26,7 +29,7 @@ namespace ats {
     void BinanceExchangeManager::run() {
         while (mRunning)
             if (mOrderManager.hasOrders()) {
-                Order& order = mOrderManager.getOldestOrder();
+                Order &order = mOrderManager.getOldestOrder();
                 sendOrder(order);
             }
     }
@@ -41,34 +44,35 @@ namespace ats {
         return mRunning;
     }
 
-    void BinanceExchangeManager::sendOrder(Order& order) {
+    void BinanceExchangeManager::sendOrder(Order &order) {
         Json::Value result;
         BINANCE_ERR_CHECK(mAccount.sendOrder(result, order.symbol.c_str(),
-                        SideToString(order.side).c_str(), OrderTypeToString(order.type).c_str(),
-                           order.timeInForce.c_str(), order.quantity, order.price, "",
-                           order.stopPrice, order.icebergQty, order.recvWindow));
+                                             SideToString(order.side).c_str(), OrderTypeToString(order.type).c_str(),
+                                             order.timeInForce.c_str(), order.quantity, order.price, "",
+                                             order.stopPrice, order.icebergQty, order.recvWindow));
         Logger::write_log(result.toStyledString().c_str());
         order.emsId = result["orderId"].asInt64();
         omsToEmsId[order.id] = order.emsId;
         emsToOmsId[order.emsId] = order.id;
     }
 
-    void BinanceExchangeManager::modifyOrder(Order& oldOrder, Order& newOrder) {
+    void BinanceExchangeManager::modifyOrder(Order &oldOrder, Order &newOrder) {
         cancelOrder(oldOrder);
         sendOrder(newOrder);
     }
 
-    void BinanceExchangeManager::cancelOrder(Order& order) {
+    void BinanceExchangeManager::cancelOrder(Order &order) {
         Json::Value result;
-        BINANCE_ERR_CHECK(mAccount.cancelOrder(result, order.symbol.c_str(), omsToEmsId[order.id], "", "", order.recvWindow));
+        BINANCE_ERR_CHECK(
+                mAccount.cancelOrder(result, order.symbol.c_str(), omsToEmsId[order.id], "", "", order.recvWindow));
         Logger::write_log(result.toStyledString().c_str());
     }
 
-    void BinanceExchangeManager::getOrderStatus(Order& order, Json::Value& result) {
+    void BinanceExchangeManager::getOrderStatus(Order &order, Json::Value &result) {
         BINANCE_ERR_CHECK(mAccount.getOrder(result, order.symbol.c_str(), omsToEmsId[order.id], "", order.recvWindow));
     }
 
-    Order BinanceExchangeManager::jsonToOrder(Json::Value& result) {
+    Order BinanceExchangeManager::jsonToOrder(Json::Value &result) {
         std::string symbol = result["symbol"].asString();
         long emsId = stol(result["orderId"].asString());
         long omsId = (emsToOmsId.find(emsId) != emsToOmsId.end() ? emsToOmsId[emsId] : 0);
@@ -79,21 +83,29 @@ namespace ats {
         std::string timeInForce = result["timeInForce"].asString();
         double stopPrice = stod(result["stopPrice"].asString());
         double icebergQty = stod(result["icebergQty"].asString());
+        long time = stol(result["time"].asString()) / 1000;
 
         return Order{omsId, type, side, symbol, quantity, price,
-                     stopPrice, icebergQty, 0, emsId, timeInForce};
+                     stopPrice, icebergQty, 0, emsId, timeInForce, time};
     }
 
-    std::vector<Order> BinanceExchangeManager::getOpenOrders() {
+    std::vector<Order> BinanceExchangeManager::getOpenOrders(std::string symbol) {
         Json::Value result;
         std::vector<Order> orders;
-        BINANCE_ERR_CHECK(mAccount.getOpenOrders(result));
+        if (!mAccount.keysAreSet()) {
+            Logger::write_log("<getOpenOrders> Keys not set");
+            return orders;
+        }
+        if (symbol != "")
+            BINANCE_ERR_CHECK(mAccount.getOpenOrders(result, symbol.c_str()));
+        else
+            BINANCE_ERR_CHECK(mAccount.getOpenOrders(result));
         for (Json::Value::ArrayIndex i = 0; i < result.size(); i++)
             orders.push_back(jsonToOrder(result[i]));
         return orders;
     }
 
-    Trade BinanceExchangeManager::jsonToTrade(Json::Value& result) {
+    Trade BinanceExchangeManager::jsonToTrade(Json::Value &result) {
         long id = stol(result["id"].asString());
         double price = stod(result["price"].asString());
         double quantity = stod(result["qty"].asString());
@@ -105,6 +117,10 @@ namespace ats {
     }
 
     std::vector<Trade> BinanceExchangeManager::getTradeHistory(std::string symbol) {
+        if(!mAccount.keysAreSet()) {
+            Logger::write_log("<getTradeHistory> Keys not set");
+            return {};
+        }
         Json::Value result;
         std::vector<Trade> trades;
         BINANCE_ERR_CHECK(mAccount.getHistoricalTrades(result, symbol.c_str()));
@@ -120,14 +136,17 @@ namespace ats {
     }
 
 
-
     void
     BinanceExchangeManager::getKlines(Json::Value &result, std::string symbol, std::string interval, time_t start_date,
                                       time_t end_date, int limit) {
         BINANCE_ERR_CHECK(mMarket.getKlines(result, symbol.c_str(), interval.c_str(), start_date, end_date, limit));
     }
 
-    void BinanceExchangeManager::getUserInfo(Json::Value& result) {
+    void BinanceExchangeManager::getUserInfo(Json::Value &result) {
+        if (!mAccount.keysAreSet()) {
+            Logger::write_log("<getUserInfo> Keys not set");
+            return;
+        }
         BINANCE_ERR_CHECK(mAccount.getInfo(result));
     }
 

@@ -110,9 +110,10 @@ namespace ats {
         /**
          * @brief Gets all open orders for the current user.
          *
+         * @param symbol The symbol to retrieve the orders for, all open orders if omitted.
          * @return A vector of all open orders.
          */
-        std::vector<Order> getOpenOrders() override;
+        std::vector<Order> getOpenOrders(std::string symbol="") override;
 
         /**
          * @brief Gets the trade history for the specified symbol.

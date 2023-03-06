@@ -3,6 +3,7 @@
 //
 #ifndef ATS_PLOTTER_H
 #define ATS_PLOTTER_H
+
 #include "App.h"
 #include "ats.h"
 #include <string.h>
@@ -70,6 +71,24 @@ struct TickerData {
 
     }
 
+    void push_back(TickerData d) {
+        push_back(d.time.back(), d.open.back(), d.high.back(), d.low.back(), d.close.back(), d.volume.back());
+    }
+
+    void pop_back() {
+        time.pop_back();
+        open.pop_back();
+        high.pop_back();
+        low.pop_back();
+        close.pop_back();
+        volume.pop_back();
+
+        bollinger_top.pop_back();
+        bollinger_mid.pop_back();
+        bollinger_bot.pop_back();
+
+    }
+
     int size() const {
         return (int) time.size();
     }
@@ -97,10 +116,18 @@ class BinanceAPI {
     ats::BinanceExchangeManager &ems;
 
 public:
-    BinanceAPI(ats::BinanceExchangeManager& ems_);
+    BinanceAPI(ats::BinanceExchangeManager &ems_);
+
     TickerData get_ticker(std::string ticker, ImPlotTime start_date, ImPlotTime end_date, Interval interval);
 
+    TickerData update_ticker(std::string ticker, Interval interval);
+
+    std::vector<ats::Order> get_open_orders(std::string ticker);
+
+    std::vector<std::pair<std::string, double>> get_balances();
+
     std::string getStrInterval(Interval interval);
+
     double jsonToDouble(Json::Value);
 };
 
@@ -140,8 +167,13 @@ struct ImBinance : App {
         t2 = ImPlot::FloorTime(ImPlotTime::FromDouble((double) time(0)), ImPlotTimeUnit_Day);
         t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Mo, -1);
         auto d = m_api.get_ticker("BTCUSDT", t1, t2, interval);
-        if (d.ticker != "ERROR")
+        auto v = m_api.get_open_orders("BTCUSDT");
+        auto b = m_api.get_balances();
+        if (d.ticker != "ERROR") {
             m_ticker_data[d.ticker] = d;
+            m_open_orders[d.ticker] = v;
+            m_balances = b;
+        }
         ImPlot::GetStyle().FitPadding.y = 0.2f;
     }
 
@@ -156,7 +188,7 @@ struct ImBinance : App {
                      ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize/*|ImGuiWindowFlags_MenuBar*/);
 
 
-        static char buff[8] = "BTCUSDT";
+        static char buff[8] = "ETHUSDT";
         ImGui::SetNextItemWidth(200);
         if (ImGui::InputText("##Symbol", buff, 8,
                              ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsUppercase)) {
@@ -165,11 +197,22 @@ struct ImBinance : App {
 
         time_t end_time;
         time(&end_time);
-        if (difftime(end_time, start_time) > 3) {
-            auto d = m_api.get_ticker(buff, t1, t2, interval);
-            if (d.ticker != "ERROR")
-                m_ticker_data[d.ticker] = d;
-            ImPlot::GetStyle().FitPadding.y = 0.2f;
+        // TODO: add multithreading for this part
+        if (difftime(end_time, start_time) > 60) {
+            for (auto &pair: m_ticker_data) {
+                auto &data = pair.second;
+                auto d = m_api.update_ticker(data.ticker, interval);
+                auto v = m_api.get_open_orders(data.ticker);
+                auto b = m_api.get_balances();
+                if (data.size() && data.time.back() == d.time.back())
+                    data.pop_back();
+                if (d.ticker != "ERROR") {
+                    m_ticker_data[d.ticker].push_back(d);
+                    m_open_orders[d.ticker] = v;
+                    m_balances = b;
+                }
+                ImPlot::GetStyle().FitPadding.y = 0.2f;
+            }
             time(&start_time);
         }
 
@@ -178,29 +221,33 @@ struct ImBinance : App {
         static int duration = 0;
         ImGui::SetNextItemWidth(200);
         if (ImGui::Combo("##Interval", &duration,
-                         "1 Minute\0""5 Minutes\0""1 Hour\0""1 Day\0""1 Week\0""1 Month\0")) {
+                         "1 Second\0""1 Minute\0""5 Minutes\0""1 Hour\0""1 Day\0""1 Week\0""1 Month\0")) {
             switch (duration) {
                 case 0:
+                    t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_S, -100);
+                    interval = Interval_1s;
+                    break;
+                case 1:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Min, -100);
                     interval = Interval_1m;
                     break;
-                case 1:
+                case 2:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Min, -500);
                     interval = Interval_5m;
                     break;
-                case 2:
+                case 3:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Hr, -100);
                     interval = Interval_1h;
                     break;
-                case 3:
+                case 4:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Day, -100);
                     interval = Interval_1d;
                     break;
-                case 4:
+                case 5:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Day, -700);
                     interval = Interval_1w;
                     break;
-                case 5:
+                case 6:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Mo, -100);
                     interval = Interval_1M;
                     break;
@@ -211,8 +258,11 @@ struct ImBinance : App {
 
         if (ImGui::Button("Fetch")) {
             auto d = m_api.get_ticker(buff, t1, t2, interval);
-            if (d.ticker != "ERROR")
+            auto v = m_api.get_open_orders(buff);
+            if (d.ticker != "ERROR") {
                 m_ticker_data[d.ticker] = d;
+                m_open_orders[d.ticker] = v;
+            }
             else
                 fmt::print("Failed to get data for ticker symbol {}!\n", buff);
         }
@@ -225,7 +275,7 @@ struct ImBinance : App {
                 auto &data = pair.second;
                 if (ImGui::BeginTabItem(data.ticker.c_str())) {
                     static float ratios[] = {2, 1};
-                    if (ImPlot::BeginSubplots("##Pairs", 2, 1, ImVec2(-1, -1), ImPlotSubplotFlags_LinkCols, ratios)) {
+                    if (ImPlot::BeginSubplots("##Pairs", 2, 1, ImVec2(700, 700), ImPlotSubplotFlags_LinkCols, ratios)) {
                         if (ImPlot::BeginPlot("##OHLCPlot")) {
                             ImPlot::SetupAxes(0, 0, ImPlotAxisFlags_NoTickLabels,
                                               ImPlotAxisFlags_AutoFit | ImPlotAxisFlags_RangeFit |
@@ -267,9 +317,80 @@ struct ImBinance : App {
                         }
                         ImPlot::EndSubplots();
                     }
+
+                    ImGui::SameLine();
+                    if (ImGui::BeginChild("##Open Orders", ImVec2(500, 400), true)) {
+                        std::vector<ats::Order> open_orders = m_open_orders[data.ticker];
+                        // display orders in a table
+                        if (!open_orders.empty()) {
+                            ImGui::Columns(6, "OpenOrdersTable", true);
+                            ImGui::Text("Type");
+                            ImGui::NextColumn();
+                            ImGui::Text("Symbol");
+                            ImGui::NextColumn();
+                            ImGui::Text("Side");
+                            ImGui::NextColumn();
+                            ImGui::Text("Quantity");
+                            ImGui::NextColumn();
+                            ImGui::Text("Price");
+                            ImGui::NextColumn();
+                            ImGui::Text("Time");
+                            ImGui::NextColumn();
+                            ImGui::Separator();
+                            for (const auto &order: open_orders) {
+                                ImGui::Text("%s", ats::OrderTypeToString(order.type).c_str());
+                                ImGui::NextColumn();
+                                ImGui::Text("%s", order.symbol.c_str());
+                                ImGui::NextColumn();
+                                if (order.side == ats::BUY)
+                                    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+                                else ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+                                ImGui::Text("%s", order.side == ats::Side::BUY ? "BUY" : "SELL");
+                                ImGui::PopStyleColor();
+                                ImGui::NextColumn();
+                                ImGui::Text("%f", order.quantity);
+                                ImGui::NextColumn();
+                                ImGui::Text("%f", order.price);
+                                ImGui::NextColumn();
+                                ImGui::Text("%s", ctime(&order.time));
+                                ImGui::NextColumn();
+                            }
+                            ImGui::Columns(1);
+                        } else {
+                            ImGui::Text("No open orders.");
+                        }
+                        ImGui::EndChild();
+                    }
+                    ImGui::SameLine();
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 400);
+                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 500);
+                    if (ImGui::BeginChild("##Balances", ImVec2(500, 400), true)) {
+                        auto &b = m_balances;
+                        if (!b.empty()) {
+                            ImGui::Columns(2, "BalancesTable", true);
+                            ImGui::Text("Asset");
+                            ImGui::NextColumn();
+                            ImGui::Text("Balance");
+                            ImGui::NextColumn();
+                            ImGui::Separator();
+                            for (const auto &balance: b) {
+                                ImGui::Text("%s", balance.first.c_str());
+                                ImGui::NextColumn();
+                                ImGui::Text("%f", balance.second);
+                                ImGui::NextColumn();
+                            }
+                            ImGui::Columns(1);
+                        } else {
+                            ImGui::Text("No balances.");
+                        }
+                        ImGui::EndChild();
+                    }
+
+
                     ImGui::EndTabItem();
                 }
             }
+
             ImGui::EndTabBar();
         }
 
@@ -278,6 +399,8 @@ struct ImBinance : App {
 
     BinanceAPI m_api;
     std::map<std::string, TickerData> m_ticker_data;
+    std::map<std::string, std::vector<ats::Order>> m_open_orders;
+    std::vector<std::pair<std::string, double>> m_balances;
 
     ImBinance(std::string title, int w, int h, int argc, const char *argv[], ats::BinanceExchangeManager &ems) : App(
             title, w, h, argc, argv),

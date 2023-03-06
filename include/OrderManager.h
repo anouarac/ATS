@@ -86,6 +86,7 @@ namespace ats {
         long recvWindow; /**< The receive window of the order (in milliseconds). */
         long emsId; /**< The EMS ID of the order. */
         std::string timeInForce; /**< The time in force of the order (e.g. GTC, IOC, FOK, etc.). */
+        time_t time; /**< The time when the order was sent. */
 
         /**
          * @brief The Order constructor.
@@ -100,10 +101,11 @@ namespace ats {
          * @param recvWindow The receive window of the order (if applicable).
          * @param emsId The ID assigned by the EMS to the order (if applicable).
          * @param timeInForce The time in force of the order (if applicable).
+         * @param time The time when the order was sent
          */
         Order(long id, OrderType type, Side side, std::string symbol, double quantity, double price,
               double stopPrice = 0., double icebergQty = 0., long recvWindow = 0, long emsId = 0,
-              std::string timeInForce = "") {
+              std::string timeInForce = "", time_t time=0) {
             this->id = id;
             this->side = side;
             this->symbol = symbol;
@@ -115,6 +117,7 @@ namespace ats {
             this->recvWindow = recvWindow;
             this->emsId = emsId;
             this->timeInForce = timeInForce;
+            this->time = time;
         }
     };
 

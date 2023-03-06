@@ -30,6 +30,43 @@ TickerData BinanceAPI::get_ticker(std::string ticker, ImPlotTime start_date, ImP
     }
 }
 
+TickerData BinanceAPI::update_ticker(std::string ticker, Interval interval) {
+    std::transform(ticker.begin(), ticker.end(), ticker.begin(), ::toupper);
+    Json::Value result;
+
+
+    ems.getKlines(result, ticker, getStrInterval(interval), 0, 0, 1);
+
+    try {
+        TickerData data(ticker);
+        for (Json::Value::ArrayIndex i = 0; i < result.size(); i++) {
+            double t = jsonToDouble(result[i][0])/1000;
+            double o = jsonToDouble(result[i][1]);
+            double h = jsonToDouble(result[i][2]);
+            double l = jsonToDouble(result[i][3]);
+            double c = jsonToDouble(result[i][4]);
+            double v = jsonToDouble(result[i][5]);
+            data.push_back(t, o, h, l, c, v);
+        }
+        return data;
+    }
+    catch (...) {
+        return TickerData("ERROR");
+    }
+}
+
+std::vector<std::pair<std::string,double>> BinanceAPI::get_balances() {
+    Json::Value result;
+    ems.getUserInfo(result);
+    if (!result.isMember("balances")) return {};
+    std::vector<std::pair<std::string,double>> balances;
+    for (Json::Value::ArrayIndex i = 0; i < result["balances"].size(); i++) {
+        auto res = result["balances"][i];
+        balances.push_back(std::make_pair(res["asset"].asString(), jsonToDouble(res["free"])));
+    }
+    return balances;
+}
+
 std::string BinanceAPI::getStrInterval(Interval interval) {
     static const std::string interval_str[]{"1s",
                                             "1m",
@@ -52,6 +89,10 @@ std::string BinanceAPI::getStrInterval(Interval interval) {
 
 double BinanceAPI::jsonToDouble(Json::Value res) {
     return atof(res.asString().c_str());
+}
+
+std::vector<ats::Order> BinanceAPI::get_open_orders(std::string ticker) {
+    return ems.getOpenOrders(ticker);
 }
 
 std::time_t timestamp_from_string(std::string date, const char *format = "%Y-%m-%d") {

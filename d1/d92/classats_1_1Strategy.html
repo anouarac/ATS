@@ -112,17 +112,17 @@ Protected Member Functions</h2></td></tr>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d92/classats_1_1Strategy.html#a9e8fc382e3a4e3439b17cd967f3b6690">updatePrice</a> ()=0</td></tr>
 <tr class="memdesc:a9e8fc382e3a4e3439b17cd967f3b6690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the historical price vector. <br /></td></tr>
 <tr class="separator:a9e8fc382e3a4e3439b17cd967f3b6690"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52ccfca479de5291452b46d45e9aa64c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d92/classats_1_1Strategy.html#a52ccfca479de5291452b46d45e9aa64c">getSignal</a> ()=0</td></tr>
-<tr class="memdesc:a52ccfca479de5291452b46d45e9aa64c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the trading signal.  <a href="../../d1/d92/classats_1_1Strategy.html#a52ccfca479de5291452b46d45e9aa64c">More...</a><br /></td></tr>
-<tr class="separator:a52ccfca479de5291452b46d45e9aa64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4b44ebb0de3c4ffd3f121934280d531"><td class="memItemLeft" align="right" valign="top"><a id="ac4b44ebb0de3c4ffd3f121934280d531"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d92/classats_1_1Strategy.html#ac4b44ebb0de3c4ffd3f121934280d531">buy</a> ()</td></tr>
-<tr class="memdesc:ac4b44ebb0de3c4ffd3f121934280d531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a buy order to the <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a>. <br /></td></tr>
-<tr class="separator:ac4b44ebb0de3c4ffd3f121934280d531"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22fd08a4ea4689652cedefab43becd04"><td class="memItemLeft" align="right" valign="top"><a id="a22fd08a4ea4689652cedefab43becd04"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d92/classats_1_1Strategy.html#a22fd08a4ea4689652cedefab43becd04">sell</a> ()</td></tr>
-<tr class="memdesc:a22fd08a4ea4689652cedefab43becd04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a sell order to the <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a>. <br /></td></tr>
-<tr class="separator:a22fd08a4ea4689652cedefab43becd04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91b628f12b3487c1a4dc8ad48a82a351"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d92/classats_1_1Strategy.html#a91b628f12b3487c1a4dc8ad48a82a351">getSignal</a> ()=0</td></tr>
+<tr class="memdesc:a91b628f12b3487c1a4dc8ad48a82a351"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the trading signal.  <a href="../../d1/d92/classats_1_1Strategy.html#a91b628f12b3487c1a4dc8ad48a82a351">More...</a><br /></td></tr>
+<tr class="separator:a91b628f12b3487c1a4dc8ad48a82a351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe7ac1a4c499494223a87a5b5ad671e4"><td class="memItemLeft" align="right" valign="top"><a id="abe7ac1a4c499494223a87a5b5ad671e4"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d92/classats_1_1Strategy.html#abe7ac1a4c499494223a87a5b5ad671e4">buy</a> ()=0</td></tr>
+<tr class="memdesc:abe7ac1a4c499494223a87a5b5ad671e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a buy order to the <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a>. <br /></td></tr>
+<tr class="separator:abe7ac1a4c499494223a87a5b5ad671e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a41cc70e057eee435230026d68c1092"><td class="memItemLeft" align="right" valign="top"><a id="a0a41cc70e057eee435230026d68c1092"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d92/classats_1_1Strategy.html#a0a41cc70e057eee435230026d68c1092">sell</a> ()=0</td></tr>
+<tr class="memdesc:a0a41cc70e057eee435230026d68c1092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a sell order to the <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a>. <br /></td></tr>
+<tr class="separator:a0a41cc70e057eee435230026d68c1092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -206,8 +206,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a52ccfca479de5291452b46d45e9aa64c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52ccfca479de5291452b46d45e9aa64c">&#9670;&nbsp;</a></span>getSignal()</h2>
+<a id="a91b628f12b3487c1a4dc8ad48a82a351"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91b628f12b3487c1a4dc8ad48a82a351">&#9670;&nbsp;</a></span>getSignal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,7 +216,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool ats::Strategy::getSignal </td>
+          <td class="memname">virtual double ats::Strategy::getSignal </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

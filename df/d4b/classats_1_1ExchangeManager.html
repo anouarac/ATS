@@ -116,6 +116,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=".
 <tr class="memitem:aebb853ece9186aa4d771b5389d649749"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="../../de/d42/classats_1_1Trade.html">Trade</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#aebb853ece9186aa4d771b5389d649749">getTradeHistory</a> (std::string symbol)=0</td></tr>
 <tr class="memdesc:aebb853ece9186aa4d771b5389d649749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the trade history for a given symbol on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#aebb853ece9186aa4d771b5389d649749">More...</a><br /></td></tr>
 <tr class="separator:aebb853ece9186aa4d771b5389d649749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add1cb53868c1a87c9af1a2766ef4d8d7"><td class="memItemLeft" align="right" valign="top">virtual std::map&lt; std::string, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#add1cb53868c1a87c9af1a2766ef4d8d7">getBalances</a> ()=0</td></tr>
+<tr class="memdesc:add1cb53868c1a87c9af1a2766ef4d8d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves user balances.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#add1cb53868c1a87c9af1a2766ef4d8d7">More...</a><br /></td></tr>
+<tr class="separator:add1cb53868c1a87c9af1a2766ef4d8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67fd1b4a45c24553be92f692611e4eb8"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#a67fd1b4a45c24553be92f692611e4eb8">getPrice</a> (std::string symbol)=0</td></tr>
 <tr class="memdesc:a67fd1b4a45c24553be92f692611e4eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current price for a given symbol on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#a67fd1b4a45c24553be92f692611e4eb8">More...</a><br /></td></tr>
 <tr class="separator:a67fd1b4a45c24553be92f692611e4eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,6 +191,36 @@ Protected Attributes</h2></td></tr>
 </dl>
 
 <p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ae8fbcd3a212092d895f6e65cfd3af895">ats::BinanceExchangeManager</a>.</p>
+
+</div>
+</div>
+<a id="add1cb53868c1a87c9af1a2766ef4d8d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add1cb53868c1a87c9af1a2766ef4d8d7">&#9670;&nbsp;</a></span>getBalances()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::map&lt;std::string,double&gt; ats::ExchangeManager::getBalances </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves user balances. </p>
+<dl class="section return"><dt>Returns</dt><dd>A map of pairs {asset, balance}. </dd></dl>
+
+<p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a5f2e9b87e1179d2769bb4578a542d367">ats::BinanceExchangeManager</a>.</p>
 
 </div>
 </div>

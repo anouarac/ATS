@@ -85,6 +85,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#aed1308bc5723cd906316484f5d3c87d6">OrderManager</a> ()</td></tr>
 <tr class="memdesc:aed1308bc5723cd906316484f5d3c87d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a> object. <br /></td></tr>
 <tr class="separator:aed1308bc5723cd906316484f5d3c87d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a155e78aba9fa89ad06e21413b2b311c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a155e78aba9fa89ad06e21413b2b311c7">OrderManager</a> (std::vector&lt; std::string &gt; symbols)</td></tr>
+<tr class="memdesc:a155e78aba9fa89ad06e21413b2b311c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a> with an initial symbols list.  <a href="../../d9/d55/classats_1_1OrderManager.html#a155e78aba9fa89ad06e21413b2b311c7">More...</a><br /></td></tr>
+<tr class="separator:a155e78aba9fa89ad06e21413b2b311c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32bf5f2a85628370b2dbee7d50d29e3c"><td class="memItemLeft" align="right" valign="top"><a id="a32bf5f2a85628370b2dbee7d50d29e3c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a32bf5f2a85628370b2dbee7d50d29e3c">~OrderManager</a> ()</td></tr>
 <tr class="memdesc:a32bf5f2a85628370b2dbee7d50d29e3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a> object. <br /></td></tr>
@@ -114,6 +117,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a6f7b2178388fdaf05b20bab51778fcd4">cancelAllOrders</a> ()</td></tr>
 <tr class="memdesc:a6f7b2178388fdaf05b20bab51778fcd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel all orders. <br /></td></tr>
 <tr class="separator:a6f7b2178388fdaf05b20bab51778fcd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab37b1dcbbcff1e872130ba9dd7b5f860"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#ab37b1dcbbcff1e872130ba9dd7b5f860">updateOpenOrders</a> (std::unordered_map&lt; long, <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &gt; openOrders)</td></tr>
+<tr class="memdesc:ab37b1dcbbcff1e872130ba9dd7b5f860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update open orders.  <a href="../../d9/d55/classats_1_1OrderManager.html#ab37b1dcbbcff1e872130ba9dd7b5f860">More...</a><br /></td></tr>
+<tr class="separator:ab37b1dcbbcff1e872130ba9dd7b5f860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50f0ed639da9de2db542e3c416735aad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a50f0ed639da9de2db542e3c416735aad">processOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> order)</td></tr>
 <tr class="memdesc:a50f0ed639da9de2db542e3c416735aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process a single order.  <a href="../../d9/d55/classats_1_1OrderManager.html#a50f0ed639da9de2db542e3c416735aad">More...</a><br /></td></tr>
 <tr class="separator:a50f0ed639da9de2db542e3c416735aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,10 +139,40 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr class="memitem:a19846290dc901e14d2546ca30d05712c"><td class="memItemLeft" align="right" valign="top">std::pair&lt; long, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a19846290dc901e14d2546ca30d05712c">getCancelOrder</a> ()</td></tr>
 <tr class="memdesc:a19846290dc901e14d2546ca30d05712c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an order to cancel.  <a href="../../d9/d55/classats_1_1OrderManager.html#a19846290dc901e14d2546ca30d05712c">More...</a><br /></td></tr>
 <tr class="separator:a19846290dc901e14d2546ca30d05712c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5298a01aec8f3393ffc5ba926bee2577"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a5298a01aec8f3393ffc5ba926bee2577">getSymbols</a> ()</td></tr>
+<tr class="memdesc:a5298a01aec8f3393ffc5ba926bee2577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get symbols currently ordered.  <a href="../../d9/d55/classats_1_1OrderManager.html#a5298a01aec8f3393ffc5ba926bee2577">More...</a><br /></td></tr>
+<tr class="separator:a5298a01aec8f3393ffc5ba926bee2577"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class for managing orders. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a155e78aba9fa89ad06e21413b2b311c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a155e78aba9fa89ad06e21413b2b311c7">&#9670;&nbsp;</a></span>OrderManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ats::OrderManager::OrderManager </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>symbols</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="../../d9/d55/classats_1_1OrderManager.html" title="A class for managing orders.">OrderManager</a> with an initial symbols list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">symbols</td><td>an initial list of traded symbols </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7d568b16d599b6bd126eb58c1044c878"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7d568b16d599b6bd126eb58c1044c878">&#9670;&nbsp;</a></span>cancelOrder()</h2>
 
@@ -272,6 +308,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 </div>
 </div>
+<a id="a5298a01aec8f3393ffc5ba926bee2577"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5298a01aec8f3393ffc5ba926bee2577">&#9670;&nbsp;</a></span>getSymbols()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; ats::OrderManager::getSymbols </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get symbols currently ordered. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::string&gt; a vector of symbols </dd></dl>
+
+</div>
+</div>
 <a id="ae8f3e94e549473e4aa59b259c30c4d61"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae8f3e94e549473e4aa59b259c30c4d61">&#9670;&nbsp;</a></span>hasCancelOrders()</h2>
 
@@ -356,6 +412,32 @@ false otherwise </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">order</td><td>The order to process </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab37b1dcbbcff1e872130ba9dd7b5f860"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab37b1dcbbcff1e872130ba9dd7b5f860">&#9670;&nbsp;</a></span>updateOpenOrders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ats::OrderManager::updateOpenOrders </td>
+          <td>(</td>
+          <td class="paramtype">std::unordered_map&lt; long, <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &gt;&#160;</td>
+          <td class="paramname"><em>openOrders</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update open orders. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">openOrders</td><td>the new list of open orders </td></tr>
   </table>
   </dd>
 </dl>

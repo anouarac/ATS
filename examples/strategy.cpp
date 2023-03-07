@@ -68,9 +68,9 @@ public:
     virtual void buy() override {
         time_t curTime(0);
         time(&curTime);
-        updateBalance();
         if (difftime(curTime, mLastOrder) < 10)
             return;
+        updateBalance();
         mOrderManager.createOrder(LIMIT, BUY, mSymbol, floor(mData.getQtyForPrice(mSymbol, 0.01*mBalances["USDT"])*1e6)/1e6, mPrices.back());
         time(&mLastOrder);
     }
@@ -78,9 +78,9 @@ public:
     virtual void sell() override {
         time_t curTime(0);
         time(&curTime);
-        updateBalance();
         if (difftime(curTime, mLastOrder) < 10)
             return;
+        updateBalance();
         mOrderManager.createOrder(LIMIT, SELL, mSymbol, floor(mData.getQtyForPrice(mSymbol, 0.01*mBalances["USDT"])*1e6)/1e6, mPrices.back());
         time(&mLastOrder);
     }

@@ -34,6 +34,20 @@ add_executable(main main.cpp)
 target_link_libraries(main ${PROJECT_NAME})
 target_compile_features(main PUBLIC cxx_std_17)
 
+# Examples
+## cancel_orders
+add_executable(cancel_orders examples/cancel_orders.cpp)
+target_link_libraries(cancel_orders ${PROJECT_NAME})
+target_compile_features(cancel_orders PUBLIC cxx_std_17)
+## exchange_ui
+add_executable(exchange_ui examples/exchange_ui.cpp)
+target_link_libraries(exchange_ui ${PROJECT_NAME})
+target_compile_features(exchange_ui PUBLIC cxx_std_17)
+## strategy
+add_executable(strategy examples/strategy.cpp)
+target_link_libraries(strategy ${PROJECT_NAME})
+target_compile_features(strategy PUBLIC cxx_std_17)
+
 # Testing
 enable_testing()
 

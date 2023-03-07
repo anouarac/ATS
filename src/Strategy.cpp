@@ -42,14 +42,4 @@ namespace ats {
         return mRunning;
     }
 
-    void Strategy::buy() {
-
-        std::cout << "Buying " << mSymbol << std::endl;
-    }
-
-    void Strategy::sell() {
-
-        std::cout << "Selling " << mSymbol << std::endl;
-    }
-
 } // ats

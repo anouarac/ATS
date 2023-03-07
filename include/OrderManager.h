@@ -107,7 +107,7 @@ namespace ats {
          */
         Order(long id, OrderType type, Side side, std::string symbol, double quantity, double price,
               double stopPrice = 0., double icebergQty = 0., long recvWindow = 0, long emsId = 0,
-              std::string timeInForce = "", time_t time=0) {
+              std::string timeInForce = "GTC", time_t time=0) {
             this->id = id;
             this->side = side;
             this->symbol = symbol;
@@ -137,12 +137,20 @@ namespace ats {
         std::mutex mOrderFetchMutex; ///< A mutex for accessing mSentOrders
         bool mRunning; ///< A flag indicating if the order manager is running
         long mOrderCount; ///< A counter for the number of orders processed
+        std::set<std::string> mSymbols;
     public:
         /**
          * @brief Construct a new OrderManager object
          *
          */
         OrderManager();
+
+        /**
+         * @brief Construct a new OrderManager with an initial symbols list
+         *
+         * @param symbols an initial list of traded symbols
+         */
+         OrderManager(std::vector<std::string> symbols);
 
         /**
          * @brief Destroy the OrderManager object
@@ -200,6 +208,13 @@ namespace ats {
          */
          void cancelAllOrders();
 
+         /**
+          * @brief Update open orders
+          *
+          * @param openOrders the new list of open orders
+          */
+          void updateOpenOrders(std::unordered_map<long,Order> openOrders);
+
         /**
          * @brief Process a single order
          *
@@ -242,6 +257,13 @@ namespace ats {
          * @return {id,symbol} of the order to cancel
          */
          std::pair<long,std::string> getCancelOrder();
+
+         /**
+          * @brief Get symbols currently ordered
+          *
+          * @return std::vector<std::string> a vector of symbols
+          */
+          std::vector<std::string> getSymbols();
 
     private:
         /**

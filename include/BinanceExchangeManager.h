@@ -85,6 +85,12 @@ namespace ats {
         bool isSimulation();
 
         /**
+         * @brief Update open orders on the local OMS
+         *
+         */
+         void updateOpenOrders();
+
+        /**
          * @brief Send an order to the Binance exchange.
          *
          * @param order The Order object to be sent.
@@ -180,6 +186,13 @@ namespace ats {
          * @param result The JSON object containing the result of the operation.
          */
         void getUserInfo(Json::Value &result);
+
+        /**
+         * @brief Gets user's balances.
+         *
+         * @returns Map of pairs {asset, Qty}.
+         */
+         std::map<std::string,double> getBalances() override;
     };
 
 } // ats

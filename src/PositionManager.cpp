@@ -47,19 +47,25 @@ namespace ats {
     }
 
     void PositionManager::updatePosition(std::string symbol, double quantity) {
-        std::lock_guard<std::mutex> lock(mPositionMutex);
+        std::unique_lock<std::mutex> lock(mPositionMutex);
         if (mOpenPositions.count(symbol))
             mOpenPositions[symbol].quantity += quantity;
-        else mOpenPositions[symbol] = Position(quantity, mData.getPrice(symbol));
+        else {
+            lock.unlock();
+            double price = mData.getPrice(symbol);
+            lock.lock();
+            mOpenPositions[symbol] = Position(quantity, price);
+        }
     }
 
     void PositionManager::updatePnL() {
         for (auto openPosition : mOpenPositions) {
             std::string symbol = openPosition.first;
             Position position = openPosition.second;
+            double newPrice = mData.getPrice(symbol);
             std::lock_guard<std::mutex> lock(mPositionMutex);
             mPnL -= position.total();
-            position.price = mData.getPrice(symbol);
+            position.price = newPrice;
             mPnL += position.total();
         }
     }

@@ -89,6 +89,13 @@ namespace ats {
         virtual std::vector<Trade> getTradeHistory(std::string symbol) = 0;
 
         /**
+         * @brief Retrieves user balances.
+         *
+         * @return A map of pairs {asset, balance}.
+         */
+         virtual std::map<std::string,double> getBalances() = 0;
+
+        /**
          * @brief Retrieves the current price for a given symbol on the exchange.
          *
          * @param symbol The symbol to retrieve the price for.

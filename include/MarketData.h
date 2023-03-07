@@ -83,7 +83,21 @@ namespace ats {
          * @param symbol The symbol to retrieve the price for.
          * @return The current price for the symbol.
          */
-        double getPrice(const std::string& symbol);
+        double getPrice(const std::string symbol);
+
+        /**
+         * @brief Returns prices recorded for a symbol.
+         * @param symbol The symbol to retrieve the prices for.
+         * @return The vector of prices recorded.
+         */
+         std::vector<double> getPrices(std::string symbol);
+
+         /**
+          * @brief Returns trade history for a symbol.
+          * @param symbol The symbol to retrieve the history for.
+          * @return The vector of trades.
+          */
+          std::vector<Trade> getTradeHistory(std::string symbol);
 
         /**
          * @brief Retrieves the quantity for a given price and symbol.
@@ -92,6 +106,12 @@ namespace ats {
          * @return The quantity for the given price and symbol.
          */
         double getQtyForPrice(const std::string& symbol, double price);
+
+        /**
+         * @brief Retrives user's balances.
+         * @return Map of pairs {asset, balance}.
+         */
+         std::map<std::string,double> getBalances();
 
     private:
         /**

@@ -460,6 +460,11 @@ struct ImBinance : App {
             title, w, h, argc, argv),
                                                                                                                  m_api(ems) {
     }
+
+    ~ImBinance() {
+        if (t.joinable())
+            t.join();
+    }
 };
 
 #endif

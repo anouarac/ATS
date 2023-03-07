@@ -22,6 +22,7 @@ namespace ats {
 
     void BinanceExchangeManager::start() {
         mRunning = true;
+        updateOpenOrders();
         mExchangeManagerThread = std::thread(&BinanceExchangeManager::run, this);
     }
 
@@ -32,9 +33,10 @@ namespace ats {
                 sendOrder(order);
             }
             if (mOrderManager.hasCancelOrders()) {
-                std::pair<long,std::string> order = mOrderManager.getCancelOrder();
+                std::pair<long, std::string> order = mOrderManager.getCancelOrder();
                 cancelOrder(order.first, order.second);
             }
+            updateOpenOrders();
         }
     }
 
@@ -50,6 +52,26 @@ namespace ats {
 
     bool BinanceExchangeManager::isSimulation() {
         return mIsSimulation;
+    }
+
+    void BinanceExchangeManager::updateOpenOrders() {
+        auto symbols = mOrderManager.getSymbols();
+        std::unordered_map<long, Order> openOrders;
+        for (std::string symbol: symbols) {
+            auto orders = getOpenOrders(symbol);
+            for (Order &order: orders) {
+                order.id = order.emsId;
+                if (emsToOmsId.count(order.emsId)) {
+                    order.id = emsToOmsId[order.emsId];
+                    omsToEmsId[order.id] = order.emsId;
+                } else {
+                    emsToOmsId[order.emsId] = order.id;
+                    omsToEmsId[order.id] = order.emsId;
+                }
+                openOrders.insert({order.id, order});
+            }
+        }
+        mOrderManager.updateOpenOrders(openOrders);
     }
 
     void BinanceExchangeManager::sendOrder(Order &order) {
@@ -70,10 +92,10 @@ namespace ats {
     }
 
     void BinanceExchangeManager::cancelOrder(long id, std::string symbol) {
-     Json::Value result;
-    BINANCE_ERR_CHECK(
-            mAccount.cancelOrder(result, symbol.c_str(), omsToEmsId[id], "", "", 0));
-    Logger::write_log(result.toStyledString().c_str());
+        Json::Value result;
+        BINANCE_ERR_CHECK(
+                mAccount.cancelOrder(result, symbol.c_str(), omsToEmsId[id], "", "", 0));
+        Logger::write_log(result.toStyledString().c_str());
     }
 
     void BinanceExchangeManager::cancelOrder(Order &order) {
@@ -129,7 +151,7 @@ namespace ats {
     }
 
     std::vector<Trade> BinanceExchangeManager::getTradeHistory(std::string symbol) {
-        if(!mAccount.keysAreSet()) {
+        if (!mAccount.keysAreSet()) {
             Logger::write_log("<getTradeHistory> Keys not set");
             return {};
         }
@@ -160,6 +182,22 @@ namespace ats {
             return;
         }
         BINANCE_ERR_CHECK(mAccount.getInfo(result));
+    }
+
+    std::map<std::string, double> BinanceExchangeManager::getBalances() {
+        Json::Value result;
+        if (!mAccount.keysAreSet()) {
+            Logger::write_log("<getBalances> Keys not set");
+            return {};
+        }
+        getUserInfo(result);
+        if (!result.isMember("balances")) return {};
+        std::map<std::string, double> balances;
+        for (Json::Value::ArrayIndex i = 0; i < result["balances"].size(); i++) {
+            auto res = result["balances"][i];
+            balances.insert(std::make_pair(res["asset"].asString(), stod(res["free"].asString())));
+        }
+        return balances;
     }
 
 } // ats

@@ -74,17 +74,17 @@ namespace ats {
          * @brief Gets the trading signal
          * @return True if the strategy signals to buy, false if the strategy signals to sell
          */
-        virtual bool getSignal() = 0;
+        virtual double getSignal() = 0;
 
         /**
          * @brief Sends a buy order to the OrderManager
          */
-        virtual void buy();
+        virtual void buy() = 0;
 
         /**
          * @brief Sends a sell order to the OrderManager
          */
-        virtual void sell();
+        virtual void sell() = 0;
     };
 
 

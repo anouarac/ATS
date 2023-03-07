@@ -27,7 +27,7 @@ namespace ats {
         }
     }
 
-    OrderType stringToOrderType(const std::string& s) {
+    OrderType stringToOrderType(const std::string &s) {
         for (int i = 0; i < OTCOUNT; i++)
             if (OrderTypeToString(OrderType(i)) == s)
                 return OrderType(i);
@@ -35,7 +35,7 @@ namespace ats {
     }
 
     std::string SideToString(Side s) {
-        switch(s) {
+        switch (s) {
             case BUY:
                 return "BUY";
             case SELL:
@@ -45,7 +45,7 @@ namespace ats {
         }
     }
 
-    Side stringToSide(const std::string& s) {
+    Side stringToSide(const std::string &s) {
         for (int i = 0; i < SCOUNT; i++)
             if (SideToString(Side(i)) == s)
                 return Side(i);
@@ -53,6 +53,12 @@ namespace ats {
     }
 
     OrderManager::OrderManager() {
+        start();
+    }
+
+    OrderManager::OrderManager(std::vector<std::string> symbols) {
+        for (std::string symbol : symbols)
+            mSymbols.insert(symbol);
         start();
     }
 
@@ -81,7 +87,8 @@ namespace ats {
 
     void OrderManager::createOrder(OrderType type, Side side, std::string symbol, double quantity, double price) {
         long id = getNewOrderId();
-        mPendingOrders.push(Order(id, MARKET, side, symbol, quantity, price));
+        mSymbols.insert(symbol);
+        mPendingOrders.push(Order(id, type, side, symbol, quantity, price));
     }
 
     void OrderManager::cancelOrder(long orderId, std::string symbol) {
@@ -90,8 +97,13 @@ namespace ats {
 
     void OrderManager::cancelAllOrders() {
         std::lock_guard<std::mutex> lock(mOrderFetchMutex);
-        for (auto& pair : mSentOrders)
+        for (auto &pair: mSentOrders)
             cancelOrder(pair.second.id, pair.second.symbol);
+    }
+
+    void OrderManager::updateOpenOrders(std::unordered_map<long, Order> openOrders) {
+        std::lock_guard<std::mutex> lock(mOrderFetchMutex);
+        mSentOrders.swap(openOrders);
     }
 
     void OrderManager::processOrder(Order order) {
@@ -122,7 +134,7 @@ namespace ats {
         return !mCancelOrders.empty();
     }
 
-    Order& OrderManager::getOldestOrder() {
+    Order &OrderManager::getOldestOrder() {
         Order oldest = mOrders.front();
         mOrders.pop();
         std::lock_guard<std::mutex> lock(mOrderFetchMutex);
@@ -130,9 +142,16 @@ namespace ats {
         return mSentOrders.find(oldest.id)->second;
     }
 
-    std::pair<long,std::string> OrderManager::getCancelOrder() {
-        std::pair<long,std::string> order = mCancelOrders.front();
+    std::pair<long, std::string> OrderManager::getCancelOrder() {
+        std::pair<long, std::string> order = mCancelOrders.front();
         mCancelOrders.pop();
         return order;
+    }
+
+    std::vector<std::string> OrderManager::getSymbols() {
+        std::vector<std::string> vSymbols;
+        for (const std::string& symbol : mSymbols)
+            vSymbols.push_back(symbol);
+        return vSymbols;
     }
 } // ats

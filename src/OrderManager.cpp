@@ -100,7 +100,7 @@ namespace ats {
     }
 
     int OrderManager::getNewOrderId() {
-        std::unique_lock<std::mutex> lock(mOrderCountMutex);
+        std::lock_guard<std::mutex> lock(mOrderCountMutex);
         return mOrderCount++;
     }
 

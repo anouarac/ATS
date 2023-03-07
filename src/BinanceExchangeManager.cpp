@@ -13,7 +13,6 @@ namespace ats {
             ExchangeManager(orderManager),
             mServer(isSimulation ? Server("https://testnet.binance.vision", 1) : Server()),
             mMarket(mServer), mAccount(mServer, api_key, secret_key) {
-        mMarket.getAndSaveExchangeInfo();
         start();
     }
 

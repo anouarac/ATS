@@ -72,7 +72,8 @@ struct TickerData {
     }
 
     void push_back(TickerData d) {
-        push_back(d.time.back(), d.open.back(), d.high.back(), d.low.back(), d.close.back(), d.volume.back());
+        for (int i = 0; i < d.size(); i++)
+            push_back(d.time[i], d.open[i], d.high[i], d.low[i], d.close[i], d.volume[i]);
     }
 
     void pop_back() {
@@ -87,6 +88,19 @@ struct TickerData {
         bollinger_mid.pop_back();
         bollinger_bot.pop_back();
 
+    }
+
+    void pop_front() {
+        time.erase(time.begin());
+        open.erase(open.begin());
+        high.erase(high.begin());
+        low.erase(low.begin());
+        close.erase(close.begin());
+        volume.erase(volume.begin());
+
+        bollinger_top.erase(bollinger_top.begin());
+        bollinger_mid.erase(bollinger_mid.begin());
+        bollinger_bot.erase(bollinger_bot.begin());
     }
 
     int size() const {
@@ -179,6 +193,33 @@ struct ImBinance : App {
         ImPlot::GetStyle().FitPadding.y = 0.2f;
     }
 
+    void UpdateData() {
+        auto m_ticker_data_copy = m_ticker_data;
+        auto m_open_orders_copy = m_open_orders;
+        auto m_balances_copy = m_balances;
+        for (auto &pair: m_ticker_data_copy) {
+            auto &data = pair.second;
+            auto d = m_api.update_ticker(data.ticker, data.interval);
+            auto v = m_api.get_open_orders(data.ticker);
+            auto b = m_api.get_balances();
+            while (d.size() && data.size() && d.time[0] < data.time.back())
+                d.pop_front();
+            if (data.size() && d.size() && data.time.back() == d.time[0])
+                data.pop_back();
+            if (d.ticker != "ERROR") {
+                d.interval = interval;
+                data.push_back(d);
+                m_open_orders_copy[d.ticker] = v;
+                m_balances_copy = b;
+            }
+            ImPlot::GetStyle().FitPadding.y = 0.2f;
+        }
+        std::lock_guard<std::mutex> lock(m_data_mutex);
+        m_open_orders_copy.swap(m_open_orders);
+        m_balances_copy.swap(m_balances);
+        m_ticker_data_copy.swap(m_ticker_data);
+    }
+
     void Update() override {
 
         static ImVec4 bull_col(0.5, 1, 0, 1);
@@ -200,22 +241,10 @@ struct ImBinance : App {
         time_t end_time;
         time(&end_time);
         // TODO: add multithreading for this part
-        if (difftime(end_time, start_time) > 60) {
-            for (auto &pair: m_ticker_data) {
-                auto &data = pair.second;
-                auto d = m_api.update_ticker(data.ticker, data.interval);
-                auto v = m_api.get_open_orders(data.ticker);
-                auto b = m_api.get_balances();
-                if (data.size() && data.time.back() == d.time.back())
-                    data.pop_back();
-                if (d.ticker != "ERROR") {
-                    d.interval = interval;
-                    m_ticker_data[d.ticker].push_back(d);
-                    m_open_orders[d.ticker] = v;
-                    m_balances = b;
-                }
-                ImPlot::GetStyle().FitPadding.y = 0.2f;
-            }
+        if (difftime(end_time, start_time) > 1) {
+            if (t.joinable())
+                t.join();
+            t = std::thread(&ImBinance::UpdateData, this);
             time(&start_time);
         }
 
@@ -263,6 +292,7 @@ struct ImBinance : App {
             auto d = m_api.get_ticker(buff, t1, t2, interval);
             d.interval = interval;
             auto v = m_api.get_open_orders(buff);
+            std::lock_guard<std::mutex> lock(m_data_mutex);
             if (d.ticker != "ERROR") {
                 m_ticker_data[d.ticker] = d;
                 m_open_orders[d.ticker] = v;
@@ -274,12 +304,14 @@ struct ImBinance : App {
         ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
 
         if (ImGui::BeginTabBar("TickerTabs")) {
+            std::lock_guard<std::mutex> lock(m_data_mutex);
             for (auto &pair: m_ticker_data) {
                 auto &data = pair.second;
                 if (ImGui::BeginTabItem(data.ticker.c_str())) {
                     static float ratios[] = {2, 1};
                     if (ImPlot::BeginSubplots("##Pairs", 2, 1, ImVec2(700, 700), ImPlotSubplotFlags_LinkCols, ratios)) {
                         if (ImPlot::BeginPlot("##OHLCPlot")) {
+                            // After changing scale, double click to fit automatically
                             ImPlot::SetupAxes(0, 0, ImPlotAxisFlags_NoTickLabels,
                                               ImPlotAxisFlags_AutoFit | ImPlotAxisFlags_RangeFit |
                                               ImPlotAxisFlags_Opposite);
@@ -421,6 +453,8 @@ struct ImBinance : App {
     std::map<std::string, TickerData> m_ticker_data;
     std::map<std::string, std::vector<ats::Order>> m_open_orders;
     std::vector<std::pair<std::string, double>> m_balances;
+    std::thread t;
+    std::mutex m_data_mutex;
 
     ImBinance(std::string title, int w, int h, int argc, const char *argv[], ats::BinanceExchangeManager &ems) : App(
             title, w, h, argc, argv),

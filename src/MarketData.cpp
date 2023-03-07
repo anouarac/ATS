@@ -36,13 +36,13 @@ namespace ats {
     }
 
     void MarketData::subscribe(const std::string& symbol) {
-        std::unique_lock<std::mutex> lock(mDataMutex);
+        std::lock_guard<std::mutex> lock(mDataMutex);
         mSymbols.insert(symbol);
         mPrices[symbol] = {};
     }
 
     void MarketData::unsubscribe(const std::string& symbol) {
-        std::unique_lock<std::mutex> lock(mDataMutex);
+        std::lock_guard<std::mutex> lock(mDataMutex);
         mSymbols.erase(symbol);
         mPrices.erase(symbol);
     }
@@ -56,7 +56,7 @@ namespace ats {
     }
 
     void MarketData::updatePrice(const std::string& symbol) {
-        std::unique_lock<std::mutex> lock(mDataMutex);
+        std::lock_guard<std::mutex> lock(mDataMutex);
         if (mPrices[symbol].size() == 10)
             mPrices[symbol].erase(mPrices[symbol].begin());
         mPrices[symbol].push_back(mExchangeManager.getPrice(symbol));

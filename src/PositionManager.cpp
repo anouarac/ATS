@@ -47,7 +47,7 @@ namespace ats {
     }
 
     void PositionManager::updatePosition(std::string symbol, double quantity) {
-        std::unique_lock<std::mutex> lock(mPositionMutex);
+        std::lock_guard<std::mutex> lock(mPositionMutex);
         if (mOpenPositions.count(symbol))
             mOpenPositions[symbol].quantity += quantity;
         else mOpenPositions[symbol] = Position(quantity, mData.getPrice(symbol));
@@ -57,7 +57,7 @@ namespace ats {
         for (auto openPosition : mOpenPositions) {
             std::string symbol = openPosition.first;
             Position position = openPosition.second;
-            std::unique_lock<std::mutex> lock(mPositionMutex);
+            std::lock_guard<std::mutex> lock(mPositionMutex);
             mPnL -= position.total();
             position.price = mData.getPrice(symbol);
             mPnL += position.total();

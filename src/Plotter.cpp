@@ -35,7 +35,7 @@ TickerData BinanceAPI::update_ticker(std::string ticker, Interval interval) {
     Json::Value result;
 
 
-    ems.getKlines(result, ticker, getStrInterval(interval), 0, 0, 1);
+    ems.getKlines(result, ticker, getStrInterval(interval), 0, 0, 10);
 
     try {
         TickerData data(ticker);

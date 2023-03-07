@@ -90,7 +90,7 @@ Inheritance diagram for ats::BinanceExchangeManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a76111cd591c26037783c6eb67b0ef94c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a76111cd591c26037783c6eb67b0ef94c">BinanceExchangeManager</a> (<a class="el" href="../../d9/d55/classats_1_1OrderManager.html">OrderManager</a> &amp;orderManager, bool isSimulation=true, std::string api_key=&quot;&quot;, std::string secret_key=&quot;&quot;)</td></tr>
+<tr class="memitem:a76111cd591c26037783c6eb67b0ef94c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a76111cd591c26037783c6eb67b0ef94c">BinanceExchangeManager</a> (<a class="el" href="../../d9/d55/classats_1_1OrderManager.html">OrderManager</a> &amp;orderManager, bool <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac15d06b00f3cde43bb1caf5af7318c61">isSimulation</a>=true, std::string api_key=&quot;&quot;, std::string secret_key=&quot;&quot;)</td></tr>
 <tr class="memdesc:a76111cd591c26037783c6eb67b0ef94c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html" title="The BinanceExchangeManager class is a class that defines the interface for managing orders on the Bin...">BinanceExchangeManager</a> class.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a76111cd591c26037783c6eb67b0ef94c">More...</a><br /></td></tr>
 <tr class="separator:a76111cd591c26037783c6eb67b0ef94c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81208f7276f2dfa2efd0ccfb8cdbda0f"><td class="memItemLeft" align="right" valign="top"><a id="a81208f7276f2dfa2efd0ccfb8cdbda0f"></a>
@@ -112,27 +112,36 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr class="memitem:a7151fa45d9dfe3808865e966b843f6e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a7151fa45d9dfe3808865e966b843f6e3">isRunning</a> ()</td></tr>
 <tr class="memdesc:a7151fa45d9dfe3808865e966b843f6e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html" title="The BinanceExchangeManager class is a class that defines the interface for managing orders on the Bin...">BinanceExchangeManager</a> thread is running.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a7151fa45d9dfe3808865e966b843f6e3">More...</a><br /></td></tr>
 <tr class="separator:a7151fa45d9dfe3808865e966b843f6e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac15d06b00f3cde43bb1caf5af7318c61"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac15d06b00f3cde43bb1caf5af7318c61">isSimulation</a> ()</td></tr>
+<tr class="memdesc:ac15d06b00f3cde43bb1caf5af7318c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the EMS is connected to the test network.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac15d06b00f3cde43bb1caf5af7318c61">More...</a><br /></td></tr>
+<tr class="separator:ac15d06b00f3cde43bb1caf5af7318c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81cd437a8cef0a8085213baf38c5b563"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a81cd437a8cef0a8085213baf38c5b563">sendOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;order) override</td></tr>
 <tr class="memdesc:a81cd437a8cef0a8085213baf38c5b563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an order to the Binance exchange.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a81cd437a8cef0a8085213baf38c5b563">More...</a><br /></td></tr>
 <tr class="separator:a81cd437a8cef0a8085213baf38c5b563"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af57c4098103b5dceeb09c0b1630420ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#af57c4098103b5dceeb09c0b1630420ba">modifyOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;oldOrder, <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;newOrder) override</td></tr>
 <tr class="memdesc:af57c4098103b5dceeb09c0b1630420ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an existing order on the Binance exchange.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#af57c4098103b5dceeb09c0b1630420ba">More...</a><br /></td></tr>
 <tr class="separator:af57c4098103b5dceeb09c0b1630420ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf50e34ed61dd0c0f9a7465397354ef9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#aaf50e34ed61dd0c0f9a7465397354ef9">cancelOrder</a> (long orderId, std::string symbol)</td></tr>
+<tr class="memdesc:aaf50e34ed61dd0c0f9a7465397354ef9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel an existing order on the Binance exchange.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#aaf50e34ed61dd0c0f9a7465397354ef9">More...</a><br /></td></tr>
+<tr class="separator:aaf50e34ed61dd0c0f9a7465397354ef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8fbcd3a212092d895f6e65cfd3af895"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ae8fbcd3a212092d895f6e65cfd3af895">cancelOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;order) override</td></tr>
 <tr class="memdesc:ae8fbcd3a212092d895f6e65cfd3af895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel an existing order on the Binance exchange.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ae8fbcd3a212092d895f6e65cfd3af895">More...</a><br /></td></tr>
 <tr class="separator:ae8fbcd3a212092d895f6e65cfd3af895"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67bd9cf70caa18f1e2e86929307e4b97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a67bd9cf70caa18f1e2e86929307e4b97">getOrderStatus</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;order, Json::Value &amp;result) override</td></tr>
 <tr class="memdesc:a67bd9cf70caa18f1e2e86929307e4b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the status of the given order.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a67bd9cf70caa18f1e2e86929307e4b97">More...</a><br /></td></tr>
 <tr class="separator:a67bd9cf70caa18f1e2e86929307e4b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afef23b272675be9bc1369a0007367526"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#afef23b272675be9bc1369a0007367526">getOpenOrders</a> () override</td></tr>
-<tr class="memdesc:afef23b272675be9bc1369a0007367526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all open orders for the current user.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#afef23b272675be9bc1369a0007367526">More...</a><br /></td></tr>
-<tr class="separator:afef23b272675be9bc1369a0007367526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472e326ed63b49d24139c7d5ffe0c7c0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a472e326ed63b49d24139c7d5ffe0c7c0">getOpenOrders</a> (std::string symbol=&quot;&quot;) override</td></tr>
+<tr class="memdesc:a472e326ed63b49d24139c7d5ffe0c7c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all open orders for the current user.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a472e326ed63b49d24139c7d5ffe0c7c0">More...</a><br /></td></tr>
+<tr class="separator:a472e326ed63b49d24139c7d5ffe0c7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13b9db6407c0055cef88fab3ccc0aa39"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../de/d42/classats_1_1Trade.html">Trade</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a13b9db6407c0055cef88fab3ccc0aa39">getTradeHistory</a> (std::string symbol) override</td></tr>
 <tr class="memdesc:a13b9db6407c0055cef88fab3ccc0aa39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the trade history for the specified symbol.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a13b9db6407c0055cef88fab3ccc0aa39">More...</a><br /></td></tr>
 <tr class="separator:a13b9db6407c0055cef88fab3ccc0aa39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c14fb0a3c6408f0faf3c2d3f7e259cd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a3c14fb0a3c6408f0faf3c2d3f7e259cd">getPrice</a> (std::string symbol) override</td></tr>
 <tr class="memdesc:a3c14fb0a3c6408f0faf3c2d3f7e259cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current price for the specified symbol.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a3c14fb0a3c6408f0faf3c2d3f7e259cd">More...</a><br /></td></tr>
 <tr class="separator:a3c14fb0a3c6408f0faf3c2d3f7e259cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3775625bc891dbb6aabc378e3f07339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac3775625bc891dbb6aabc378e3f07339">getKlines</a> (Json::Value &amp;result, std::string symbol, std::string interval, time_t start_date=0, time_t end_date=0, int limit=500)</td></tr>
+<tr class="memdesc:ac3775625bc891dbb6aabc378e3f07339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets Klines for a symbol.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac3775625bc891dbb6aabc378e3f07339">More...</a><br /></td></tr>
+<tr class="separator:ac3775625bc891dbb6aabc378e3f07339"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac208b201c3984dc98492e3a526b2dd34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac208b201c3984dc98492e3a526b2dd34">jsonToOrder</a> (Json::Value &amp;result)</td></tr>
 <tr class="memdesc:ac208b201c3984dc98492e3a526b2dd34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a JSON object to an <a class="el" href="../../d8/d28/structats_1_1Order.html" title="The Order struct represents an order to be placed on an exchange.">Order</a> object.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac208b201c3984dc98492e3a526b2dd34">More...</a><br /></td></tr>
 <tr class="separator:ac208b201c3984dc98492e3a526b2dd34"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,8 +229,45 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aaf50e34ed61dd0c0f9a7465397354ef9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf50e34ed61dd0c0f9a7465397354ef9">&#9670;&nbsp;</a></span>cancelOrder() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ats::BinanceExchangeManager::cancelOrder </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>orderId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>symbol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cancel an existing order on the Binance exchange. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">orderId</td><td>The orderId of the order to cancel. </td></tr>
+    <tr><td class="paramname">symbol</td><td>The symbol of the order to cancel. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ae8fbcd3a212092d895f6e65cfd3af895"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8fbcd3a212092d895f6e65cfd3af895">&#9670;&nbsp;</a></span>cancelOrder()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8fbcd3a212092d895f6e65cfd3af895">&#9670;&nbsp;</a></span>cancelOrder() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -256,8 +302,73 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="afef23b272675be9bc1369a0007367526"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afef23b272675be9bc1369a0007367526">&#9670;&nbsp;</a></span>getOpenOrders()</h2>
+<a id="ac3775625bc891dbb6aabc378e3f07339"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3775625bc891dbb6aabc378e3f07339">&#9670;&nbsp;</a></span>getKlines()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ats::BinanceExchangeManager::getKlines </td>
+          <td>(</td>
+          <td class="paramtype">Json::Value &amp;&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>symbol</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>interval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">time_t&#160;</td>
+          <td class="paramname"><em>start_date</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">time_t&#160;</td>
+          <td class="paramname"><em>end_date</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>limit</em> = <code>500</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets Klines for a symbol. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>Json object to write the response to </td></tr>
+    <tr><td class="paramname">symbol</td><td>Symbol to get the Klines for </td></tr>
+    <tr><td class="paramname">interval</td><td>Kline interval </td></tr>
+    <tr><td class="paramname">start_date</td><td>Start date </td></tr>
+    <tr><td class="paramname">end_date</td><td>End date </td></tr>
+    <tr><td class="paramname">limit</td><td>Limit, should be less than or equal to 1000 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a472e326ed63b49d24139c7d5ffe0c7c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a472e326ed63b49d24139c7d5ffe0c7c0">&#9670;&nbsp;</a></span>getOpenOrders()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -268,7 +379,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">std::vector&lt; <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &gt; ats::BinanceExchangeManager::getOpenOrders </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>symbol</em> = <code>&quot;&quot;</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -280,9 +392,15 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets all open orders for the current user. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">symbol</td><td>The symbol to retrieve the orders for, all open orders if omitted. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of all open orders. </dd></dl>
 
-<p>Implements <a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#aceb954b5c62a744a0cc2037c15750e0e">ats::ExchangeManager</a>.</p>
+<p>Implements <a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#ad0bc36dfae82151d81504f5bd222b1e1">ats::ExchangeManager</a>.</p>
 
 </div>
 </div>
@@ -450,6 +568,26 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Check if the <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html" title="The BinanceExchangeManager class is a class that defines the interface for managing orders on the Bin...">BinanceExchangeManager</a> thread is running. </p>
 <dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html" title="The BinanceExchangeManager class is a class that defines the interface for managing orders on the Bin...">BinanceExchangeManager</a> thread is running or not. </dd></dl>
+
+</div>
+</div>
+<a id="ac15d06b00f3cde43bb1caf5af7318c61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac15d06b00f3cde43bb1caf5af7318c61">&#9670;&nbsp;</a></span>isSimulation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ats::BinanceExchangeManager::isSimulation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the EMS is connected to the test network. </p>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether the EMS is connected to the test network. </dd></dl>
 
 </div>
 </div>

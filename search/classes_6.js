@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['strategy_99',['Strategy',['../d1/d92/classats_1_1Strategy.html',1,'ats']]]
+  ['riskmanager_110',['RiskManager',['../d4/dc0/classats_1_1RiskManager.html',1,'ats']]]
 ];

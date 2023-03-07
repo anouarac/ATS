@@ -110,9 +110,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=".
 <tr class="memitem:a4605ed74ee2cf7b26fb184852b7d664e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#a4605ed74ee2cf7b26fb184852b7d664e">getOrderStatus</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;order, Json::Value &amp;result)=0</td></tr>
 <tr class="memdesc:a4605ed74ee2cf7b26fb184852b7d664e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the status of an order on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#a4605ed74ee2cf7b26fb184852b7d664e">More...</a><br /></td></tr>
 <tr class="separator:a4605ed74ee2cf7b26fb184852b7d664e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aceb954b5c62a744a0cc2037c15750e0e"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#aceb954b5c62a744a0cc2037c15750e0e">getOpenOrders</a> ()=0</td></tr>
-<tr class="memdesc:aceb954b5c62a744a0cc2037c15750e0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a list of open orders on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#aceb954b5c62a744a0cc2037c15750e0e">More...</a><br /></td></tr>
-<tr class="separator:aceb954b5c62a744a0cc2037c15750e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0bc36dfae82151d81504f5bd222b1e1"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#ad0bc36dfae82151d81504f5bd222b1e1">getOpenOrders</a> (std::string symbol)=0</td></tr>
+<tr class="memdesc:ad0bc36dfae82151d81504f5bd222b1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a list of open orders on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#ad0bc36dfae82151d81504f5bd222b1e1">More...</a><br /></td></tr>
+<tr class="separator:ad0bc36dfae82151d81504f5bd222b1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebb853ece9186aa4d771b5389d649749"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="../../de/d42/classats_1_1Trade.html">Trade</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#aebb853ece9186aa4d771b5389d649749">getTradeHistory</a> (std::string symbol)=0</td></tr>
 <tr class="memdesc:aebb853ece9186aa4d771b5389d649749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the trade history for a given symbol on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#aebb853ece9186aa4d771b5389d649749">More...</a><br /></td></tr>
 <tr class="separator:aebb853ece9186aa4d771b5389d649749"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,8 +191,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aceb954b5c62a744a0cc2037c15750e0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceb954b5c62a744a0cc2037c15750e0e">&#9670;&nbsp;</a></span>getOpenOrders()</h2>
+<a id="ad0bc36dfae82151d81504f5bd222b1e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0bc36dfae82151d81504f5bd222b1e1">&#9670;&nbsp;</a></span>getOpenOrders()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +203,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual std::vector&lt;<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a>&gt; ats::ExchangeManager::getOpenOrders </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>symbol</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -215,9 +216,15 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieves a list of open orders on the exchange. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">symbol</td><td>The symbol to get the orders for, all open orders if omitted. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of open orders. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#afef23b272675be9bc1369a0007367526">ats::BinanceExchangeManager</a>.</p>
+<p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a472e326ed63b49d24139c7d5ffe0c7c0">ats::BinanceExchangeManager</a>.</p>
 
 </div>
 </div>

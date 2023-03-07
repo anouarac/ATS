@@ -107,6 +107,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr class="memitem:a2e699cde88cbe362252c9108b122199b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a2e699cde88cbe362252c9108b122199b">createOrder</a> (<a class="el" href="../../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682">OrderType</a> type, <a class="el" href="../../d7/d32/namespaceats.html#aa8545ec794af5782573da340c0ccbbbd">Side</a> side, std::string symbol, double quantity, double price)</td></tr>
 <tr class="memdesc:a2e699cde88cbe362252c9108b122199b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new order and add it to the queue.  <a href="../../d9/d55/classats_1_1OrderManager.html#a2e699cde88cbe362252c9108b122199b">More...</a><br /></td></tr>
 <tr class="separator:a2e699cde88cbe362252c9108b122199b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d568b16d599b6bd126eb58c1044c878"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a7d568b16d599b6bd126eb58c1044c878">cancelOrder</a> (long orderId, std::string symbol)</td></tr>
+<tr class="memdesc:a7d568b16d599b6bd126eb58c1044c878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel an order.  <a href="../../d9/d55/classats_1_1OrderManager.html#a7d568b16d599b6bd126eb58c1044c878">More...</a><br /></td></tr>
+<tr class="separator:a7d568b16d599b6bd126eb58c1044c878"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f7b2178388fdaf05b20bab51778fcd4"><td class="memItemLeft" align="right" valign="top"><a id="a6f7b2178388fdaf05b20bab51778fcd4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a6f7b2178388fdaf05b20bab51778fcd4">cancelAllOrders</a> ()</td></tr>
+<tr class="memdesc:a6f7b2178388fdaf05b20bab51778fcd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel all orders. <br /></td></tr>
+<tr class="separator:a6f7b2178388fdaf05b20bab51778fcd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50f0ed639da9de2db542e3c416735aad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a50f0ed639da9de2db542e3c416735aad">processOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> order)</td></tr>
 <tr class="memdesc:a50f0ed639da9de2db542e3c416735aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process a single order.  <a href="../../d9/d55/classats_1_1OrderManager.html#a50f0ed639da9de2db542e3c416735aad">More...</a><br /></td></tr>
 <tr class="separator:a50f0ed639da9de2db542e3c416735aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,13 +124,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr class="memitem:a1e99777c3ac8de1b20268ff76d322df5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a1e99777c3ac8de1b20268ff76d322df5">hasOrders</a> ()</td></tr>
 <tr class="memdesc:a1e99777c3ac8de1b20268ff76d322df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if there are orders to be sent.  <a href="../../d9/d55/classats_1_1OrderManager.html#a1e99777c3ac8de1b20268ff76d322df5">More...</a><br /></td></tr>
 <tr class="separator:a1e99777c3ac8de1b20268ff76d322df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8f3e94e549473e4aa59b259c30c4d61"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#ae8f3e94e549473e4aa59b259c30c4d61">hasCancelOrders</a> ()</td></tr>
+<tr class="memdesc:ae8f3e94e549473e4aa59b259c30c4d61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if there are orders to be cancelled.  <a href="../../d9/d55/classats_1_1OrderManager.html#ae8f3e94e549473e4aa59b259c30c4d61">More...</a><br /></td></tr>
+<tr class="separator:ae8f3e94e549473e4aa59b259c30c4d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18b7050ee3105b2d288822b0c4b00bd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a18b7050ee3105b2d288822b0c4b00bd4">getOldestOrder</a> ()</td></tr>
 <tr class="memdesc:a18b7050ee3105b2d288822b0c4b00bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the oldest order from the order queue.  <a href="../../d9/d55/classats_1_1OrderManager.html#a18b7050ee3105b2d288822b0c4b00bd4">More...</a><br /></td></tr>
 <tr class="separator:a18b7050ee3105b2d288822b0c4b00bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19846290dc901e14d2546ca30d05712c"><td class="memItemLeft" align="right" valign="top">std::pair&lt; long, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d55/classats_1_1OrderManager.html#a19846290dc901e14d2546ca30d05712c">getCancelOrder</a> ()</td></tr>
+<tr class="memdesc:a19846290dc901e14d2546ca30d05712c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an order to cancel.  <a href="../../d9/d55/classats_1_1OrderManager.html#a19846290dc901e14d2546ca30d05712c">More...</a><br /></td></tr>
+<tr class="separator:a19846290dc901e14d2546ca30d05712c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class for managing orders. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7d568b16d599b6bd126eb58c1044c878"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d568b16d599b6bd126eb58c1044c878">&#9670;&nbsp;</a></span>cancelOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ats::OrderManager::cancelOrder </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>orderId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>symbol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cancel an order. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">orderId</td><td>ID of the order </td></tr>
+    <tr><td class="paramname">symbol</td><td>Symbol of the order </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a2e699cde88cbe362252c9108b122199b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2e699cde88cbe362252c9108b122199b">&#9670;&nbsp;</a></span>createOrder()</h2>
 
@@ -182,6 +232,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 </div>
 </div>
+<a id="a19846290dc901e14d2546ca30d05712c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19846290dc901e14d2546ca30d05712c">&#9670;&nbsp;</a></span>getCancelOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; long, std::string &gt; ats::OrderManager::getCancelOrder </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get an order to cancel. </p>
+<dl class="section return"><dt>Returns</dt><dd>{id,symbol} of the order to cancel </dd></dl>
+
+</div>
+</div>
 <a id="a18b7050ee3105b2d288822b0c4b00bd4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a18b7050ee3105b2d288822b0c4b00bd4">&#9670;&nbsp;</a></span>getOldestOrder()</h2>
 
@@ -199,6 +269,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 <p>Get the oldest order from the order queue. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d8/d28/structats_1_1Order.html" title="The Order struct represents an order to be placed on an exchange.">Order</a>&amp; The oldest order in the queue </dd></dl>
+
+</div>
+</div>
+<a id="ae8f3e94e549473e4aa59b259c30c4d61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8f3e94e549473e4aa59b259c30c4d61">&#9670;&nbsp;</a></span>hasCancelOrders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ats::OrderManager::hasCancelOrders </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if there are orders to be cancelled. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if there are orders to cancel </dd>
+<dd>
+false otherwise </dd></dl>
 
 </div>
 </div>

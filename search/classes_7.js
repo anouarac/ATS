@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['trade_100',['Trade',['../de/d42/classats_1_1Trade.html',1,'ats']]]
+  ['stockapi_111',['StockAPI',['../dc/d97/classStockAPI.html',1,'']]],
+  ['strategy_112',['Strategy',['../d1/d92/classats_1_1Strategy.html',1,'ats']]]
 ];

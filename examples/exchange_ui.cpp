@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
     binance::Logger::set_debug_level(1);
 	binance::Logger::set_debug_logfp(stderr);
     OrderManager oms;
-    BinanceExchangeManager ems(oms, 1);
+    BinanceExchangeManager ems(oms, 0);
     ImBinance app("ImBinance", 1280, 800, argc, argv, ems);
     app.Run();
     return 0;

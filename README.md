@@ -3,6 +3,8 @@ ATS is an open-source implementation of an algorithmic trading system in C++.
 
 It currently supports the Binance Exchange but the project is modular and any exchange can be added.
 
+![User Interface](screenshots/exchange-ui.png)
+
 ## Prerequisites
 The project requires C++ 14 and CMake.
 

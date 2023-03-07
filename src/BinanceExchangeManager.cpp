@@ -26,11 +26,16 @@ namespace ats {
     }
 
     void BinanceExchangeManager::run() {
-        while (mRunning)
+        while (mRunning) {
             if (mOrderManager.hasOrders()) {
                 Order &order = mOrderManager.getOldestOrder();
                 sendOrder(order);
             }
+            if (mOrderManager.hasCancelOrders()) {
+                std::pair<long,std::string> order = mOrderManager.getCancelOrder();
+                cancelOrder(order.first, order.second);
+            }
+        }
     }
 
     void BinanceExchangeManager::stop() {
@@ -41,6 +46,10 @@ namespace ats {
 
     bool BinanceExchangeManager::isRunning() {
         return mRunning;
+    }
+
+    bool BinanceExchangeManager::isSimulation() {
+        return mIsSimulation;
     }
 
     void BinanceExchangeManager::sendOrder(Order &order) {
@@ -60,11 +69,15 @@ namespace ats {
         sendOrder(newOrder);
     }
 
+    void BinanceExchangeManager::cancelOrder(long id, std::string symbol) {
+     Json::Value result;
+    BINANCE_ERR_CHECK(
+            mAccount.cancelOrder(result, symbol.c_str(), omsToEmsId[id], "", "", 0));
+    Logger::write_log(result.toStyledString().c_str());
+    }
+
     void BinanceExchangeManager::cancelOrder(Order &order) {
-        Json::Value result;
-        BINANCE_ERR_CHECK(
-                mAccount.cancelOrder(result, order.symbol.c_str(), omsToEmsId[order.id], "", "", order.recvWindow));
-        Logger::write_log(result.toStyledString().c_str());
+        cancelOrder(order.id, order.symbol);
     }
 
     void BinanceExchangeManager::getOrderStatus(Order &order, Json::Value &result) {

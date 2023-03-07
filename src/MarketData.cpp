@@ -57,7 +57,7 @@ namespace ats {
 
     void MarketData::updatePrice(const std::string& symbol) {
         std::lock_guard<std::mutex> lock(mDataMutex);
-        if (mPrices[symbol].size() == 10)
+        if (mPrices[symbol].size() == 1000)
             mPrices[symbol].erase(mPrices[symbol].begin());
         mPrices[symbol].push_back(mExchangeManager.getPrice(symbol));
     }

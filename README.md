@@ -53,5 +53,6 @@ Working with this library can go as follows with the Binance EMS:
   std::cout << result.toStyledString() << std::endl;
   std::cout << b_ems.getPrice("ETHUSDT") << std::endl;
   ```
+You can find more examples in [examples](examples/).
 ## Documentation
 For further details check the [documentation](https://anouarac.github.io/ATS/).

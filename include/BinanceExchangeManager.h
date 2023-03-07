@@ -78,6 +78,13 @@ namespace ats {
         bool isRunning();
 
         /**
+         * @brief Check if the EMS is connected to the test network.
+         *
+         * @return A boolean indicating whether the EMS is connected to the test network.
+         */
+        bool isSimulation();
+
+        /**
          * @brief Send an order to the Binance exchange.
          *
          * @param order The Order object to be sent.
@@ -91,6 +98,14 @@ namespace ats {
          * @param newOrder The new Order object.
          */
         void modifyOrder(Order &oldOrder, Order &newOrder) override;
+
+        /**
+         * @brief Cancel an existing order on the Binance exchange.
+         *
+         * @param orderId The orderId of the order to cancel.
+         * @param symbol The symbol of the order to cancel.
+         */
+         void cancelOrder(long orderId, std::string symbol);
 
         /**
          * @brief Cancel an existing order on the Binance exchange.

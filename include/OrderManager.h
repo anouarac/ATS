@@ -14,6 +14,8 @@
 #include <mutex>
 #include <map>
 #include <vector>
+#include <unordered_map>
+#include <set>
 
 namespace ats {
     /**
@@ -126,14 +128,15 @@ namespace ats {
      */
     class OrderManager {
     private:
-        std::queue<Order> mOrders; ///< A queue of orders waiting to be processed
+        std::unordered_map<long,Order> mSentOrders; ///< A map of all orders sent
+        std::queue<std::pair<long,std::string>> mCancelOrders; ///< A queue of orders waiting to be canceled (EMS side)
+        std::queue<Order> mOrders; ///< A queue of orders waiting to be processed (EMS side)
         std::queue<Order> mPendingOrders; ///< A queue of orders that have been sent and are waiting for confirmation
         std::thread mOrderManagerThread; ///< A thread for processing orders
         std::mutex mOrderCountMutex; ///< A mutex for accessing the order count
-        std::mutex mOrderFetchMutex; ///< A mutex for accessing the order queue
+        std::mutex mOrderFetchMutex; ///< A mutex for accessing mSentOrders
         bool mRunning; ///< A flag indicating if the order manager is running
         long mOrderCount; ///< A counter for the number of orders processed
-        std::vector<Order> mSentOrders; ///< A vector of orders that have been sent and confirmed
     public:
         /**
          * @brief Construct a new OrderManager object
@@ -184,6 +187,20 @@ namespace ats {
         void createOrder(OrderType type, Side side, std::string symbol, double quantity, double price);
 
         /**
+         * @brief Cancel an order
+         *
+         * @param orderId ID of the order
+         * @param symbol Symbol of the order
+         *
+         */
+        void cancelOrder(long orderId, std::string symbol);
+
+        /**
+         * @brief Cancel all orders
+         */
+         void cancelAllOrders();
+
+        /**
          * @brief Process a single order
          *
          * @param order The order to process
@@ -205,11 +222,26 @@ namespace ats {
         bool hasOrders();
 
         /**
+         * @brief Check if there are orders to be cancelled
+         *
+         * @return true if there are orders to cancel
+         * @return false otherwise
+         */
+         bool hasCancelOrders();
+
+        /**
          * @brief Get the oldest order from the order queue
          *
          * @return Order& The oldest order in the queue
          */
         Order &getOldestOrder();
+
+        /**
+         * @brief Get an order to cancel
+         *
+         * @return {id,symbol} of the order to cancel
+         */
+         std::pair<long,std::string> getCancelOrder();
 
     private:
         /**

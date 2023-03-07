@@ -84,6 +84,16 @@ namespace ats {
         mPendingOrders.push(Order(id, MARKET, side, symbol, quantity, price));
     }
 
+    void OrderManager::cancelOrder(long orderId, std::string symbol) {
+        mCancelOrders.push({orderId, symbol});
+    }
+
+    void OrderManager::cancelAllOrders() {
+        std::lock_guard<std::mutex> lock(mOrderFetchMutex);
+        for (auto& pair : mSentOrders)
+            cancelOrder(pair.second.id, pair.second.symbol);
+    }
+
     void OrderManager::processOrder(Order order) {
         bool valid = true;
         if (valid)
@@ -108,10 +118,21 @@ namespace ats {
         return !mOrders.empty();
     }
 
+    bool OrderManager::hasCancelOrders() {
+        return !mCancelOrders.empty();
+    }
+
     Order& OrderManager::getOldestOrder() {
         Order oldest = mOrders.front();
         mOrders.pop();
-        mSentOrders.push_back(oldest);
-        return mSentOrders.back();
+        std::lock_guard<std::mutex> lock(mOrderFetchMutex);
+        mSentOrders.insert({oldest.id, oldest});
+        return mSentOrders.find(oldest.id)->second;
+    }
+
+    std::pair<long,std::string> OrderManager::getCancelOrder() {
+        std::pair<long,std::string> order = mCancelOrders.front();
+        mCancelOrders.pop();
+        return order;
     }
 } // ats

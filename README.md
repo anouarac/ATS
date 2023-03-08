@@ -20,10 +20,19 @@ git clone --recurse-submodules -j4 https://github.com/anouarac/ATS.git
 $ cd ATS
 $ mkdir build
 $ cd build
+```
+##### Windows
+```Bash
+$ cmake-gui ..
+```
+Then generate the binaries in the build directory.
+##### Linux/Mac
+```Bash
 $ cmake ..
 $ make -j4
 ```
-You should now be able to add your own code after importing ```ats.h```.
+
+You should now be able to run the targets either through an IDE such as Visual Studio, or through the terminal.
 
 ### Example
 Working with this library can go as follows with the Binance EMS:

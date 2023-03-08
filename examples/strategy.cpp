@@ -28,22 +28,26 @@ public:
 private:
     std::map<std::string, double> mBalances;
     time_t mLastOrder{0};
+    time_t mDataFetch{0};
 public:
     ~ExampleStrategy() {
         mOrderManager.cancelAllOrders();
         stop();
     }
 
-    virtual void updatePrice() {
+    virtual void updatePrice() override {
         double currentPrice = mData.getPrice(mSymbol);
-        mPrices.push_back(currentPrice);
+        time_t new_t;
+        time(&new_t);
+        if (difftime(new_t, mDataFetch) > 1)
+            mPrices.push_back(currentPrice);
     }
 
     virtual double getSignal() override {
         updatePrice();
 
         double shortSMA = 0.0, longSMA = 0.0;
-        int shortPeriod = 10, longPeriod = 50;
+        int shortPeriod = 10, longPeriod = 150;
         if (mPrices.size() >= shortPeriod) {
             shortSMA = std::accumulate(mPrices.end() - shortPeriod, mPrices.end(), 0.0) / shortPeriod;
         }
@@ -68,20 +72,24 @@ public:
     virtual void buy() override {
         time_t curTime(0);
         time(&curTime);
-        if (difftime(curTime, mLastOrder) < 10)
+        if (difftime(curTime, mLastOrder) < 15)
             return;
         updateBalance();
-        mOrderManager.createOrder(LIMIT, BUY, mSymbol, floor(mData.getQtyForPrice(mSymbol, 0.01*mBalances["USDT"])*1e6)/1e6, mPrices.back());
+        mOrderManager.createOrder(LIMIT, BUY, mSymbol,
+                                  floor(mData.getQtyForPrice(mSymbol, 0.01 * mBalances["USDT"]) * 1e6) / 1e6,
+                                  mPrices.back());
         time(&mLastOrder);
     }
 
     virtual void sell() override {
         time_t curTime(0);
         time(&curTime);
-        if (difftime(curTime, mLastOrder) < 10)
+        if (difftime(curTime, mLastOrder) < 15)
             return;
         updateBalance();
-        mOrderManager.createOrder(LIMIT, SELL, mSymbol, floor(mData.getQtyForPrice(mSymbol, 0.01*mBalances["USDT"])*1e6)/1e6, mPrices.back());
+        mOrderManager.createOrder(LIMIT, SELL, mSymbol,
+                                  floor(mData.getQtyForPrice(mSymbol, 0.01 * mBalances["USDT"]) * 1e6) / 1e6,
+                                  mPrices.back());
         time(&mLastOrder);
     }
 };
@@ -92,7 +100,6 @@ int main(int argc, char const *argv[]) {
     OrderManager oms;
     BinanceExchangeManager ems(oms, 1);
     MarketData md({"BTCUSDT", "ETHUSDT"}, ems);
-    while (md.getPrices("BTCUSDT").size() < 1) continue;
     ExampleStrategy strat("BTCUSDT", md, oms, md.getPrices("BTCUSDT"));
     ImBinance app("ImBinance", 1280, 800, argc, argv, ems);
     app.Run();

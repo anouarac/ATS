@@ -25,8 +25,15 @@ namespace ats {
     }
 
     void MarketData::run() {
-        while (mRunning)
-            updatePrices();
+        time_t lastUpd{0};
+        while (mRunning) {
+            time_t newUpd;
+            time(&newUpd);
+            if (difftime(newUpd, lastUpd) > 1) {
+                updatePrices();
+                lastUpd = newUpd;
+            }
+        }
     }
 
     void MarketData::stop() {

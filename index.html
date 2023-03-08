@@ -84,10 +84,16 @@ Building</h2>
 <div class="fragment"><div class="line">$ cd ATS</div>
 <div class="line">$ mkdir build</div>
 <div class="line">$ cd build</div>
-<div class="line">$ cmake ..</div>
+</div><!-- fragment --> <h4><a class="anchor" id="autotoc_md5"></a>
+Windows</h4>
+<div class="fragment"><div class="line">$ cmake-gui ..</div>
+</div><!-- fragment --><p> Then generate the binaries in the build directory. </p>
+<h4><a class="anchor" id="autotoc_md6"></a>
+Linux/Mac</h4>
+<div class="fragment"><div class="line">$ cmake ..</div>
 <div class="line">$ make -j4</div>
-</div><!-- fragment --><p> You should now be able to add your own code after importing <code><a class="el" href="d9/d59/ats_8h.html" title="Main header file for the ATS library.">ats.h</a></code>.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><p>You should now be able to run the targets either through an IDE such as Visual Studio, or through the terminal.</p>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Example</h2>
 <p>Working with this library can go as follows with the Binance EMS:</p>
 <ul>
@@ -112,7 +118,7 @@ Example</h2>
 <div class="line">std::cout &lt;&lt; b_ems.getPrice(<span class="stringliteral">&quot;ETHUSDT&quot;</span>) &lt;&lt; std::endl;</div>
 </div><!-- fragment --> You can find more examples in <a href="examples/">examples</a>. </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Documentation</h1>
 <p>For further details check the <a href="https://anouarac.github.io/ATS/">documentation</a>. </p>
 </div></div><!-- PageDoc -->

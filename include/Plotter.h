@@ -176,6 +176,7 @@ struct ImBinance : App {
     ImPlotTime t2;
     Interval interval = Interval_1h;
     time_t start_time;
+    bool m_done_upd;
 
     void Start() override {
         time(&start_time);
@@ -192,9 +193,11 @@ struct ImBinance : App {
         }
         ImPlot::GetStyle().FitPadding.y = 0.2f;
         ImGui::StyleColorsDark();
+        m_done_upd = 1;
     }
 
     void UpdateData() {
+        m_done_upd = 0;
         auto m_ticker_data_copy = m_ticker_data;
         auto m_open_orders_copy = m_open_orders;
         auto m_balances_copy = m_balances;
@@ -219,6 +222,7 @@ struct ImBinance : App {
         m_open_orders_copy.swap(m_open_orders);
         m_balances_copy.swap(m_balances);
         m_ticker_data_copy.swap(m_ticker_data);
+        m_done_upd = 1;
     }
 
     void Update() override {
@@ -242,7 +246,9 @@ struct ImBinance : App {
         time_t end_time;
         time(&end_time);
         if (difftime(end_time, start_time) > 1) {
-            if (!t.joinable()) {
+            if (m_done_upd) {
+                if (t.joinable())
+                    t.join();
                 t = std::thread(&ImBinance::UpdateData, this);
                 time(&start_time);
             }

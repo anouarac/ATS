@@ -241,12 +241,11 @@ struct ImBinance : App {
 
         time_t end_time;
         time(&end_time);
-        // TODO: add multithreading for this part
         if (difftime(end_time, start_time) > 1) {
-            if (t.joinable())
-                t.join();
-            t = std::thread(&ImBinance::UpdateData, this);
-            time(&start_time);
+            if (!t.joinable()) {
+                t = std::thread(&ImBinance::UpdateData, this);
+                time(&start_time);
+            }
         }
 
         ImGui::SameLine();

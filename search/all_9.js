@@ -1,7 +1,7 @@
 var searchData=
 [
   ['market_40',['MARKET',['../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682a00ca61986b26723bbf3a56954a042e38',1,'ats']]],
-  ['marketdata_41',['MarketData',['../d4/d41/classats_1_1MarketData.html',1,'ats::MarketData'],['../d4/d41/classats_1_1MarketData.html#aa6d4bbf90e4c37b17d1f16350431622e',1,'ats::MarketData::MarketData(ExchangeManager &amp;ems)'],['../d4/d41/classats_1_1MarketData.html#aba7dc4a86c3b7ae31698a4bb87d7cea7',1,'ats::MarketData::MarketData(const std::vector&lt; std::string &gt; &amp;symbols, ExchangeManager &amp;ems)']]],
+  ['marketdata_41',['MarketData',['../d4/d41/classats_1_1MarketData.html',1,'ats::MarketData'],['../d4/d41/classats_1_1MarketData.html#a490f2d9cd0b65d0ec10ba0379f720b20',1,'ats::MarketData::MarketData(ExchangeManager &amp;ems, time_t updateInterval=1)'],['../d4/d41/classats_1_1MarketData.html#aa6c5ccc6890332a55b8e14f3c95af50a',1,'ats::MarketData::MarketData(const std::vector&lt; std::string &gt; &amp;symbols, ExchangeManager &amp;ems, time_t updateInterval=1)']]],
   ['marketdata_2eh_42',['MarketData.h',['../d0/d4b/MarketData_8h.html',1,'']]],
   ['mdata_43',['mData',['../d1/d92/classats_1_1Strategy.html#abddbc138dbedb48dcb75dab2b27efce6',1,'ats::Strategy']]],
   ['modifyorder_44',['modifyOrder',['../dd/d9f/classats_1_1BinanceExchangeManager.html#af57c4098103b5dceeb09c0b1630420ba',1,'ats::BinanceExchangeManager::modifyOrder()'],['../df/d4b/classats_1_1ExchangeManager.html#afba4268dcda5706ca3d83bb76d8a51fb',1,'ats::ExchangeManager::modifyOrder(Order &amp;oldOrder, Order &amp;newOrder)=0']]],

@@ -191,6 +191,7 @@ struct ImBinance : App {
             m_balances = b;
         }
         ImPlot::GetStyle().FitPadding.y = 0.2f;
+        ImGui::StyleColorsDark();
     }
 
     void UpdateData() {
@@ -222,8 +223,8 @@ struct ImBinance : App {
 
     void Update() override {
 
-        static ImVec4 bull_col(0.5, 1, 0, 1);
-        static ImVec4 bear_col(1, 0, 0.5, 1);
+        static ImVec4 bull_col(0, 1, 0, 1);
+        static ImVec4 bear_col(1, 0, 0, 1);
 
         ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
         ImGui::SetNextWindowSize(GetWindowSize(), ImGuiCond_Always);
@@ -303,13 +304,15 @@ struct ImBinance : App {
         ImGui::SameLine();
         ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
 
+        ImVec2 windowSize = ImGui::GetWindowSize();
+
         if (ImGui::BeginTabBar("TickerTabs")) {
             std::lock_guard<std::mutex> lock(m_data_mutex);
             for (auto &pair: m_ticker_data) {
                 auto &data = pair.second;
                 if (ImGui::BeginTabItem(data.ticker.c_str())) {
                     static float ratios[] = {2, 1};
-                    if (ImPlot::BeginSubplots("##Pairs", 2, 1, ImVec2(700, 700), ImPlotSubplotFlags_LinkCols, ratios)) {
+                    if (ImPlot::BeginSubplots("##Pairs", 2, 1, ImVec2(0.65*windowSize.x, 0.9*windowSize.y), ImPlotSubplotFlags_LinkCols, ratios)) {
                         if (ImPlot::BeginPlot("##OHLCPlot")) {
                             // After changing scale, double click to fit automatically
                             ImPlot::SetupAxes(0, 0, ImPlotAxisFlags_NoTickLabels,
@@ -371,7 +374,7 @@ struct ImBinance : App {
                     }
 
                     ImGui::SameLine();
-                    if (ImGui::BeginChild("##Open Orders", ImVec2(500, 400), true)) {
+                    if (ImGui::BeginChild("##Open Orders", ImVec2(0.25*windowSize.x, 0.45*windowSize.y), true)) {
                         std::vector<ats::Order> open_orders = m_open_orders[data.ticker];
                         // display orders in a table
                         if (!open_orders.empty()) {
@@ -414,9 +417,9 @@ struct ImBinance : App {
                         ImGui::EndChild();
                     }
                     ImGui::SameLine();
-                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 400);
-                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 500);
-                    if (ImGui::BeginChild("##Balances", ImVec2(500, 400), true)) {
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.45*windowSize.y);
+                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 0.25*windowSize.x);
+                    if (ImGui::BeginChild("##Balances", ImVec2(0.25*windowSize.x, 0.45*windowSize.y), true)) {
                         auto &b = m_balances;
                         if (!b.empty()) {
                             ImGui::Columns(2, "BalancesTable", true);
@@ -447,6 +450,7 @@ struct ImBinance : App {
         }
 
         ImGui::End();
+
     }
 
     BinanceAPI m_api;

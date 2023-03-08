@@ -7,10 +7,11 @@
 
 namespace ats {
 
-    MarketData::MarketData(ExchangeManager& ems) : mExchangeManager(ems) {}
+    MarketData::MarketData(ExchangeManager &ems, time_t interval) : mExchangeManager(ems), mUpdateInterval(interval) {}
 
-    MarketData::MarketData(const std::vector<std::string>& symbols, ExchangeManager& ems) : mExchangeManager(ems) {
-        for (const std::string& symbol : symbols)
+    MarketData::MarketData(const std::vector<std::string> &symbols, ExchangeManager &ems, time_t interval)
+            : mExchangeManager(ems), mUpdateInterval(interval) {
+        for (const std::string &symbol: symbols)
             subscribe(symbol);
         mRunning = false;
         start();
@@ -19,6 +20,7 @@ namespace ats {
     MarketData::~MarketData() {
         MarketData::stop();
     }
+
     void MarketData::start() {
         mRunning = true;
         mMarketDataThread = std::thread(&MarketData::run, this);
@@ -29,7 +31,7 @@ namespace ats {
         while (mRunning) {
             time_t newUpd;
             time(&newUpd);
-            if (difftime(newUpd, lastUpd) > 1) {
+            if (difftime(newUpd, lastUpd) > mUpdateInterval) {
                 updatePrices();
                 lastUpd = newUpd;
             }
@@ -42,13 +44,13 @@ namespace ats {
             mMarketDataThread.join();
     }
 
-    void MarketData::subscribe(const std::string& symbol) {
+    void MarketData::subscribe(const std::string &symbol) {
         std::lock_guard<std::mutex> lock(mDataMutex);
         mSymbols.insert(symbol);
         mPrices[symbol] = {};
     }
 
-    void MarketData::unsubscribe(const std::string& symbol) {
+    void MarketData::unsubscribe(const std::string &symbol) {
         std::lock_guard<std::mutex> lock(mDataMutex);
         mSymbols.erase(symbol);
         mPrices.erase(symbol);
@@ -75,7 +77,7 @@ namespace ats {
         return mExchangeManager.getTradeHistory(symbol);
     }
 
-    void MarketData::updatePrice(const std::string& symbol) {
+    void MarketData::updatePrice(const std::string &symbol) {
         std::unique_lock<std::mutex> lock(mDataMutex);
         if (mPrices[symbol].size() == 1000)
             mPrices[symbol].erase(mPrices[symbol].begin());
@@ -89,7 +91,7 @@ namespace ats {
         std::unique_lock<std::mutex> lock(mDataMutex);
         auto mSymbolsCopy = mSymbols;
         lock.unlock();
-        for (const std::string& symbol : mSymbolsCopy)
+        for (const std::string &symbol: mSymbolsCopy)
             updatePrice(symbol);
     }
 
@@ -101,7 +103,7 @@ namespace ats {
         return price / getPrice(symbol);
     }
 
-    std::map<std::string,double> MarketData::getBalances() {
+    std::map<std::string, double> MarketData::getBalances() {
         return mExchangeManager.getBalances();
     }
 

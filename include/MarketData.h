@@ -25,13 +25,15 @@ namespace ats {
         std::unordered_set<std::string> mSymbols; /**< The set of symbols to subscribe to for market data */
         std::unordered_map<std::string, std::vector<double>> mPrices; /**< The current prices for each subscribed symbol */
         ExchangeManager& mExchangeManager; /**< A reference to the exchange manager used to retrieve market data */
+        time_t mUpdateInterval; /**< Interval between updates of locally recorded data */
 
     public:
         /**
          * @brief Constructs a new MarketData object.
          * @param ems A reference to the ExchangeManager object used to retrieve market data.
+         * @param updateInterval The interval between updates of local data, defaults to 1s.
          */
-        MarketData(ExchangeManager& ems);
+        MarketData(ExchangeManager& ems, time_t updateInterval=1);
 
         /**
          * @brief Destroys the MarketData object.
@@ -42,8 +44,9 @@ namespace ats {
          * @brief Constructs a new MarketData object.
          * @param symbols A vector of symbols to subscribe to for market data.
          * @param ems A reference to the ExchangeManager object used to retrieve market data.
+         * @param updateInterval The interval between updates of local data, defaults to 1s.
          */
-        explicit MarketData(const std::vector<std::string>& symbols, ExchangeManager& ems);
+        explicit MarketData(const std::vector<std::string>& symbols, ExchangeManager& ems, time_t updateInterval=1);
 
         /**
          * @brief Starts the market data stream.

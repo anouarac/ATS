@@ -39,15 +39,17 @@ public:
         double currentPrice = mData.getPrice(mSymbol);
         time_t new_t;
         time(&new_t);
-        if (difftime(new_t, mDataFetch) > 1)
+        if (difftime(new_t, mDataFetch) > 1) {
             mPrices.push_back(currentPrice);
+            time(&mDataFetch);
+        }
     }
 
     virtual double getSignal() override {
         updatePrice();
 
         double shortSMA = 0.0, longSMA = 0.0;
-        int shortPeriod = 10, longPeriod = 150;
+        int shortPeriod = 10, longPeriod = 50;
         if (mPrices.size() >= shortPeriod) {
             shortSMA = std::accumulate(mPrices.end() - shortPeriod, mPrices.end(), 0.0) / shortPeriod;
         }

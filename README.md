@@ -6,7 +6,7 @@ It currently supports the Binance Exchange but the project is modular and any ex
 ![User Interface](screenshots/exchange-ui.png)
 
 ## Prerequisites
-The project requires C++ 14 and CMake.
+The project requires C++ 17 and CMake.
 
 Submodules include [binance-cxx-api](https://github.com/dmikushin/binance-cxx-api), [GoogleTest](https://github.com/google/googletest) and their dependencies.
 

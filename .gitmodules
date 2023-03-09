@@ -4,7 +4,7 @@
 [submodule "external/googletest"]
 	path = external/googletest
 	url = https://github.com/google/googletest.git
-[submodule "exchange-ui"]
+[submodule "external/exchange-ui"]
 	path = exchange-ui
 	url = https://github.com/anouarac/exchange-ui
 [submodule "external/exchange-ui/implot"]

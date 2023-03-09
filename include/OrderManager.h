@@ -107,7 +107,7 @@ namespace ats {
          */
         Order(long id, OrderType type, Side side, std::string symbol, double quantity, double price,
               double stopPrice = 0., double icebergQty = 0., long recvWindow = 0, long emsId = 0,
-              std::string timeInForce = "GTC", time_t time=0) {
+              std::string timeInForce = "", time_t time=0) {
             this->id = id;
             this->side = side;
             this->symbol = symbol;
@@ -192,7 +192,7 @@ namespace ats {
          * @param quantity The quantity to trade
          * @param price The price to trade
          */
-        void createOrder(OrderType type, Side side, std::string symbol, double quantity, double price);
+        void createOrder(OrderType type, Side side, std::string symbol, double quantity, double price=0);
 
         /**
          * @brief Cancel an order

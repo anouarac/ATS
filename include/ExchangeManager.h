@@ -102,6 +102,14 @@ namespace ats {
          * @return The current price of the symbol.
          */
         virtual double getPrice(std::string symbol) = 0;
+
+        /**
+         * @brief Retrieves the order book.
+         *
+         * @param symbol The symbol to retrieve the order book for.
+         * @return The bid and ask vectors.
+         */
+        virtual OrderBook getOrderBook(std::string symbol) = 0;
     };
 
 }

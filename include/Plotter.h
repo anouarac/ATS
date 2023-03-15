@@ -143,6 +143,8 @@ public:
 
     std::string getStrInterval(Interval interval);
 
+    ats::OrderBook get_order_book(std::string ticker);
+
     double jsonToDouble(Json::Value);
 };
 
@@ -185,11 +187,13 @@ struct ImBinance : App {
         auto d = m_api.get_ticker("BTCUSDT", t1, t2, interval);
         auto v = m_api.get_open_orders("BTCUSDT");
         auto b = m_api.get_balances();
+        auto o = m_api.get_order_book("BTCUSDT");
         if (d.ticker != "ERROR") {
             d.interval = interval;
             m_ticker_data[d.ticker] = d;
             m_open_orders[d.ticker] = v;
             m_balances = b;
+            m_order_books[d.ticker] = o;
         }
         ImPlot::GetStyle().FitPadding.y = 0.2f;
         ImGui::StyleColorsDark();
@@ -201,11 +205,13 @@ struct ImBinance : App {
         auto m_ticker_data_copy = m_ticker_data;
         auto m_open_orders_copy = m_open_orders;
         auto m_balances_copy = m_balances;
+        auto m_order_books_copy = m_order_books;
         for (auto &pair: m_ticker_data_copy) {
             auto &data = pair.second;
             auto d = m_api.update_ticker(data.ticker, data.interval);
             auto v = m_api.get_open_orders(data.ticker);
             auto b = m_api.get_balances();
+            auto o = m_api.get_order_book(data.ticker);
             while (d.size() && data.size() && d.time[0] < data.time.back())
                 d.pop_front();
             if (data.size() && d.size() && data.time.back() == d.time[0])
@@ -215,6 +221,7 @@ struct ImBinance : App {
                 data.push_back(d);
                 m_open_orders_copy[d.ticker] = v;
                 m_balances_copy = b;
+                m_order_books_copy[d.ticker] = o;
             }
             ImPlot::GetStyle().FitPadding.y = 0.2f;
         }
@@ -222,6 +229,7 @@ struct ImBinance : App {
         m_open_orders_copy.swap(m_open_orders);
         m_balances_copy.swap(m_balances);
         m_ticker_data_copy.swap(m_ticker_data);
+        m_order_books_copy.swap(m_order_books);
         m_done_upd = 1;
     }
 
@@ -245,7 +253,7 @@ struct ImBinance : App {
 
         time_t end_time;
         time(&end_time);
-        if (difftime(end_time, start_time) > 1) {
+        if (difftime(end_time, start_time) > 0) {
             if (m_done_upd) {
                 if (t.joinable())
                     t.join();
@@ -298,10 +306,12 @@ struct ImBinance : App {
             auto d = m_api.get_ticker(buff, t1, t2, interval);
             d.interval = interval;
             auto v = m_api.get_open_orders(buff);
+            auto o = m_api.get_order_book(buff);
             std::lock_guard<std::mutex> lock(m_data_mutex);
             if (d.ticker != "ERROR") {
                 m_ticker_data[d.ticker] = d;
                 m_open_orders[d.ticker] = v;
+                m_order_books[d.ticker] = o;
             } else
                 fmt::print("Failed to get data for ticker symbol {}!\n", buff);
         }
@@ -379,7 +389,7 @@ struct ImBinance : App {
                     }
 
                     ImGui::SameLine();
-                    if (ImGui::BeginChild("##Open Orders", ImVec2(0.25*windowSize.x, 0.45*windowSize.y), true)) {
+                    if (ImGui::BeginChild("Open orders", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), true)) {
                         std::vector<ats::Order> open_orders = m_open_orders[data.ticker];
                         // display orders in a table
                         if (!open_orders.empty()) {
@@ -421,10 +431,45 @@ struct ImBinance : App {
                         }
                         ImGui::EndChild();
                     }
+
                     ImGui::SameLine();
-                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.45*windowSize.y);
-                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 0.25*windowSize.x);
-                    if (ImGui::BeginChild("##Balances", ImVec2(0.25*windowSize.x, 0.45*windowSize.y), true)) {
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.3*windowSize.y);
+                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 0.35*windowSize.x);
+                    if (ImGui::BeginChild("Order book", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), true)) {
+                        ats::OrderBook orderBook = m_order_books[data.ticker];
+                        if (!orderBook.bid.empty() || !orderBook.ask.empty()) {
+                            ImGui::Columns(2, "OrderBook", true);
+                            ImGui::Text("Price");
+                            ImGui::NextColumn();
+                            ImGui::Text("Volume");
+                            ImGui::NextColumn();
+                            ImGui::Separator();
+                            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+                            for (int i = 0; i < std::min(10, (int)orderBook.ask.size()); i++) {
+                                ImGui::Text("%f", orderBook.ask[i]);
+                                ImGui::NextColumn();
+                                ImGui::Text("%f", orderBook.askVol[i]);
+                                ImGui::NextColumn();
+                            }
+                            ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+                            for (int i = 0; i < std::min(10, (int)orderBook.bid.size()); i++) {
+                                ImGui::Text("%f", orderBook.bid[i]);
+                                ImGui::NextColumn();
+                                ImGui::Text("%f", orderBook.bidVol[i]);
+                                ImGui::NextColumn();
+                            }
+                            ImGui::Columns(1);
+                            ImGui::PopStyleColor(2);
+                        } else {
+                            ImGui::Text("No orders.");
+                        }
+                        ImGui::EndChild();
+                    }
+
+                    ImGui::SameLine();
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.6*windowSize.y);
+                    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 0.35*windowSize.x);
+                    if (ImGui::BeginChild("Balances", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), false)) {
                         auto &b = m_balances;
                         if (!b.empty()) {
                             ImGui::Columns(2, "BalancesTable", true);
@@ -446,7 +491,6 @@ struct ImBinance : App {
                         ImGui::EndChild();
                     }
 
-
                     ImGui::EndTabItem();
                 }
             }
@@ -462,6 +506,7 @@ struct ImBinance : App {
     std::map<std::string, TickerData> m_ticker_data;
     std::map<std::string, std::vector<ats::Order>> m_open_orders;
     std::vector<std::pair<std::string, double>> m_balances;
+    std::map<std::string, ats::OrderBook> m_order_books;
     std::thread t;
     std::mutex m_data_mutex;
 

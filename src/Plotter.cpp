@@ -14,7 +14,7 @@ TickerData BinanceAPI::get_ticker(std::string ticker, ImPlotTime start_date, ImP
 
     try {
         TickerData data(ticker);
-        for (Json::Value::ArrayIndex i = 0; i < result.size(); i++) {
+        for (Json::Value::ArrayIndex i = 0; i < std::max(Json::Value::ArrayIndex(1), result.size()); i++) {
             double t = jsonToDouble(result[i][0])/1000;
             double o = jsonToDouble(result[i][1]);
             double h = jsonToDouble(result[i][2]);
@@ -65,6 +65,13 @@ std::vector<std::pair<std::string,double>> BinanceAPI::get_balances() {
         balances.push_back(std::make_pair(res["asset"].asString(), jsonToDouble(res["free"])));
     }
     return balances;
+}
+
+ats::OrderBook BinanceAPI::get_order_book(std::string ticker) {
+    ats::OrderBook ob = ems.getOrderBook(ticker);
+    reverse(ob.ask.begin(), ob.ask.end());
+    reverse(ob.askVol.begin(), ob.askVol.end());
+    return ob;
 }
 
 std::string BinanceAPI::getStrInterval(Interval interval) {

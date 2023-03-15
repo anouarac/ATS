@@ -193,6 +193,14 @@ namespace ats {
          * @returns Map of pairs {asset, Qty}.
          */
          std::map<std::string,double> getBalances() override;
+
+        /**
+        * @brief Retrieves the order book.
+        *
+        * @param symbol The symbol to retrieve the order book for.
+        * @return The bid and ask vectors.
+        */
+        virtual OrderBook getOrderBook(std::string symbol) override;
     };
 
 } // ats

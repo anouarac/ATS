@@ -124,6 +124,29 @@ namespace ats {
     };
 
     /**
+     * @brief The OrderBook struct represents the orderbook.
+     */
+    struct OrderBook{
+        std::vector<double> bid; /**< The bid prices. */
+        std::vector<double> bidVol; /**< The bid volumes. */
+        std::vector<double> ask; /**< The ask prices. */
+        std::vector<double> askVol; /**< The ask volumes. */
+        /**
+         * @brief The OrderBook constructor.
+         * @param bid The bid prices.
+         * @param bidVol The bid volumes.
+         * @param ask The ask prices.
+         * @param askVol The ask volumes.
+         */
+        OrderBook(std::vector<double> bid={}, std::vector<double> bidVol={}, std::vector<double> ask={}, std::vector<double> askVol={}) {
+            this->bid = bid;
+            this->bidVol = bidVol;
+            this->ask = ask;
+            this->askVol = askVol;
+        }
+    };
+
+    /**
      * @brief A class for managing orders
      */
     class OrderManager {
@@ -193,6 +216,13 @@ namespace ats {
          * @param price The price to trade
          */
         void createOrder(OrderType type, Side side, std::string symbol, double quantity, double price=0);
+
+        /**
+         * @brief Add an order to the queue
+         *
+         * @param order The order to add
+         */
+        void createOrder(Order order);
 
         /**
          * @brief Cancel an order

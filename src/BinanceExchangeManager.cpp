@@ -200,4 +200,19 @@ namespace ats {
         return balances;
     }
 
+    OrderBook BinanceExchangeManager::getOrderBook(std::string symbol) {
+        Json::Value result;
+        BINANCE_ERR_CHECK(mMarket.getDepth(result, symbol.c_str()));
+        std::vector<double> bids, bidVol, asks, askVol;
+        for (auto &bid : result["bids"]) {
+            bids.push_back(stod(bid[0].asString()));
+            bidVol.push_back(stod(bid[1].asString()));
+        }
+        for (auto &ask : result["asks"]) {
+            asks.push_back(stod(ask[0].asString()));
+            askVol.push_back(stod(ask[1].asString()));
+        }
+        return OrderBook(bids, bidVol, asks, askVol);
+    }
+
 } // ats

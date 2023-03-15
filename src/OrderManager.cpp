@@ -91,6 +91,12 @@ namespace ats {
         mPendingOrders.push(Order(id, type, side, symbol, quantity, price));
     }
 
+    void OrderManager::createOrder(Order order) {
+        mSymbols.insert(order.symbol);
+        order.id = getNewOrderId();
+        mPendingOrders.push(order);
+    }
+
     void OrderManager::cancelOrder(long orderId, std::string symbol) {
         mCancelOrders.push({orderId, symbol});
     }

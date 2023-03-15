@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include "ExchangeManager.h"
+#include "OrderManager.h"
 
 namespace ats {
     /**
@@ -26,6 +27,7 @@ namespace ats {
         std::unordered_map<std::string, std::vector<double>> mPrices; /**< The current prices for each subscribed symbol */
         ExchangeManager& mExchangeManager; /**< A reference to the exchange manager used to retrieve market data */
         time_t mUpdateInterval; /**< Interval between updates of locally recorded data */
+        std::unordered_map<std::string,OrderBook> mOrderBooks; /**< The order books for each subscribed symbol */
 
     public:
         /**
@@ -116,6 +118,13 @@ namespace ats {
          */
          std::map<std::string,double> getBalances();
 
+         /**
+          * @brief Retrieves the OrderBook.
+          * @param symbol Symbol for which to get the order book.
+          * @return Current OrderBook.
+          */
+          OrderBook getOrderBook(const std::string &symbol);
+
     private:
         /**
          * @brief Updates the price for a symbol.
@@ -127,6 +136,17 @@ namespace ats {
          * @brief Updates the prices for all subscribed symbols.
          */
         void updatePrices();
+
+        /**
+         * @brief Updates the order book for a symbol.
+         * @param symbol The symbol to update the price for.
+         */
+        void updateOrderBook(const std::string& symbol);
+
+        /**
+         * @brief Updates the order books for all subscribed symbols.
+         */
+        void updateOrderBooks();
 
     };
 

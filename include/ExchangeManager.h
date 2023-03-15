@@ -46,8 +46,9 @@ namespace ats {
          * @brief Sends an order to the exchange.
          *
          * @param order The order to be sent to the exchange.
+         * @return Filled quantity.
          */
-        virtual void sendOrder(Order &order) = 0;
+        virtual double sendOrder(Order &order) = 0;
 
         /**
          * @brief Modifies an existing order on the exchange.

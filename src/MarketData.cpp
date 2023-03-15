@@ -117,7 +117,7 @@ namespace ats {
     }
 
     void MarketData::updateOrderBook(const std::string &symbol) {
-        OrderBook orderBook = getOrderBook(symbol);
+        OrderBook orderBook = mExchangeManager.getOrderBook(symbol);
         std::lock_guard<std::mutex> lock(mDataMutex);
         mOrderBooks[symbol] = orderBook;
     }

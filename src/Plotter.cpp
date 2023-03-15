@@ -14,7 +14,7 @@ TickerData BinanceAPI::get_ticker(std::string ticker, ImPlotTime start_date, ImP
 
     try {
         TickerData data(ticker);
-        for (Json::Value::ArrayIndex i = 0; i < std::max(Json::Value::ArrayIndex(1), result.size()); i++) {
+        for (Json::Value::ArrayIndex i = 0; i < result.size(); i++) {
             double t = jsonToDouble(result[i][0])/1000;
             double o = jsonToDouble(result[i][1]);
             double h = jsonToDouble(result[i][2]);

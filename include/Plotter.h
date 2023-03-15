@@ -253,7 +253,7 @@ struct ImBinance : App {
 
         time_t end_time;
         time(&end_time);
-        if (difftime(end_time, start_time) > 0) {
+        if (difftime(end_time, start_time) > 3) {
             if (m_done_upd) {
                 if (t.joinable())
                     t.join();
@@ -389,9 +389,13 @@ struct ImBinance : App {
                     }
 
                     ImGui::SameLine();
-                    if (ImGui::BeginChild("Open orders", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), true)) {
+                    if (ImGui::BeginChild("##OpenOrders", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), true)) {
                         std::vector<ats::Order> open_orders = m_open_orders[data.ticker];
                         // display orders in a table
+                        ImFont* font = ImGui::GetIO().Fonts->Fonts[0];
+                        font->Scale = 1.2f;
+                        ImGui::Text("MY ORDERS", true);
+                        font->Scale = 1.0f;
                         if (!open_orders.empty()) {
                             ImGui::Columns(6, "OpenOrdersTable", true);
                             ImGui::Text("Type");
@@ -433,11 +437,17 @@ struct ImBinance : App {
                     }
 
                     ImGui::SameLine();
-                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.3*windowSize.y);
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.31*windowSize.y);
                     ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 0.35*windowSize.x);
-                    if (ImGui::BeginChild("Order book", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), true)) {
+                    if (ImGui::BeginChild("##Order book", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), true)) {
                         ats::OrderBook orderBook = m_order_books[data.ticker];
                         if (!orderBook.bid.empty() || !orderBook.ask.empty()) {
+                            ImFont* font = ImGui::GetIO().Fonts->Fonts[0];
+                            font->Scale = 1.2f;
+                            ImGui::Text("ORDER BOOK", true);
+                            font->Scale = 1.0f;
+                            ImGui::NextColumn();
+                            ImGui::Separator();
                             ImGui::Columns(2, "OrderBook", true);
                             ImGui::Text("Price");
                             ImGui::NextColumn();
@@ -445,14 +455,14 @@ struct ImBinance : App {
                             ImGui::NextColumn();
                             ImGui::Separator();
                             ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
-                            for (int i = 0; i < std::min(10, (int)orderBook.ask.size()); i++) {
+                            for (int i = 0; i < std::min(4, (int)orderBook.ask.size()); i++) {
                                 ImGui::Text("%f", orderBook.ask[i]);
                                 ImGui::NextColumn();
                                 ImGui::Text("%f", orderBook.askVol[i]);
                                 ImGui::NextColumn();
                             }
                             ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-                            for (int i = 0; i < std::min(10, (int)orderBook.bid.size()); i++) {
+                            for (int i = 0; i < std::min(4, (int)orderBook.bid.size()); i++) {
                                 ImGui::Text("%f", orderBook.bid[i]);
                                 ImGui::NextColumn();
                                 ImGui::Text("%f", orderBook.bidVol[i]);
@@ -467,10 +477,14 @@ struct ImBinance : App {
                     }
 
                     ImGui::SameLine();
-                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.6*windowSize.y);
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 0.62*windowSize.y);
                     ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 0.35*windowSize.x);
-                    if (ImGui::BeginChild("Balances", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), false)) {
-                        auto &b = m_balances;
+                    if (ImGui::BeginChild("##Balances", ImVec2(0.35*windowSize.x, 0.3*windowSize.y), false)) {
+                        ImFont* font = ImGui::GetIO().Fonts->Fonts[0];
+                        font->Scale = 1.2f;
+                        ImGui::Text("MY BALANCE", true);
+                        font->Scale = 1.0f;
+                         auto &b = m_balances;
                         if (!b.empty()) {
                             ImGui::Columns(2, "BalancesTable", true);
                             ImGui::Text("Asset");

@@ -47,8 +47,8 @@ namespace ats {
          * @param api_key The API key for the Binance exchange account.
          * @param secret_key The secret key for the Binance exchange account.
          */
-        explicit BinanceExchangeManager(OrderManager &orderManager, bool isSimulation = true, std::string api_key = "",
-                                        std::string secret_key = "");
+        explicit BinanceExchangeManager(OrderManager &orderManager, bool isSimulation = true, std::string apiKey = "",
+                                        std::string secretKey = "");
 
         /**
          * @brief Destructor for BinanceExchangeManager class.
@@ -94,8 +94,9 @@ namespace ats {
          * @brief Send an order to the Binance exchange.
          *
          * @param order The Order object to be sent.
+         * @return Filled quantity.
          */
-        void sendOrder(Order &order) override;
+        double sendOrder(Order &order) override;
 
         /**
          * @brief Modify an existing order on the Binance exchange.

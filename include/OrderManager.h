@@ -160,7 +160,8 @@ namespace ats {
         std::mutex mOrderFetchMutex; ///< A mutex for accessing mSentOrders
         bool mRunning; ///< A flag indicating if the order manager is running
         long mOrderCount; ///< A counter for the number of orders processed
-        std::set<std::string> mSymbols;
+        std::set<std::string> mSymbols; ///< A set of subscribed symbols
+        double mLastOrderQty;
     public:
         /**
          * @brief Construct a new OrderManager object
@@ -205,6 +206,19 @@ namespace ats {
          * @return true if the order manager is running, false otherwise
          */
         bool isRunning();
+
+        /**
+         * @brief Get last filled order quantity
+         *
+         * @return -1 if not set, quantity of last filled order otherwise.
+         */
+         double getLastOrderQty();
+
+         /**
+          * @brief Sets last filled order quantity
+          *
+          */
+          void setLastOrderQty(double qty);
 
         /**
          * @brief Create a new order and add it to the queue

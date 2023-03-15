@@ -74,16 +74,23 @@ namespace ats {
         mOrderManager.updateOpenOrders(openOrders);
     }
 
-    void BinanceExchangeManager::sendOrder(Order &order) {
+    double BinanceExchangeManager::sendOrder(Order &order) {
         Json::Value result;
         BINANCE_ERR_CHECK(mAccount.sendOrder(result, order.symbol.c_str(),
                                              SideToString(order.side).c_str(), OrderTypeToString(order.type).c_str(),
                                              order.timeInForce.c_str(), order.quantity, order.price, "",
                                              order.stopPrice, order.icebergQty, order.recvWindow));
         Logger::write_log(result.toStyledString().c_str());
-        order.emsId = result["orderId"].asInt64();
+        if (result.isMember("orderId"))
+            order.emsId = result["orderId"].asInt64();
         omsToEmsId[order.id] = order.emsId;
         emsToOmsId[order.emsId] = order.id;
+        if (result.isMember("executedQty")) {
+            mOrderManager.setLastOrderQty(stod(result["executedQty"].asString()));
+            return stod(result["executedQty"].asString());
+        }
+        mOrderManager.setLastOrderQty(0);
+        return 0;
     }
 
     void BinanceExchangeManager::modifyOrder(Order &oldOrder, Order &newOrder) {

@@ -47,6 +47,14 @@ target_compile_features(exchange_ui PUBLIC cxx_std_17)
 add_executable(strategy examples/strategy.cpp)
 target_link_libraries(strategy ${PROJECT_NAME})
 target_compile_features(strategy PUBLIC cxx_std_17)
+## market_making
+add_executable(market_making examples/market_making.cpp)
+target_link_libraries(market_making ${PROJECT_NAME})
+target_compile_features(market_making PUBLIC cxx_std_17)
+## reset_testnet_balance
+add_executable(reset_testnet_balance examples/reset_testnet_balance.cpp)
+target_link_libraries(reset_testnet_balance ${PROJECT_NAME})
+target_compile_features(reset_testnet_balance PUBLIC cxx_std_17)
 
 # Testing
 enable_testing()

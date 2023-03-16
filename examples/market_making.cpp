@@ -124,8 +124,8 @@ int main(int argc, char const *argv[]) {
     binance::Logger::set_debug_level(1);
     binance::Logger::set_debug_logfp(stderr);
     OrderManager oms;
-    BinanceExchangeManager ems(oms, 1);
-    MarketData md({"BTCUSDT", "BTCBUSD"}, ems);
+    BinanceExchangeManager ems(oms, 1, 1);
+    MarketData md({"BTCUSDT", "BTCBUSD"}, ems, 1);
     MMStrategy strat("BTCBUSD", md, oms, "BTCUSDT");
     ImBinance app("ImBinance", 1280, 800, argc, argv, ems);
     app.Run();

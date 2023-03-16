@@ -28,6 +28,7 @@ namespace ats {
         ExchangeManager& mExchangeManager; /**< A reference to the exchange manager used to retrieve market data */
         time_t mUpdateInterval; /**< Interval between updates of locally recorded data */
         std::unordered_map<std::string,OrderBook> mOrderBooks; /**< The order books for each subscribed symbol */
+        std::map<std::string,double> mBalances;
 
     public:
         /**
@@ -148,6 +149,10 @@ namespace ats {
          */
         void updateOrderBooks();
 
+        /**
+         * @brief Updates balances.
+         */
+        void updateBalances();
     };
 
 

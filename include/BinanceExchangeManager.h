@@ -37,6 +37,7 @@ namespace ats {
         bool mRunning; ///< Flag to indicate if the exchange manager thread is running or not.
         std::thread mExchangeManagerThread; ///< Thread for running the exchange manager.
         std::map<long, long> omsToEmsId, emsToOmsId; ///< Maps to track order IDs between OMS and EMS.
+        time_t mUpdateInterval; ///< Open orders update interval.
 
     public:
         /**
@@ -44,10 +45,11 @@ namespace ats {
          *
          * @param orderManager Reference to the OrderManager object.
          * @param isSimulation A boolean indicating whether the exchange is a simulation or not.
+         * @param updateInterval Open orders update period.
          * @param api_key The API key for the Binance exchange account.
          * @param secret_key The secret key for the Binance exchange account.
          */
-        explicit BinanceExchangeManager(OrderManager &orderManager, bool isSimulation = true, std::string apiKey = "",
+        explicit BinanceExchangeManager(OrderManager &orderManager, bool isSimulation = true, time_t updateInterval=1, std::string apiKey = "",
                                         std::string secretKey = "");
 
         /**

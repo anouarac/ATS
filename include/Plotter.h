@@ -226,6 +226,12 @@ struct ImBinance : App {
             ImPlot::GetStyle().FitPadding.y = 0.2f;
         }
         std::lock_guard<std::mutex> lock(m_data_mutex);
+        for (auto &pair : m_ticker_data)
+            if (!m_ticker_data_copy.count(pair.first)) {
+                m_ticker_data_copy[pair.first] = pair.second;
+                m_open_orders_copy[pair.first] = m_open_orders[pair.first];
+                m_order_books_copy[pair.first] = m_order_books[pair.first];
+            }
         m_open_orders_copy.swap(m_open_orders);
         m_balances_copy.swap(m_balances);
         m_ticker_data_copy.swap(m_ticker_data);

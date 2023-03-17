@@ -124,6 +124,29 @@ namespace ats {
     };
 
     /**
+     * @brief The OrderBook struct represents the orderbook.
+     */
+    struct OrderBook{
+        std::vector<double> bid; /**< The bid prices. */
+        std::vector<double> bidVol; /**< The bid volumes. */
+        std::vector<double> ask; /**< The ask prices. */
+        std::vector<double> askVol; /**< The ask volumes. */
+        /**
+         * @brief The OrderBook constructor.
+         * @param bid The bid prices.
+         * @param bidVol The bid volumes.
+         * @param ask The ask prices.
+         * @param askVol The ask volumes.
+         */
+        OrderBook(std::vector<double> bid={}, std::vector<double> bidVol={}, std::vector<double> ask={}, std::vector<double> askVol={}) {
+            this->bid = bid;
+            this->bidVol = bidVol;
+            this->ask = ask;
+            this->askVol = askVol;
+        }
+    };
+
+    /**
      * @brief A class for managing orders
      */
     class OrderManager {
@@ -137,7 +160,8 @@ namespace ats {
         std::mutex mOrderFetchMutex; ///< A mutex for accessing mSentOrders
         bool mRunning; ///< A flag indicating if the order manager is running
         long mOrderCount; ///< A counter for the number of orders processed
-        std::set<std::string> mSymbols;
+        std::set<std::string> mSymbols; ///< A set of subscribed symbols
+        double mLastOrderQty;
     public:
         /**
          * @brief Construct a new OrderManager object
@@ -184,6 +208,19 @@ namespace ats {
         bool isRunning();
 
         /**
+         * @brief Get last filled order quantity
+         *
+         * @return -1 if not set, quantity of last filled order otherwise.
+         */
+         double getLastOrderQty();
+
+         /**
+          * @brief Sets last filled order quantity
+          *
+          */
+          void setLastOrderQty(double qty);
+
+        /**
          * @brief Create a new order and add it to the queue
          *
          * @param type The type of order
@@ -193,6 +230,13 @@ namespace ats {
          * @param price The price to trade
          */
         void createOrder(OrderType type, Side side, std::string symbol, double quantity, double price=0);
+
+        /**
+         * @brief Add an order to the queue
+         *
+         * @param order The order to add
+         */
+        void createOrder(Order order);
 
         /**
          * @brief Cancel an order

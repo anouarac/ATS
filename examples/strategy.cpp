@@ -77,9 +77,9 @@ public:
         if (difftime(curTime, mLastOrder) < 15)
             return;
         updateBalance();
-        mOrderManager.createOrder(LIMIT, BUY, mSymbol,
-                                  floor(mData.getQtyForPrice(mSymbol, 0.01 * mBalances["USDT"]) * 1e6) / 1e6,
-                                  mPrices.back());
+        mOrderManager.createOrder(Order(0, LIMIT, BUY, mSymbol,
+                                        floor(mData.getQtyForPrice(mSymbol, 0.01 * mBalances["USDT"]) * 1e6) / 1e6,
+                                        mPrices.back(), 0, 0, 0, 0, "GTC", 0));
         time(&mLastOrder);
     }
 
@@ -89,9 +89,9 @@ public:
         if (difftime(curTime, mLastOrder) < 15)
             return;
         updateBalance();
-        mOrderManager.createOrder(LIMIT, SELL, mSymbol,
+        mOrderManager.createOrder(Order(0, LIMIT, SELL, mSymbol,
                                   floor(mData.getQtyForPrice(mSymbol, 0.01 * mBalances["USDT"]) * 1e6) / 1e6,
-                                  mPrices.back());
+                                  mPrices.back(), 0, 0, 0, 0, "GTC", 0));
         time(&mLastOrder);
     }
 };

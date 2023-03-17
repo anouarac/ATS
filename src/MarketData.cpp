@@ -33,7 +33,9 @@ namespace ats {
             time(&newUpd);
             if (difftime(newUpd, lastUpd) > mUpdateInterval) {
                 updatePrices();
-                lastUpd = newUpd;
+                updateOrderBooks();
+                updateBalances();
+                time(&lastUpd);
             }
         }
     }
@@ -47,6 +49,7 @@ namespace ats {
     void MarketData::subscribe(const std::string &symbol) {
         std::lock_guard<std::mutex> lock(mDataMutex);
         mSymbols.insert(symbol);
+        mOrderBooks[symbol] = {};
         mPrices[symbol] = {};
     }
 
@@ -54,6 +57,7 @@ namespace ats {
         std::lock_guard<std::mutex> lock(mDataMutex);
         mSymbols.erase(symbol);
         mPrices.erase(symbol);
+        mOrderBooks.erase(symbol);
     }
 
     double MarketData::getPrice(const std::string symbol) {
@@ -80,7 +84,7 @@ namespace ats {
     void MarketData::updatePrice(const std::string &symbol) {
         std::unique_lock<std::mutex> lock(mDataMutex);
         if (mPrices[symbol].size() == 1000)
-            mPrices[symbol].erase(mPrices[symbol].begin());
+            mPrices[symbol].erase(mPrices[symbol].begin(), mPrices[symbol].begin()+500);
         lock.unlock();
         double price = mExchangeManager.getPrice(symbol);
         lock.lock();
@@ -104,7 +108,35 @@ namespace ats {
     }
 
     std::map<std::string, double> MarketData::getBalances() {
-        return mExchangeManager.getBalances();
+        std::lock_guard<std::mutex> lock(mDataMutex);
+        return mBalances;
+    }
+
+    OrderBook MarketData::getOrderBook(const std::string &symbol) {
+        std::lock_guard<std::mutex> lock(mDataMutex);
+        if (mOrderBooks.count(symbol))
+            return mOrderBooks[symbol];
+        return {};
+    }
+
+    void MarketData::updateOrderBook(const std::string &symbol) {
+        OrderBook orderBook = mExchangeManager.getOrderBook(symbol);
+        std::lock_guard<std::mutex> lock(mDataMutex);
+        mOrderBooks[symbol] = orderBook;
+    }
+
+    void MarketData::updateOrderBooks() {
+        std::unique_lock<std::mutex> lock(mDataMutex);
+        auto mSymbolsCopy = mSymbols;
+        lock.unlock();
+        for (const std::string &symbol: mSymbolsCopy)
+            updateOrderBook(symbol);
+    }
+
+    void MarketData::updateBalances() {
+        auto balances = mExchangeManager.getBalances();
+        std::unique_lock<std::mutex> lock(mDataMutex);
+        balances.swap(mBalances);
     }
 
 } // ats

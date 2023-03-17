@@ -37,6 +37,7 @@ namespace ats {
         bool mRunning; ///< Flag to indicate if the exchange manager thread is running or not.
         std::thread mExchangeManagerThread; ///< Thread for running the exchange manager.
         std::map<long, long> omsToEmsId, emsToOmsId; ///< Maps to track order IDs between OMS and EMS.
+        time_t mUpdateInterval; ///< Open orders update interval.
 
     public:
         /**
@@ -44,11 +45,12 @@ namespace ats {
          *
          * @param orderManager Reference to the OrderManager object.
          * @param isSimulation A boolean indicating whether the exchange is a simulation or not.
+         * @param updateInterval Open orders update period.
          * @param api_key The API key for the Binance exchange account.
          * @param secret_key The secret key for the Binance exchange account.
          */
-        explicit BinanceExchangeManager(OrderManager &orderManager, bool isSimulation = true, std::string api_key = "",
-                                        std::string secret_key = "");
+        explicit BinanceExchangeManager(OrderManager &orderManager, bool isSimulation = true, time_t updateInterval=1, std::string apiKey = "",
+                                        std::string secretKey = "");
 
         /**
          * @brief Destructor for BinanceExchangeManager class.
@@ -94,8 +96,9 @@ namespace ats {
          * @brief Send an order to the Binance exchange.
          *
          * @param order The Order object to be sent.
+         * @return Filled quantity.
          */
-        void sendOrder(Order &order) override;
+        double sendOrder(Order &order) override;
 
         /**
          * @brief Modify an existing order on the Binance exchange.
@@ -193,6 +196,14 @@ namespace ats {
          * @returns Map of pairs {asset, Qty}.
          */
          std::map<std::string,double> getBalances() override;
+
+        /**
+        * @brief Retrieves the order book.
+        *
+        * @param symbol The symbol to retrieve the order book for.
+        * @return The bid and ask vectors.
+        */
+        virtual OrderBook getOrderBook(std::string symbol) override;
     };
 
 } // ats

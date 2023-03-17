@@ -8,11 +8,11 @@
 namespace ats {
     using namespace binance;
 
-    BinanceExchangeManager::BinanceExchangeManager(OrderManager &orderManager, bool isSimulation, std::string api_key,
+    BinanceExchangeManager::BinanceExchangeManager(OrderManager &orderManager, bool isSimulation, time_t updateInterval, std::string api_key,
                                                    std::string secret_key) :
             ExchangeManager(orderManager),
             mServer(isSimulation ? Server("https://testnet.binance.vision", 1) : Server()),
-            mMarket(mServer), mAccount(mServer, api_key, secret_key) {
+            mMarket(mServer), mAccount(mServer, api_key, secret_key), mUpdateInterval(updateInterval) {
         start();
     }
 
@@ -27,7 +27,10 @@ namespace ats {
     }
 
     void BinanceExchangeManager::run() {
+        time_t lastUpd{0};
         while (mRunning) {
+            time_t newUpd;
+            time(&newUpd);
             if (mOrderManager.hasOrders()) {
                 Order &order = mOrderManager.getOldestOrder();
                 sendOrder(order);
@@ -36,7 +39,10 @@ namespace ats {
                 std::pair<long, std::string> order = mOrderManager.getCancelOrder();
                 cancelOrder(order.first, order.second);
             }
+            if (difftime(newUpd, lastUpd) < mUpdateInterval)
+                continue;
             updateOpenOrders();
+            time(&lastUpd);
         }
     }
 
@@ -74,16 +80,23 @@ namespace ats {
         mOrderManager.updateOpenOrders(openOrders);
     }
 
-    void BinanceExchangeManager::sendOrder(Order &order) {
+    double BinanceExchangeManager::sendOrder(Order &order) {
         Json::Value result;
         BINANCE_ERR_CHECK(mAccount.sendOrder(result, order.symbol.c_str(),
                                              SideToString(order.side).c_str(), OrderTypeToString(order.type).c_str(),
                                              order.timeInForce.c_str(), order.quantity, order.price, "",
                                              order.stopPrice, order.icebergQty, order.recvWindow));
         Logger::write_log(result.toStyledString().c_str());
-        order.emsId = result["orderId"].asInt64();
+        if (result.isMember("orderId"))
+            order.emsId = result["orderId"].asInt64();
         omsToEmsId[order.id] = order.emsId;
         emsToOmsId[order.emsId] = order.id;
+        if (result.isMember("executedQty")) {
+            mOrderManager.setLastOrderQty(stod(result["executedQty"].asString()));
+            return stod(result["executedQty"].asString());
+        }
+        mOrderManager.setLastOrderQty(0);
+        return 0;
     }
 
     void BinanceExchangeManager::modifyOrder(Order &oldOrder, Order &newOrder) {
@@ -107,20 +120,24 @@ namespace ats {
     }
 
     Order BinanceExchangeManager::jsonToOrder(Json::Value &result) {
-        std::string symbol = result["symbol"].asString();
-        long emsId = stol(result["orderId"].asString());
-        long omsId = (emsToOmsId.find(emsId) != emsToOmsId.end() ? emsToOmsId[emsId] : 0);
-        double price = stod(result["price"].asString());
-        double quantity = stod(result["origQty"].asString());
-        Side side = stringToSide(result["side"].asString());
-        OrderType type = stringToOrderType(result["type"].asString());
-        std::string timeInForce = result["timeInForce"].asString();
-        double stopPrice = stod(result["stopPrice"].asString());
-        double icebergQty = stod(result["icebergQty"].asString());
-        long time = stol(result["time"].asString()) / 1000;
+        try {
+            std::string symbol = result["symbol"].asString();
+            long emsId = stol(result["orderId"].asString());
+            long omsId = (emsToOmsId.find(emsId) != emsToOmsId.end() ? emsToOmsId[emsId] : 0);
+            double price = stod(result["price"].asString());
+            double quantity = stod(result["origQty"].asString());
+            Side side = stringToSide(result["side"].asString());
+            OrderType type = stringToOrderType(result["type"].asString());
+            std::string timeInForce = result["timeInForce"].asString();
+            double stopPrice = stod(result["stopPrice"].asString());
+            double icebergQty = stod(result["icebergQty"].asString());
+            long time = stol(result["time"].asString()) / 1000;
 
-        return Order{omsId, type, side, symbol, quantity, price,
-                     stopPrice, icebergQty, 0, emsId, timeInForce, time};
+            return Order{omsId, type, side, symbol, quantity, price,
+                         stopPrice, icebergQty, 0, emsId, timeInForce, time};
+        } catch(...) {
+            return Order(0, MARKET, BUY, 0, 0, 0, 0);
+        }
     }
 
     std::vector<Order> BinanceExchangeManager::getOpenOrders(std::string symbol) {
@@ -135,19 +152,27 @@ namespace ats {
         else
             BINANCE_ERR_CHECK(mAccount.getOpenOrders(result));
         for (Json::Value::ArrayIndex i = 0; i < result.size(); i++)
-            orders.push_back(jsonToOrder(result[i]));
+            try {
+                orders.push_back(jsonToOrder(result[i]));
+            } catch (...) {
+                break;
+            }
         return orders;
     }
 
     Trade BinanceExchangeManager::jsonToTrade(Json::Value &result) {
-        long id = stol(result["id"].asString());
-        double price = stod(result["price"].asString());
-        double quantity = stod(result["qty"].asString());
-        double quoteQty = stod(result["quoteQty"].asString());
-        long time = stol(result["time"].asString());
-        bool isBuyerMaker = result["isBuyerMaker"].asString() == "true";
-        bool isBestMatch = result["isBestMatch"].asString() == "true";
-        return Trade{id, price, quantity, quoteQty, time, isBuyerMaker, isBestMatch};
+        try {
+            long id = stol(result["id"].asString());
+            double price = stod(result["price"].asString());
+            double quantity = stod(result["qty"].asString());
+            double quoteQty = stod(result["quoteQty"].asString());
+            long time = stol(result["time"].asString());
+            bool isBuyerMaker = result["isBuyerMaker"].asString() == "true";
+            bool isBestMatch = result["isBestMatch"].asString() == "true";
+            return Trade{id, price, quantity, quoteQty, time, isBuyerMaker, isBestMatch};
+        } catch(...) {
+            return Trade(0,0,0,0,0,0,0);
+        }
     }
 
     std::vector<Trade> BinanceExchangeManager::getTradeHistory(std::string symbol) {
@@ -159,7 +184,11 @@ namespace ats {
         std::vector<Trade> trades;
         BINANCE_ERR_CHECK(mAccount.getHistoricalTrades(result, symbol.c_str()));
         for (Json::Value::ArrayIndex i = 0; i < result.size(); i++)
-            trades.push_back(jsonToTrade(result[i]));
+            try {
+                trades.push_back(jsonToTrade(result[i]));
+            } catch (...) {
+                break;
+            }
         return trades;
     }
 
@@ -198,6 +227,21 @@ namespace ats {
             balances.insert(std::make_pair(res["asset"].asString(), stod(res["free"].asString())));
         }
         return balances;
+    }
+
+    OrderBook BinanceExchangeManager::getOrderBook(std::string symbol) {
+        Json::Value result;
+        BINANCE_ERR_CHECK(mMarket.getDepth(result, symbol.c_str()));
+        std::vector<double> bids, bidVol, asks, askVol;
+        for (auto &bid : result["bids"]) {
+            bids.push_back(stod(bid[0].asString()));
+            bidVol.push_back(stod(bid[1].asString()));
+        }
+        for (auto &ask : result["asks"]) {
+            asks.push_back(stod(ask[0].asString()));
+            askVol.push_back(stod(ask[1].asString()));
+        }
+        return OrderBook(bids, bidVol, asks, askVol);
     }
 
 } // ats

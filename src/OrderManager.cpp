@@ -59,6 +59,7 @@ namespace ats {
     OrderManager::OrderManager(std::vector<std::string> symbols) {
         for (std::string symbol : symbols)
             mSymbols.insert(symbol);
+        setLastOrderQty(-1);
         start();
     }
 
@@ -85,10 +86,24 @@ namespace ats {
         return mRunning;
     }
 
+    double OrderManager::getLastOrderQty() {
+        return mLastOrderQty;
+    }
+
+    void OrderManager::setLastOrderQty(double qty) {
+        mLastOrderQty = qty;
+    }
+
     void OrderManager::createOrder(OrderType type, Side side, std::string symbol, double quantity, double price) {
         long id = getNewOrderId();
         mSymbols.insert(symbol);
         mPendingOrders.push(Order(id, type, side, symbol, quantity, price));
+    }
+
+    void OrderManager::createOrder(Order order) {
+        mSymbols.insert(order.symbol);
+        order.id = getNewOrderId();
+        mPendingOrders.push(order);
     }
 
     void OrderManager::cancelOrder(long orderId, std::string symbol) {

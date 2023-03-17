@@ -99,9 +99,9 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#a84e164d8b7227bb1826886f8033111c3">~ExchangeManager</a> ()=default</td></tr>
 <tr class="memdesc:a84e164d8b7227bb1826886f8033111c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for <a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html" title="The ExchangeManager class is an abstract class that defines the interface for managing orders on an e...">ExchangeManager</a> class. <br /></td></tr>
 <tr class="separator:a84e164d8b7227bb1826886f8033111c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade644b9d57bfe5b32d73e53fcc31dd35"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#ade644b9d57bfe5b32d73e53fcc31dd35">sendOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;order)=0</td></tr>
-<tr class="memdesc:ade644b9d57bfe5b32d73e53fcc31dd35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an order to the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#ade644b9d57bfe5b32d73e53fcc31dd35">More...</a><br /></td></tr>
-<tr class="separator:ade644b9d57bfe5b32d73e53fcc31dd35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b9effc651d8f341f45e357e597b7015"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#a0b9effc651d8f341f45e357e597b7015">sendOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;order)=0</td></tr>
+<tr class="memdesc:a0b9effc651d8f341f45e357e597b7015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an order to the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#a0b9effc651d8f341f45e357e597b7015">More...</a><br /></td></tr>
+<tr class="separator:a0b9effc651d8f341f45e357e597b7015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afba4268dcda5706ca3d83bb76d8a51fb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#afba4268dcda5706ca3d83bb76d8a51fb">modifyOrder</a> (<a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;oldOrder, <a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;newOrder)=0</td></tr>
 <tr class="memdesc:afba4268dcda5706ca3d83bb76d8a51fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies an existing order on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#afba4268dcda5706ca3d83bb76d8a51fb">More...</a><br /></td></tr>
 <tr class="separator:afba4268dcda5706ca3d83bb76d8a51fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,6 +123,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=".
 <tr class="memitem:a67fd1b4a45c24553be92f692611e4eb8"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#a67fd1b4a45c24553be92f692611e4eb8">getPrice</a> (std::string symbol)=0</td></tr>
 <tr class="memdesc:a67fd1b4a45c24553be92f692611e4eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current price for a given symbol on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#a67fd1b4a45c24553be92f692611e4eb8">More...</a><br /></td></tr>
 <tr class="separator:a67fd1b4a45c24553be92f692611e4eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ed990a34eb45a8fce10aad7373aa4d2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../d9/d73/structats_1_1OrderBook.html">OrderBook</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#a0ed990a34eb45a8fce10aad7373aa4d2">getOrderBook</a> (std::string symbol)=0</td></tr>
+<tr class="memdesc:a0ed990a34eb45a8fce10aad7373aa4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the order book.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#a0ed990a34eb45a8fce10aad7373aa4d2">More...</a><br /></td></tr>
+<tr class="separator:a0ed990a34eb45a8fce10aad7373aa4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -259,6 +262,43 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A vector of open orders. </dd></dl>
 
 <p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a472e326ed63b49d24139c7d5ffe0c7c0">ats::BinanceExchangeManager</a>.</p>
+
+</div>
+</div>
+<a id="a0ed990a34eb45a8fce10aad7373aa4d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ed990a34eb45a8fce10aad7373aa4d2">&#9670;&nbsp;</a></span>getOrderBook()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="../../d9/d73/structats_1_1OrderBook.html">OrderBook</a> ats::ExchangeManager::getOrderBook </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>symbol</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the order book. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">symbol</td><td>The symbol to retrieve the order book for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The bid and ask vectors. </dd></dl>
+
+<p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a931cfece35c5693faae23776edc49726">ats::BinanceExchangeManager</a>.</p>
 
 </div>
 </div>
@@ -430,8 +470,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ade644b9d57bfe5b32d73e53fcc31dd35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade644b9d57bfe5b32d73e53fcc31dd35">&#9670;&nbsp;</a></span>sendOrder()</h2>
+<a id="a0b9effc651d8f341f45e357e597b7015"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b9effc651d8f341f45e357e597b7015">&#9670;&nbsp;</a></span>sendOrder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -440,7 +480,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void ats::ExchangeManager::sendOrder </td>
+          <td class="memname">virtual double ats::ExchangeManager::sendOrder </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a> &amp;&#160;</td>
           <td class="paramname"><em>order</em></td><td>)</td>
@@ -461,8 +501,9 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Filled quantity. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a81cd437a8cef0a8085213baf38c5b563">ats::BinanceExchangeManager</a>.</p>
+<p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#aca471d0b67e110b5c0c6da8ca8807dd8">ats::BinanceExchangeManager</a>.</p>
 
 </div>
 </div>

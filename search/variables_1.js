@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['icebergqty_188',['icebergQty',['../d8/d28/structats_1_1Order.html#ab341234e37c4974a549e16558e1fc794',1,'ats::Order']]],
-  ['id_189',['id',['../d8/d28/structats_1_1Order.html#a33d17f5db578f04fd464c86de68458e0',1,'ats::Order']]]
+  ['bid_202',['bid',['../d9/d73/structats_1_1OrderBook.html#ad5eeac0b30d049ea9f1f52cdd2efdb20',1,'ats::OrderBook']]],
+  ['bidvol_203',['bidVol',['../d9/d73/structats_1_1OrderBook.html#af9164a268d9ee950badd7721572c7578',1,'ats::OrderBook']]]
 ];

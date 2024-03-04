@@ -144,9 +144,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr class="memitem:a3c14fb0a3c6408f0faf3c2d3f7e259cd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a3c14fb0a3c6408f0faf3c2d3f7e259cd">getPrice</a> (std::string symbol) override</td></tr>
 <tr class="memdesc:a3c14fb0a3c6408f0faf3c2d3f7e259cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current price for the specified symbol.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a3c14fb0a3c6408f0faf3c2d3f7e259cd">More...</a><br /></td></tr>
 <tr class="separator:a3c14fb0a3c6408f0faf3c2d3f7e259cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3775625bc891dbb6aabc378e3f07339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac3775625bc891dbb6aabc378e3f07339">getKlines</a> (Json::Value &amp;result, std::string symbol, std::string interval, time_t start_date=0, time_t end_date=0, int limit=500)</td></tr>
-<tr class="memdesc:ac3775625bc891dbb6aabc378e3f07339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets Klines for a symbol.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac3775625bc891dbb6aabc378e3f07339">More...</a><br /></td></tr>
-<tr class="separator:ac3775625bc891dbb6aabc378e3f07339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac80e8ecc69bca2a66cf55a290fea6f54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac80e8ecc69bca2a66cf55a290fea6f54">getKlines</a> (Json::Value &amp;result, std::string symbol, std::string interval, time_t start_date=0, time_t end_date=0, int limit=500) override</td></tr>
+<tr class="memdesc:ac80e8ecc69bca2a66cf55a290fea6f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets <a class="el" href="../../d1/dd4/structats_1_1Klines.html" title="The Klines stores kline data for a specific symbol.">Klines</a> for a symbol.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac80e8ecc69bca2a66cf55a290fea6f54">More...</a><br /></td></tr>
+<tr class="separator:ac80e8ecc69bca2a66cf55a290fea6f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac208b201c3984dc98492e3a526b2dd34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d28/structats_1_1Order.html">Order</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac208b201c3984dc98492e3a526b2dd34">jsonToOrder</a> (Json::Value &amp;result)</td></tr>
 <tr class="memdesc:ac208b201c3984dc98492e3a526b2dd34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a JSON object to an <a class="el" href="../../d8/d28/structats_1_1Order.html" title="The Order struct represents an order to be placed on an exchange.">Order</a> object.  <a href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac208b201c3984dc98492e3a526b2dd34">More...</a><br /></td></tr>
 <tr class="separator:ac208b201c3984dc98492e3a526b2dd34"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -350,11 +350,14 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ac3775625bc891dbb6aabc378e3f07339"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3775625bc891dbb6aabc378e3f07339">&#9670;&nbsp;</a></span>getKlines()</h2>
+<a id="ac80e8ecc69bca2a66cf55a290fea6f54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac80e8ecc69bca2a66cf55a290fea6f54">&#9670;&nbsp;</a></span>getKlines()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void ats::BinanceExchangeManager::getKlines </td>
@@ -398,13 +401,18 @@ Additional Inherited Members</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Gets Klines for a symbol. </p>
+<p>Gets <a class="el" href="../../d1/dd4/structats_1_1Klines.html" title="The Klines stores kline data for a specific symbol.">Klines</a> for a symbol. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">result</td><td>Json object to write the response to </td></tr>
-    <tr><td class="paramname">symbol</td><td>Symbol to get the Klines for </td></tr>
+    <tr><td class="paramname">symbol</td><td>Symbol to get the <a class="el" href="../../d1/dd4/structats_1_1Klines.html" title="The Klines stores kline data for a specific symbol.">Klines</a> for </td></tr>
     <tr><td class="paramname">interval</td><td>Kline interval </td></tr>
     <tr><td class="paramname">start_date</td><td>Start date </td></tr>
     <tr><td class="paramname">end_date</td><td>End date </td></tr>
@@ -412,6 +420,8 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+<p>Implements <a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#ac1c5a46fa6c5598e2fa45dcc67ac4c5f">ats::ExchangeManager</a>.</p>
 
 </div>
 </div>

@@ -120,6 +120,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=".
 <tr class="memitem:add1cb53868c1a87c9af1a2766ef4d8d7"><td class="memItemLeft" align="right" valign="top">virtual std::map&lt; std::string, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#add1cb53868c1a87c9af1a2766ef4d8d7">getBalances</a> ()=0</td></tr>
 <tr class="memdesc:add1cb53868c1a87c9af1a2766ef4d8d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves user balances.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#add1cb53868c1a87c9af1a2766ef4d8d7">More...</a><br /></td></tr>
 <tr class="separator:add1cb53868c1a87c9af1a2766ef4d8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1c5a46fa6c5598e2fa45dcc67ac4c5f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#ac1c5a46fa6c5598e2fa45dcc67ac4c5f">getKlines</a> (Json::Value &amp;result, std::string symbol, std::string interval, time_t start_date, time_t end_date, int limit)=0</td></tr>
+<tr class="memdesc:ac1c5a46fa6c5598e2fa45dcc67ac4c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets <a class="el" href="../../d1/dd4/structats_1_1Klines.html" title="The Klines stores kline data for a specific symbol.">Klines</a> for a symbol.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#ac1c5a46fa6c5598e2fa45dcc67ac4c5f">More...</a><br /></td></tr>
+<tr class="separator:ac1c5a46fa6c5598e2fa45dcc67ac4c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67fd1b4a45c24553be92f692611e4eb8"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d4b/classats_1_1ExchangeManager.html#a67fd1b4a45c24553be92f692611e4eb8">getPrice</a> (std::string symbol)=0</td></tr>
 <tr class="memdesc:a67fd1b4a45c24553be92f692611e4eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current price for a given symbol on the exchange.  <a href="../../df/d4b/classats_1_1ExchangeManager.html#a67fd1b4a45c24553be92f692611e4eb8">More...</a><br /></td></tr>
 <tr class="separator:a67fd1b4a45c24553be92f692611e4eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -225,6 +228,81 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A map of pairs {asset, balance}. </dd></dl>
 
 <p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#a5f2e9b87e1179d2769bb4578a542d367">ats::BinanceExchangeManager</a>.</p>
+
+</div>
+</div>
+<a id="ac1c5a46fa6c5598e2fa45dcc67ac4c5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1c5a46fa6c5598e2fa45dcc67ac4c5f">&#9670;&nbsp;</a></span>getKlines()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ats::ExchangeManager::getKlines </td>
+          <td>(</td>
+          <td class="paramtype">Json::Value &amp;&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>symbol</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>interval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">time_t&#160;</td>
+          <td class="paramname"><em>start_date</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">time_t&#160;</td>
+          <td class="paramname"><em>end_date</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>limit</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets <a class="el" href="../../d1/dd4/structats_1_1Klines.html" title="The Klines stores kline data for a specific symbol.">Klines</a> for a symbol. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>Json object to write the response to </td></tr>
+    <tr><td class="paramname">symbol</td><td>Symbol to get the <a class="el" href="../../d1/dd4/structats_1_1Klines.html" title="The Klines stores kline data for a specific symbol.">Klines</a> for </td></tr>
+    <tr><td class="paramname">interval</td><td>Kline interval </td></tr>
+    <tr><td class="paramname">start_date</td><td>Start date </td></tr>
+    <tr><td class="paramname">end_date</td><td>End date </td></tr>
+    <tr><td class="paramname">limit</td><td>Limit, should be less than or equal to 1000 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../dd/d9f/classats_1_1BinanceExchangeManager.html#ac80e8ecc69bca2a66cf55a290fea6f54">ats::BinanceExchangeManager</a>.</p>
 
 </div>
 </div>

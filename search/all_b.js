@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['position_63',['Position',['../d9/d73/structats_1_1Position.html',1,'ats::Position'],['../d9/d73/structats_1_1Position.html#a3eceb485aa42ac5c54343d683ac6fc10',1,'ats::Position::Position()'],['../d9/d73/structats_1_1Position.html#abf9f99f9f944e3731fc65259078cc998',1,'ats::Position::Position(double q, double p)']]],
-  ['positionmanager_64',['PositionManager',['../d3/d39/classats_1_1PositionManager.html',1,'ats::PositionManager'],['../d3/d39/classats_1_1PositionManager.html#aaeae6987290c17c6e9c20d446c1484c1',1,'ats::PositionManager::PositionManager()'],['../d3/d39/classats_1_1PositionManager.html#aa0e1bcefac2543c8255a0beec4df3dec',1,'ats::PositionManager::PositionManager(MarketData &amp;marketData)']]],
-  ['positionmanager_2eh_65',['PositionManager.h',['../d5/d3b/PositionManager_8h.html',1,'']]],
-  ['price_66',['price',['../d8/d28/structats_1_1Order.html#a3bd3faefcefc603f2a6437f58cb201b3',1,'ats::Order::price()'],['../d9/d73/structats_1_1Position.html#ab2d7880c1aeff2ffa138dca59d283aca',1,'ats::Position::price()']]],
-  ['processorder_67',['processOrder',['../d9/d55/classats_1_1OrderManager.html#a50f0ed639da9de2db542e3c416735aad',1,'ats::OrderManager']]],
-  ['processorders_68',['processOrders',['../d9/d55/classats_1_1OrderManager.html#affaed7d5ad32912cf50df2053bad8f3a',1,'ats::OrderManager']]]
+  ['order_57',['Order',['../d8/d28/structats_1_1Order.html',1,'ats::Order'],['../d8/d28/structats_1_1Order.html#a1032903c47e0377188f685f2e7a18f90',1,'ats::Order::Order()']]],
+  ['orderbook_58',['OrderBook',['../d9/d73/structats_1_1OrderBook.html',1,'ats::OrderBook'],['../d9/d73/structats_1_1OrderBook.html#a35eb08d73e8df52693ba55bb96c94715',1,'ats::OrderBook::OrderBook()']]],
+  ['ordermanager_59',['OrderManager',['../d9/d55/classats_1_1OrderManager.html',1,'ats::OrderManager'],['../d9/d55/classats_1_1OrderManager.html#aed1308bc5723cd906316484f5d3c87d6',1,'ats::OrderManager::OrderManager()'],['../d9/d55/classats_1_1OrderManager.html#a155e78aba9fa89ad06e21413b2b311c7',1,'ats::OrderManager::OrderManager(std::vector&lt; std::string &gt; symbols)']]],
+  ['ordermanager_2eh_60',['OrderManager.h',['../d7/d4d/OrderManager_8h.html',1,'']]],
+  ['ordertype_61',['OrderType',['../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682',1,'ats']]],
+  ['ordertypetostring_62',['OrderTypeToString',['../d7/d32/namespaceats.html#ab384ee4482809c8f3a481ae34883ab8e',1,'ats']]],
+  ['otcount_63',['OTCOUNT',['../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682a2206ed95356f03e0abd76d81d47e0bfe',1,'ats']]]
 ];

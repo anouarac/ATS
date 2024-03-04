@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['binanceexchangemanager_2eh_130',['BinanceExchangeManager.h',['../de/d73/BinanceExchangeManager_8h.html',1,'']]]
+  ['binanceexchangemanager_2eh_132',['BinanceExchangeManager.h',['../de/d73/BinanceExchangeManager_8h.html',1,'']]]
 ];

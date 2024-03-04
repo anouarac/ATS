@@ -1,12 +1,23 @@
 var searchData=
 [
-  ['take_5fprofit_94',['TAKE_PROFIT',['../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682a34d54f01b2dfca19dbedb1d05eb8b455',1,'ats']]],
-  ['take_5fprofit_5flimit_95',['TAKE_PROFIT_LIMIT',['../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682afc48d7f65cb1e51511f63d185044b157',1,'ats']]],
-  ['tickerdata_96',['TickerData',['../db/dd8/structTickerData.html',1,'']]],
-  ['time_97',['time',['../d8/d28/structats_1_1Order.html#aad994cc9b976fdcd2f6268fd4f60c497',1,'ats::Order']]],
-  ['timeinforce_98',['timeInForce',['../d8/d28/structats_1_1Order.html#a29de2df8e3e0edf2cf36f2a1c52cf619',1,'ats::Order']]],
-  ['total_99',['total',['../d9/d73/structats_1_1Position.html#a024b434760676c93577dca57bcf76561',1,'ats::Position']]],
-  ['trade_100',['Trade',['../de/d42/classats_1_1Trade.html',1,'ats::Trade'],['../de/d42/classats_1_1Trade.html#ae99b90c0cc7781b2808d6e72898eb594',1,'ats::Trade::Trade()']]],
-  ['trade_2eh_101',['Trade.h',['../dd/d8b/Trade_8h.html',1,'']]],
-  ['type_102',['type',['../d8/d28/structats_1_1Order.html#acb6f6f9dbe31ea883973143a29607cfc',1,'ats::Order']]]
+  ['scount_75',['SCOUNT',['../d7/d32/namespaceats.html#aa8545ec794af5782573da340c0ccbbbda1c7dfcb30872921e705604be594abb68',1,'ats']]],
+  ['sell_76',['SELL',['../d7/d32/namespaceats.html#aa8545ec794af5782573da340c0ccbbbdaed0fe03aad9d0c6e281b2de596bb0eaa',1,'ats']]],
+  ['sell_77',['sell',['../d1/d92/classats_1_1Strategy.html#a0a41cc70e057eee435230026d68c1092',1,'ats::Strategy']]],
+  ['sendorder_78',['sendOrder',['../dd/d9f/classats_1_1BinanceExchangeManager.html#aca471d0b67e110b5c0c6da8ca8807dd8',1,'ats::BinanceExchangeManager::sendOrder()'],['../df/d4b/classats_1_1ExchangeManager.html#a0b9effc651d8f341f45e357e597b7015',1,'ats::ExchangeManager::sendOrder()']]],
+  ['setlastorderqty_79',['setLastOrderQty',['../d9/d55/classats_1_1OrderManager.html#a99252528c6798c83187d846285b34bd5',1,'ats::OrderManager']]],
+  ['side_80',['side',['../d8/d28/structats_1_1Order.html#a66563c2acb8d81c4b318cd134ce758be',1,'ats::Order']]],
+  ['side_81',['Side',['../d7/d32/namespaceats.html#aa8545ec794af5782573da340c0ccbbbd',1,'ats']]],
+  ['sidetostring_82',['SideToString',['../d7/d32/namespaceats.html#a49fb8354dce72738b47639769779fea1',1,'ats']]],
+  ['start_83',['start',['../d1/d92/classats_1_1Strategy.html#a6d26c8dea3e251dc42f390c9ba7151ca',1,'ats::Strategy::start()'],['../d3/d39/classats_1_1PositionManager.html#a872f532247f132f17b055d2b9fd00db4',1,'ats::PositionManager::start()'],['../d9/d55/classats_1_1OrderManager.html#a0150a5ed3afcbf1af72e81e82052a50a',1,'ats::OrderManager::start()'],['../d4/d41/classats_1_1MarketData.html#a4634c75ec47f233dad3b9d3d9ef72ddf',1,'ats::MarketData::start()'],['../dd/d9f/classats_1_1BinanceExchangeManager.html#a02a2438edd8c8260f2240e67f8b9d24e',1,'ats::BinanceExchangeManager::start()']]],
+  ['stockapi_84',['StockAPI',['../dc/d97/classStockAPI.html',1,'']]],
+  ['stop_85',['stop',['../dd/d9f/classats_1_1BinanceExchangeManager.html#a62d3f3fe1e3589e722a64aee9d5f9223',1,'ats::BinanceExchangeManager::stop()'],['../d4/d41/classats_1_1MarketData.html#aa49f5f06558dcc993b5cfe03d3ffacad',1,'ats::MarketData::stop()'],['../d9/d55/classats_1_1OrderManager.html#a5bb37c184094c7f7e498595c0b0030da',1,'ats::OrderManager::stop()'],['../d3/d39/classats_1_1PositionManager.html#ab92bf73cdc90cdcc3d7f1db690203cb2',1,'ats::PositionManager::stop()'],['../d1/d92/classats_1_1Strategy.html#a121faaefb5b0dfca028514b75c63574e',1,'ats::Strategy::stop()']]],
+  ['stop_5floss_86',['STOP_LOSS',['../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682a6539659f2dea8a8382514605a524d200',1,'ats']]],
+  ['stop_5floss_5flimit_87',['STOP_LOSS_LIMIT',['../d7/d32/namespaceats.html#afbf7d6918f0d7ee517f047fcb1c46682acf07147410419d49a8fdfc369fac4a26',1,'ats']]],
+  ['stopprice_88',['stopPrice',['../d8/d28/structats_1_1Order.html#acda06aa14e1839213ac849865a4d41c3',1,'ats::Order']]],
+  ['strategy_89',['Strategy',['../d1/d92/classats_1_1Strategy.html',1,'ats::Strategy'],['../d1/d92/classats_1_1Strategy.html#a0dcac60cf358f543e4035587e6afe17e',1,'ats::Strategy::Strategy()']]],
+  ['strategy_2eh_90',['Strategy.h',['../d1/d4f/Strategy_8h.html',1,'']]],
+  ['stringtoordertype_91',['stringToOrderType',['../d7/d32/namespaceats.html#a3ab2b2234f729c9511f7d908abe2c153',1,'ats']]],
+  ['stringtoside_92',['stringToSide',['../d7/d32/namespaceats.html#a3f99a0b582369b7ccb28c7b6cebb28d9',1,'ats']]],
+  ['subscribe_93',['subscribe',['../d4/d41/classats_1_1MarketData.html#a8bd51bf1e389cd8c4c9114fc12cb8fb5',1,'ats::MarketData']]],
+  ['symbol_94',['symbol',['../d8/d28/structats_1_1Order.html#a37d7aba744966221515705f72819c437',1,'ats::Order']]]
 ];

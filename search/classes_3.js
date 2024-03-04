@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['marketdata_117',['MarketData',['../d4/d41/classats_1_1MarketData.html',1,'ats']]]
+  ['klines_118',['Klines',['../d1/dd4/structats_1_1Klines.html',1,'ats']]]
 ];

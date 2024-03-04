@@ -165,7 +165,7 @@ namespace ats {
          * @param end_date End date
          * @param limit Limit, should be less than or equal to 1000
          */
-         void getKlines(Json::Value& result, std::string symbol, std::string interval, time_t start_date=0, time_t end_date=0, int limit=500);
+         void getKlines(Json::Value& result, std::string symbol, std::string interval, time_t start_date=0, time_t end_date=0, int limit=500) override;
 
         /**
          * @brief Converts a JSON object to an Order object.

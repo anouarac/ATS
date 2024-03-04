@@ -97,6 +97,18 @@ namespace ats {
          virtual std::map<std::string,double> getBalances() = 0;
 
         /**
+         * @brief Gets Klines for a symbol
+         *
+         * @param result Json object to write the response to
+         * @param symbol Symbol to get the Klines for
+         * @param interval Kline interval
+         * @param start_date Start date
+         * @param end_date End date
+         * @param limit Limit, should be less than or equal to 1000
+         */
+         virtual void getKlines(Json::Value& result, std::string symbol, std::string interval, time_t start_date, time_t end_date, int limit) = 0;
+
+        /**
          * @brief Retrieves the current price for a given symbol on the exchange.
          *
          * @param symbol The symbol to retrieve the price for.

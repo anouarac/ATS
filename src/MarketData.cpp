@@ -33,6 +33,7 @@ namespace ats {
             time(&newUpd);
             if (difftime(newUpd, lastUpd) > mUpdateInterval) {
                 updatePrices();
+                updateKlines();
                 updateOrderBooks();
                 updateBalances();
                 time(&lastUpd);
@@ -46,11 +47,13 @@ namespace ats {
             mMarketDataThread.join();
     }
 
-    void MarketData::subscribe(const std::string &symbol) {
+    void MarketData::subscribe(const std::string &symbol, std::string interval) {
         std::lock_guard<std::mutex> lock(mDataMutex);
         mSymbols.insert(symbol);
-        mOrderBooks[symbol] = {};
-        mPrices[symbol] = {};
+        mOrderBooks[symbol];
+        mPrices[symbol];
+        mKlines[{symbol, interval}];
+        mOrderBooks[symbol];
     }
 
     void MarketData::unsubscribe(const std::string &symbol) {
@@ -58,9 +61,16 @@ namespace ats {
         mSymbols.erase(symbol);
         mPrices.erase(symbol);
         mOrderBooks.erase(symbol);
+        std::vector<std::string> intervalsToErase;
+        for (const auto &[key, kline] : mKlines) {
+            if (key.first == symbol)
+                intervalsToErase.push_back(key.second);
+        }
+        for (const std::string& interval : intervalsToErase)
+            mKlines.erase({symbol, interval});
     }
 
-    double MarketData::getPrice(const std::string symbol) {
+    double MarketData::getPrice(const std::string& symbol) {
         std::unique_lock<std::mutex> lock(mDataMutex);
         if (mPrices.count(symbol)) {
             if (mPrices[symbol].empty()) {
@@ -72,12 +82,12 @@ namespace ats {
         return -1;
     }
 
-    std::vector<double> MarketData::getPrices(std::string symbol) {
+    std::vector<double> MarketData::getPrices(const std::string& symbol) {
         std::lock_guard<std::mutex> lock(mDataMutex);
         return mPrices[symbol];
     }
 
-    std::vector<Trade> MarketData::getTradeHistory(std::string symbol) {
+    std::vector<Trade> MarketData::getTradeHistory(const std::string& symbol) {
         return mExchangeManager.getTradeHistory(symbol);
     }
 
@@ -97,6 +107,37 @@ namespace ats {
         lock.unlock();
         for (const std::string &symbol: mSymbolsCopy)
             updatePrice(symbol);
+    }
+
+    void MarketData::updateKlines() {
+        std::unique_lock<std::mutex> lock(mDataMutex);
+        std::map<std::pair<std::string,std::string>, Klines> klinesCopy = mKlines;
+        lock.unlock();
+        for (auto &[key, klines] : klinesCopy) {
+            Json::Value result;
+            if (klines.times.size())
+                mExchangeManager.getKlines(result, key.first, key.second, 0, 0, 10);
+            else mExchangeManager.getKlines(result, key.first, key.second, 0, 0, 500);
+            try {
+                for (Json::Value::ArrayIndex i = 0; i < result.size(); i++) {
+                    time_t t = jsonToDouble(result[i][0])/1000;
+                    double o = jsonToDouble(result[i][1]);
+                    double h = jsonToDouble(result[i][2]);
+                    double l = jsonToDouble(result[i][3]);
+                    double c = jsonToDouble(result[i][4]);
+                    double v = jsonToDouble(result[i][5]);
+                    if (!klines.times.empty() && t < klines.times.back()) continue;
+                    if (!klines.times.empty() && t == klines.times.back())
+                        klines.pop_back();
+                    klines.push_back(t, o, h, l, c, v);
+                }
+            }
+            catch (...) {
+                return;
+            }
+        }
+        lock.lock();
+        mKlines.swap(klinesCopy);
     }
 
     bool MarketData::isRunning() {
@@ -119,6 +160,13 @@ namespace ats {
         return {};
     }
 
+
+    Klines MarketData::getKlines(const std::string &symbol, const std::string& interval) {
+        if (mKlines.count({symbol, interval}))
+            return mKlines[{symbol, interval}];
+        return {};
+    }
+
     void MarketData::updateOrderBook(const std::string &symbol) {
         OrderBook orderBook = mExchangeManager.getOrderBook(symbol);
         std::lock_guard<std::mutex> lock(mDataMutex);
@@ -137,6 +185,10 @@ namespace ats {
         auto balances = mExchangeManager.getBalances();
         std::unique_lock<std::mutex> lock(mDataMutex);
         balances.swap(mBalances);
+    }
+
+    double MarketData::jsonToDouble(Json::Value res) {
+        return atof(res.asString().c_str());
     }
 
 } // ats

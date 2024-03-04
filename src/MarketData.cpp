@@ -160,6 +160,13 @@ namespace ats {
         return {};
     }
 
+
+    Klines MarketData::getKlines(const std::string &symbol, const std::string& interval) {
+        if (mKlines.count({symbol, interval}))
+            return mKlines[{symbol, interval}];
+        return {};
+    }
+
     void MarketData::updateOrderBook(const std::string &symbol) {
         OrderBook orderBook = mExchangeManager.getOrderBook(symbol);
         std::lock_guard<std::mutex> lock(mDataMutex);

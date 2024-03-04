@@ -161,6 +161,14 @@ namespace ats {
           */
           OrderBook getOrderBook(const std::string &symbol);
 
+          /**
+           * @brief Retrieves Kline data.
+           * @param symbol Symbol for which to get the Kline data.
+           * @param interval Interval for the Klines.
+           * @return The requested Kline data.
+           */
+           Klines getKlines(const std::string &symbol, const std::string& interval);
+
     private:
         /**
          * @brief Updates the price for a symbol.

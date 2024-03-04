@@ -53,6 +53,7 @@ namespace ats {
         mOrderBooks[symbol];
         mPrices[symbol];
         mKlines[{symbol, interval}];
+        mOrderBooks[symbol];
     }
 
     void MarketData::unsubscribe(const std::string &symbol) {

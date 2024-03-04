@@ -1,5 +1,5 @@
 # ATS
-ATS is an open-source implementation of an algorithmic trading system in C++.
+ATS is an open-source implementation of an algorithmic trading systems library in C++.
 
 It currently supports the Binance Exchange but the project is modular and any exchange can be added.
 

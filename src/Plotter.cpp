@@ -9,7 +9,6 @@ TickerData BinanceAPI::get_ticker(std::string ticker, ImPlotTime start_date, ImP
     std::transform(ticker.begin(), ticker.end(), ticker.begin(), ::toupper);
     Json::Value result;
 
-
     ems.getKlines(result, ticker, getStrInterval(interval));
 
     try {

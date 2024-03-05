@@ -22,8 +22,10 @@ namespace ats {
     }
 
     void MarketData::start() {
-        mRunning = true;
-        mMarketDataThread = std::thread(&MarketData::run, this);
+        if (!mRunning) {
+            mRunning = true;
+            mMarketDataThread = std::thread(&MarketData::run, this);
+        }
     }
 
     void MarketData::run() {
@@ -151,6 +153,15 @@ namespace ats {
     std::map<std::string, double> MarketData::getBalances() {
         std::lock_guard<std::mutex> lock(mDataMutex);
         return mBalances;
+    }
+
+    std::string MarketData::getOrderStatus(long id, const std::string& symbol) {
+        Json::Value result;
+        Order order{id};
+        order.symbol = symbol;
+        mExchangeManager.getOrderStatus(order, result);
+        std::string status = result.get("status", "REJECTED").asString();
+        return status;
     }
 
     OrderBook MarketData::getOrderBook(const std::string &symbol) {

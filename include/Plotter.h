@@ -286,6 +286,7 @@ struct ImBinance : App {
                 case 2:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Min, -300);
                     interval = Interval_3m;
+                    break;
                 case 3:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Min, -500);
                     interval = Interval_5m;

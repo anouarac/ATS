@@ -128,6 +128,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr class="memitem:a76b9312f0817841ed850f268cef1de2a"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d41/classats_1_1MarketData.html#a76b9312f0817841ed850f268cef1de2a">getBalances</a> ()</td></tr>
 <tr class="memdesc:a76b9312f0817841ed850f268cef1de2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrives user's balances.  <a href="../../d4/d41/classats_1_1MarketData.html#a76b9312f0817841ed850f268cef1de2a">More...</a><br /></td></tr>
 <tr class="separator:a76b9312f0817841ed850f268cef1de2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a292f42a48e90302bbde67554171c24d8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d41/classats_1_1MarketData.html#a292f42a48e90302bbde67554171c24d8">getOrderStatus</a> (long id, const std::string &amp;symbol)</td></tr>
+<tr class="memdesc:a292f42a48e90302bbde67554171c24d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves order status.  <a href="../../d4/d41/classats_1_1MarketData.html#a292f42a48e90302bbde67554171c24d8">More...</a><br /></td></tr>
+<tr class="separator:a292f42a48e90302bbde67554171c24d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac489e36a9488c79769233f58dc79b703"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/d73/structats_1_1OrderBook.html">OrderBook</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d41/classats_1_1MarketData.html#ac489e36a9488c79769233f58dc79b703">getOrderBook</a> (const std::string &amp;symbol)</td></tr>
 <tr class="memdesc:ac489e36a9488c79769233f58dc79b703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the <a class="el" href="../../d9/d73/structats_1_1OrderBook.html" title="The OrderBook struct represents the orderbook.">OrderBook</a>.  <a href="../../d4/d41/classats_1_1MarketData.html#ac489e36a9488c79769233f58dc79b703">More...</a><br /></td></tr>
 <tr class="separator:ac489e36a9488c79769233f58dc79b703"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -310,6 +313,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Current <a class="el" href="../../d9/d73/structats_1_1OrderBook.html" title="The OrderBook struct represents the orderbook.">OrderBook</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a292f42a48e90302bbde67554171c24d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a292f42a48e90302bbde67554171c24d8">&#9670;&nbsp;</a></span>getOrderStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ats::MarketData::getOrderStatus </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>symbol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieves order status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Id</td><td>Client-side order Id.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d8/d28/structats_1_1Order.html" title="The Order struct represents an order to be placed on an exchange.">Order</a> status </dd></dl>
 
 </div>
 </div>

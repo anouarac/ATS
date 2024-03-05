@@ -18,8 +18,8 @@
 namespace ats {
 
     /**
- * @brief Defines an abstract interface for trading strategies
- */
+     * @brief Defines an abstract interface for trading strategies
+     */
     class Strategy {
     protected:
         MarketData& mData; ///< MarketData object to get market information

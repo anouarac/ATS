@@ -82,14 +82,16 @@ public:
         double price = ob1.bid[0];
         if (price*quantity < 10) return;
         mOrderManager.setLastOrderQty(-1);
-        mOrderManager.createOrder(Order(0, LIMIT, SELL, mSymbol,
+        Order order = Order(0, LIMIT, SELL, mSymbol,
                                         quantity,
-                                        price, 0, 0, 0, 0, "IOC", 0));
+                                        price, 0, 0, 0, 0, "IOC", 0);
+        mOrderManager.createOrder(order);
         while (mOrderManager.getLastOrderQty() == -1) continue;
         double qty = mOrderManager.getLastOrderQty();
         mOrderManager.setLastOrderQty(-1);
+        order = Order(0, LIMIT, BUY, mHedgeSymbol, qty, ob2.ask[0], 0, 0, 0, 0, "GTC", 0);
         if (qty > 1e-7)
-            mOrderManager.createOrder(Order(0, LIMIT, BUY, mHedgeSymbol, qty, ob2.ask[0], 0, 0, 0, 0, "GTC", 0));
+            mOrderManager.createOrder(order);
         time(&mLastOrder);
     }
 
@@ -108,14 +110,16 @@ public:
         double price = ob1.ask[0];
         if (price*quantity < 10) return;
         mOrderManager.setLastOrderQty(-1);
-        mOrderManager.createOrder(Order(0, LIMIT, BUY, mSymbol,
+        Order order = Order(0, LIMIT, BUY, mSymbol,
                                         quantity,
-                                        price, 0, 0, 0, 0, "IOC", 0));
+                                        price, 0, 0, 0, 0, "IOC", 0);
+        mOrderManager.createOrder(order);
         while (mOrderManager.getLastOrderQty() == -1) continue;
         double qty = mOrderManager.getLastOrderQty();
         mOrderManager.setLastOrderQty(-1);
+        order = Order(0, LIMIT, SELL, mHedgeSymbol, qty, ob2.bid[0], 0, 0, 0, 0, "GTC", 0);
         if (qty > 1e-7)
-            mOrderManager.createOrder(Order(0, LIMIT, SELL, mHedgeSymbol, qty, ob2.bid[0], 0, 0, 0, 0, "GTC", 0));
+            mOrderManager.createOrder(order);
         time(&mLastOrder);
     }
 };

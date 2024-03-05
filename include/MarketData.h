@@ -155,6 +155,15 @@ namespace ats {
          std::map<std::string,double> getBalances();
 
          /**
+          * @brief Retrieves order status.
+          *
+          * @param Id Client-side order Id.
+          *
+          * @return Order status
+          */
+          std::string getOrderStatus(long id, const std::string& symbol);
+
+         /**
           * @brief Retrieves the OrderBook.
           * @param symbol Symbol for which to get the order book.
           * @return Current OrderBook.

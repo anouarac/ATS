@@ -68,8 +68,10 @@ namespace ats {
     }
 
     void OrderManager::start() {
-        mRunning = true;
-        mOrderManagerThread = std::thread(&OrderManager::run, this);
+        if (!mRunning) {
+            mRunning = true;
+            mOrderManagerThread = std::thread(&OrderManager::run, this);
+        }
     }
 
     void OrderManager::run() {
@@ -94,16 +96,18 @@ namespace ats {
         mLastOrderQty = qty;
     }
 
-    void OrderManager::createOrder(OrderType type, Side side, std::string symbol, double quantity, double price) {
+    long OrderManager::createOrder(OrderType type, Side side, std::string symbol, double quantity, double price) {
         long id = getNewOrderId();
         mSymbols.insert(symbol);
         mPendingOrders.push(Order(id, type, side, symbol, quantity, price));
+        return id;
     }
 
-    void OrderManager::createOrder(Order order) {
+    long OrderManager::createOrder(Order& order) {
         mSymbols.insert(order.symbol);
         order.id = getNewOrderId();
         mPendingOrders.push(order);
+        return order.id;
     }
 
     void OrderManager::cancelOrder(long orderId, std::string symbol) {
@@ -155,6 +159,12 @@ namespace ats {
         std::lock_guard<std::mutex> lock(mOrderFetchMutex);
         mSentOrders.insert({oldest.id, oldest});
         return mSentOrders.find(oldest.id)->second;
+    }
+
+    Order OrderManager::getOrderById(long ID) {
+        if (mSentOrders.count(ID))
+            return mSentOrders[ID];
+        return Order{};
     }
 
     std::pair<long, std::string> OrderManager::getCancelOrder() {

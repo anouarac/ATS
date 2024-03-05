@@ -90,6 +90,8 @@ namespace ats {
         std::string timeInForce; /**< The time in force of the order (e.g. GTC, IOC, FOK, etc.). */
         time_t time; /**< The time when the order was sent. */
 
+        Order(long id=-1) : id(id) {}
+
         /**
          * @brief The Order constructor.
          * @param id The order ID.
@@ -228,15 +230,19 @@ namespace ats {
          * @param symbol The symbol to trade
          * @param quantity The quantity to trade
          * @param price The price to trade
+         *
+         * @return Order Id
          */
-        void createOrder(OrderType type, Side side, std::string symbol, double quantity, double price=0);
+        long createOrder(OrderType type, Side side, std::string symbol, double quantity, double price=0);
 
         /**
          * @brief Add an order to the queue
          *
          * @param order The order to add
+         *
+         * @return Order Id
          */
-        void createOrder(Order order);
+        long createOrder(Order& order);
 
         /**
          * @brief Cancel an order
@@ -294,6 +300,15 @@ namespace ats {
          * @return Order& The oldest order in the queue
          */
         Order &getOldestOrder();
+
+        /**
+         * @brief Returns order by ID
+         *
+         * @param ID ID of the order to return
+         *
+         * @return Order The requested order
+         */
+         Order getOrderById(long ID);
 
         /**
          * @brief Get an order to cancel

@@ -270,10 +270,10 @@ struct ImBinance : App {
 
         ImGui::SameLine();
 
-        static int duration = 3;
+        static int duration = 4;
         ImGui::SetNextItemWidth(200);
         if (ImGui::Combo("##Interval", &duration,
-                         "1 Second\0""1 Minute\0""5 Minutes\0""1 Hour\0""1 Day\0""1 Week\0""1 Month\0")) {
+                         "1 Second\0""1 Minute\0""3 Minutes\0""5 Minutes\0""1 Hour\0""1 Day\0""1 Week\0""1 Month\0")) {
             switch (duration) {
                 case 0:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_S, -100);
@@ -284,22 +284,25 @@ struct ImBinance : App {
                     interval = Interval_1m;
                     break;
                 case 2:
+                    t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Min, -300);
+                    interval = Interval_3m;
+                case 3:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Min, -500);
                     interval = Interval_5m;
                     break;
-                case 3:
+                case 4:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Hr, -100);
                     interval = Interval_1h;
                     break;
-                case 4:
+                case 5:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Day, -100);
                     interval = Interval_1d;
                     break;
-                case 5:
+                case 6:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Day, -700);
                     interval = Interval_1w;
                     break;
-                case 6:
+                case 7:
                     t1 = ImPlot::AddTime(t2, ImPlotTimeUnit_Mo, -100);
                     interval = Interval_1M;
                     break;

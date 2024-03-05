@@ -17,8 +17,10 @@ namespace ats {
     }
 
     void Strategy::start() {
-        mRunning = true;
-        mStrategyThread = std::thread(&Strategy::run, this);
+        if (!mRunning) {
+            mRunning = true;
+            mStrategyThread = std::thread(&Strategy::run, this);
+        }
     }
 
     void Strategy::stop() {
